@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "News Filter — Local & Private",
+  "version": "0.1.0",
+  "description": "Filter news cards using your own topics and phrases. Local rules, clear explanations, and easy story restoration.",
+  "minimum_chrome_version": "110",
+  "permissions": ["storage", "activeTab"],
+  "background": { "service_worker": "background.js" },
+  "action": { "default_popup": "popup.html", "default_title": "News Filter" },
+  "options_ui": { "page": "settings.html", "open_in_tab": true },
+  "content_scripts": [{
+    "matches": ["http://*/*", "https://*/*"],
+    "js": ["content.js"],
+    "css": ["content.css"],
+    "run_at": "document_idle",
+    "all_frames": false
+  }],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'none'; connect-src 'none'; img-src 'self'; style-src 'self'; base-uri 'none'; form-action 'none'"
+  }
+}

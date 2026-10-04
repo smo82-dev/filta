@@ -1,0 +1,10 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>News Filter</title><link rel="stylesheet" href="ui.css"></head>
+<body class="popup">
+  <header><div class="icon" aria-hidden="true">N</div><div><h1>News Filter</h1><div class="tag">Local · Private · Yours</div></div></header>
+  <label class="choice"><input id="enabled" type="checkbox">Enable filtering globally</label>
+  <section class="panel"><div id="site" class="site">Connecting…</div><p id="state" class="help" aria-live="polite"></p><div class="counter"><strong id="count">0</strong><span>stories filtered<br><small>This page</small></span></div><button id="review" class="full" disabled>View filtered stories</button><button id="detect" class="full" hidden>Detect news cards on this site</button></section>
+  <fieldset><legend>Mode</legend><div class="mode"><label class="choice"><input id="collapse" type="radio" name="mode" value="collapse" checked>Collapse</label><label class="choice"><input id="hide" type="radio" name="mode" value="hide">Hide</label></div></fieldset>
+  <button id="setup" class="full primary">Choose topics to filter</button><button id="settings" class="full">Settings</button><button id="pause" class="full" disabled>Pause on this site</button><p id="status" class="status" role="status"></p>
+  <script src="popup.js"></script>
+</body></html>

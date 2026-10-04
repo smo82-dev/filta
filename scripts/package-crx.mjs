@@ -1,0 +1,20 @@
+import { spawnSync } from 'node:child_process';
+import { access, mkdir, rename, rm } from 'node:fs/promises';
+import { resolve } from 'node:path';
+process.chdir(resolve(import.meta.dirname, '..'));
+if (!process.env.CHROMIUM_PATH) throw new Error('Set CHROMIUM_PATH to the full Chrome/Chromium executable to package a CRX3.');
+await mkdir('.signing', { recursive: true });
+await mkdir('release', { recursive: true });
+const key = resolve('.signing/news-filter-development.pem');
+let existing = false;
+try { await access(key); existing = true; } catch { /* Chrome will create the first development signing key */ }
+const args = ['--headless', '--no-message-box', `--pack-extension=${resolve('dist')}`];
+if (process.getuid?.() === 0) args.push('--no-sandbox');
+if (existing) args.push(`--pack-extension-key=${key}`);
+await rm('dist.crx', { force: true });
+const result = spawnSync(process.env.CHROMIUM_PATH, args, { encoding: 'utf8' });
+if (result.error || result.status !== 0) throw result.error ?? new Error(result.stderr || 'CRX packaging failed');
+await access('dist.crx');
+await rename('dist.crx', 'release/news-filter-0.1.0.crx');
+if (!existing) await rename('dist.pem', key);
+console.log('Created release/news-filter-0.1.0.crx with a retained local development signing key.');

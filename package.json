@@ -1,0 +1,25 @@
+{
+  "name": "local-news-filter",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "A local-first, transparent Manifest V3 news filter",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "npm run typecheck && node scripts/build.mjs",
+    "test": "node scripts/test.mjs",
+    "test:browser": "node tests/browser.test.mjs",
+    "test:extension": "node tests/native.test.mjs",
+    "check": "npm run test && npm run build && npm run test:browser && node scripts/audit.mjs",
+    "package": "npm run build && node scripts/package.mjs",
+    "package:crx": "npm run build && node scripts/package-crx.mjs",
+    "audit:package": "node scripts/audit.mjs",
+    "audit:crx": "node scripts/verify-crx.mjs"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.0",
+    "playwright": "1.62.1",
+    "typescript": "5.9.3"
+  },
+  "engines": { "node": ">=22" }
+}
