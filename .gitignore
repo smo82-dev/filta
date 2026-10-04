@@ -1,0 +1,12 @@
+node_modules/
+dist/
+release/
+tests/.generated/
+test-results/
+.browser-profile/
+*.pem
+*.crx
+.signing/
+
+# Checked-in installation package; private signing keys stay excluded.
+!downloads/*.crx
