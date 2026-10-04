@@ -1,5 +1,6 @@
 import type { DetectedStory, StoryDetector } from '../../core/types';
 import { canonicalUrl } from '../../core/text';
+import { extractMetadata, ownedVisibleContent } from './labels';
 export type Root = Document | HTMLElement;
 const PROTECTED = 'nav, footer, [role="navigation"], [role="banner"], [role="contentinfo"], [role="dialog"], [role="alert"], [role="menu"], form, [data-news-filter-ui], [data-emergency], .article-body, .article__body, [itemprop="articleBody"]';
 const CARD = 'article, li, [class*="story"], [class*="card"], [class*="teaser"], [class*="fc-item"], [data-testid*="card"]';
@@ -51,8 +52,11 @@ export function extractCard(element: HTMLElement, pageUrl: string, detector: str
   const parsed = new URL(url);
   if (/\/(?:login|signin|subscribe|account|privacy|cookie|tag|tags|category|categories)\/?$/i.test(parsed.pathname)) return null;
   if (parsed.pathname === '/' || parsed.pathname.split('/').filter(Boolean).length === 0) return null;
-  const description = clean(element.querySelector('p, [data-testid="card-description"], [class*="summary"], [class*="description"]')?.textContent);
-  const section = clean(element.getAttribute('data-section') || element.querySelector('[rel="tag"], [data-testid="card-topic"], [class*="category"], [class*="section-label"], [class*="kicker"]')?.textContent);
+  const descriptionElement = [...element.querySelectorAll<HTMLElement>('p, [data-testid="card-description"], [class*="summary"], [class*="description"]')]
+    .find(value => ownedVisibleContent(value, element) && !value.querySelector('h1,h2,h3,h4,h5,h6,article,aside,nav,footer,form,button,time,[data-ad-slot],[data-recommendations]'));
+  const description = clean(descriptionElement?.textContent);
+  const metadata = extractMetadata(element, headlineElement);
+  const section = clean(element.getAttribute('data-section') || metadata.section);
   const image = element.querySelector<HTMLImageElement>('img');
   let imageUrl: string | undefined;
   try {
@@ -61,7 +65,8 @@ export function extractCard(element: HTMLElement, pageUrl: string, detector: str
     if (resolved && ['http:', 'https:'].includes(resolved.protocol)) imageUrl = resolved.href;
   } catch { /* an image is optional; never fetch it */ }
   return { handle: element, detector, story: { headline, description: description || undefined, url,
-    imageUrl, section: section || undefined, sourceDomain: new URL(pageUrl).hostname } };
+    imageUrl, section: section || undefined, labels: metadata.labels.length ? metadata.labels : undefined,
+    sourceDomain: new URL(pageUrl).hostname } };
 }
 function candidateFor(heading: HTMLElement, pageUrl: string): HTMLElement | null {
   let parent = heading.parentElement;

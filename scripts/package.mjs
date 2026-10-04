@@ -2,6 +2,7 @@ import { deflateRawSync } from 'node:zlib';
 import { readdir, readFile, writeFile, mkdir } from 'node:fs/promises';
 import { resolve } from 'node:path';
 process.chdir(resolve(import.meta.dirname, '..'));
+const { version } = JSON.parse(await readFile('package.json', 'utf8'));
 // Small ZIP writer: no extra packaging dependency. UTF-8 names, DEFLATE, CRC-32.
 const table = Array.from({ length: 256 }, (_, n) => {
   for (let i = 0; i < 8; i++) n = n & 1 ? 0xedb88320 ^ (n >>> 1) : n >>> 1;
@@ -41,5 +42,5 @@ const centralBytes = Buffer.concat(central), end = Buffer.alloc(22);
 end.writeUInt32LE(0x06054b50, 0); end.writeUInt16LE(entries.length, 8); end.writeUInt16LE(entries.length, 10);
 end.writeUInt32LE(centralBytes.length, 12); end.writeUInt32LE(offset, 16);
 await mkdir('release', { recursive: true });
-await writeFile('release/news-filter-0.1.0.zip', Buffer.concat([...locals, centralBytes, end]));
-console.log('Created release/news-filter-0.1.0.zip (manifest at ZIP root).');
+await writeFile(`release/news-filter-${version}.zip`, Buffer.concat([...locals, centralBytes, end]));
+console.log(`Created release/news-filter-${version}.zip (manifest at ZIP root).`);

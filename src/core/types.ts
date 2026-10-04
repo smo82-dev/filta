@@ -1,16 +1,17 @@
 export const CATEGORY_IDS = [
   'celebrity', 'crime', 'tragedy', 'sexual', 'war', 'disaster', 'politics',
-  'sport', 'entertainment', 'opinion', 'business', 'technology', 'science',
+  'sport', 'entertainment', 'opinion', 'business', 'technology', 'science', 'sponsored',
 ] as const;
 export type CategoryId = typeof CATEGORY_IDS[number];
 export type Action = 'allow' | 'collapse' | 'hide';
-export type Field = 'headline' | 'description' | 'url' | 'section';
+export type Field = 'headline' | 'description' | 'url' | 'section' | 'label';
 export interface Story {
   headline: string;
   description?: string;
   url?: string;
   imageUrl?: string;
   section?: string;
+  labels?: string[];
   sourceDomain: string;
 }
 export interface Signal {

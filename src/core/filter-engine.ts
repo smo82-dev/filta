@@ -7,8 +7,8 @@ export function isEmergencyInformation(story: Story): boolean {
 }
 function keywordSignals(story: Story, words: string[], kind: 'blocked' | 'allowed'): Signal[] {
   const fields = storyFields(story);
-  return words.flatMap(term => (Object.entries(fields) as [Field, string][])
-    .filter(([, text]) => matchesPhrase(text, term))
+  return words.flatMap(term => (Object.entries(fields) as [Field, string[]][])
+    .filter(([, texts]) => texts.some(text => matchesPhrase(text, term)))
     .map(([field]) => ({ field, term, contribution: kind === 'blocked' ? 10 : -10, kind })));
 }
 export function evaluate(story: Story, classification: ClassificationResult, preferences: Preferences,

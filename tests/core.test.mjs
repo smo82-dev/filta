@@ -121,3 +121,54 @@ test('filter pipeline accepts an independent asynchronous classifier implementat
   const result = await engine.process(story('A new discovery is announced'), prefs({ filteredCategories: ['science'] }));
   assert.equal(result.decision.action, 'collapse');
 });
+test('explicit sponsored and paid labels are strong, case-insensitive category signals', async t => {
+  for (const label of ['Sponsored', 'SPONSORED', 'Paid Content', 'Paid Post', 'Partner Content', 'Promoted',
+    'Advertisement', 'Advertorial', 'Brand Partner', 'Branded Content', 'Commercial content', 'Presented by Acme',
+    'Brought to you by Acme', 'In partnership with Acme', 'Native advertising', 'Sponsored by Acme', 'Partner feature']) {
+    await t.test(label, async () => {
+      const item = story('A local project opens this week', { labels: [label] });
+      const classification = await classifier.classify(item);
+      const category = classification.categories.find(x => x.id === 'sponsored');
+      assert.ok(category.score >= category.threshold);
+      assert.ok(classification.signals.some(x => x.category === 'sponsored' && x.field === 'label'));
+      assert.equal(evaluate(item, classification, prefs()).action, 'allow');
+      assert.equal(evaluate(item, classification, prefs({ filteredCategories: ['sponsored'] })).action, 'collapse');
+      assert.equal(evaluate(item, classification, prefs({ filteredCategories: ['sponsored'], mode: 'hide' })).action, 'hide');
+    });
+  }
+});
+test('hide and always-show phrases match labels with existing whole-phrase boundaries', async () => {
+  const item = story('A local project opens this week', { labels: ['SPONSORED', 'Community development'] });
+  const result = await decision(item, prefs({ blockedKeywords: ['sponsored'] }));
+  assert.equal(result.action, 'collapse'); assert.equal(result.signals[0].field, 'label');
+  assert.equal((await decision(item, prefs({ blockedKeywords: ['sponsor'] }))).action, 'allow');
+  assert.equal((await decision(item, prefs({ blockedKeywords: ['sponsored'], allowedKeywords: ['COMMUNITY DEVELOPMENT'], filteredCategories: ['sponsored'], mode: 'hide' }), 'hide')).action, 'allow');
+  assert.equal((await decision(story('A local project opens this week', { labels: ['Paid', 'Content'] }), prefs({ blockedKeywords: ['paid content'], filteredCategories: ['sponsored'] }))).action, 'allow');
+});
+test('labels do not inflate repeated rule evidence or duplicate existing section scores', async () => {
+  assert.equal(await score('A local project opens this week', 'sponsored', { labels: ['Sponsored', 'SPONSORED'] }), 8);
+  assert.equal(await score('A local project opens this week', 'sport', { section: 'Rugby', labels: ['RUGBY'] }), 6);
+  assert.equal(await score('A local project opens this week', 'opinion', { labels: ['Opinion'] }), 6);
+});
+test('sponsored rules use conservative field weights and ignore ambiguous narrative words', async () => {
+  for (const headline of ['Minister promoted after committee reshuffle', 'New advertisement rules discussed in parliament', 'Club sponsored its local players']) {
+    assert.equal((await decision(story(headline), prefs({ filteredCategories: ['sponsored'] }))).action, 'allow');
+  }
+  for (const phrase of ['Paid Content', 'Partner Content', 'Presented by Acme', 'Sponsored by Acme']) {
+    assert.equal((await decision(story(`${phrase}: A local project opens this week`), prefs({ filteredCategories: ['sponsored'] }))).action, 'collapse');
+  }
+  assert.equal((await decision(story('A local project opens this week', { url: 'https://news.example/paid-content/123' }), prefs({ filteredCategories: ['sponsored'] }))).action, 'allow');
+});
+test('sponsored labels preserve every higher-priority exception and old stored choices', async () => {
+  const item = story('A local project opens this week', { labels: ['Sponsored'] });
+  const selected = prefs({ filteredCategories: ['sponsored'], blockedKeywords: ['sponsored'], mode: 'hide' });
+  for (const change of [{ configured: false }, { enabled: false }, { disabledDomains: ['news.example'] },
+    { allowedKeywords: ['sponsored'] }, { alwaysShowUrls: [item.url], blockedUrls: [item.url] }]) {
+    assert.equal((await decision(item, { ...selected, ...change }, 'hide')).action, 'allow');
+  }
+  assert.equal((await decision(item, selected, 'show')).action, 'allow');
+  assert.equal((await decision({ ...item, headline: 'Emergency alert: evacuate now' }, selected, 'hide')).action, 'allow');
+  assert.deepEqual(sanitisePreferences(prefs({ filteredCategories: ['sport', 'sponsored'] })).filteredCategories, ['sport', 'sponsored']);
+  assert.deepEqual(sanitisePreferences(prefs({ filteredCategories: ['sport'] })).filteredCategories, ['sport']);
+  assert.deepEqual(defaultPreferences().filteredCategories, []);
+});

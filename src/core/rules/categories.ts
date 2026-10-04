@@ -1,5 +1,5 @@
-import type { CategoryId } from '../types';
-export interface TermRule { term: string; weight: number }
+import type { CategoryId, Field } from '../types';
+export interface TermRule { term: string; weight: number; fields?: Field[] }
 export interface CombinationRule { terms: string[]; weight: number }
 export interface CategoryDefinition {
   id: CategoryId;
@@ -8,6 +8,7 @@ export interface CategoryDefinition {
   terms: TermRule[];
   combinations?: CombinationRule[];
   contexts?: TermRule[];
+  fieldWeights?: Partial<Record<Field, number>>;
 }
 const terms = (weight: number, ...values: string[]): TermRule[] => values.map(term => ({ term, weight }));
 export const CATEGORIES: CategoryDefinition[] = [
@@ -46,4 +47,15 @@ export const CATEGORIES: CategoryDefinition[] = [
     terms: terms(4, 'technology', 'software', 'artificial intelligence', 'cybersecurity', 'smartphone', 'internet', 'broadband') },
   { id: 'science', name: 'Science', threshold: 4,
     terms: [...terms(4, 'science', 'scientific', 'scientists', 'astronomy', 'space research'), ...terms(2, 'research', 'discovery', 'study')] },
+  { id: 'sponsored', name: 'Sponsored & Paid Content', threshold: 4, fieldWeights: { label: 2 },
+    terms: [
+      ...terms(4, 'paid content', 'paid post', 'partner content', 'brand partner', 'branded content',
+        'commercial content', 'presented by', 'brought to you by', 'in partnership with',
+        'native advertising', 'sponsored by', 'partner feature'),
+      // Ambiguous single words are decisive only in explicit card metadata.
+      ...terms(4, 'sponsored', 'promoted', 'advertisement', 'advertorial')
+        .map(rule => ({ ...rule, fields: ['label', 'section'] as Field[] })),
+      ...terms(1, 'sponsored', 'promoted', 'advertisement', 'advertorial')
+        .map(rule => ({ ...rule, fields: ['headline', 'description', 'url'] as Field[] })),
+    ] },
 ];

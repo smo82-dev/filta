@@ -4,16 +4,18 @@ A working Manifest V3 extension that detects individual news cards, classifies t
 
 The release ZIP contains the built extension; the source ZIP contains this project, tests and a `dist/` folder. No account, backend, AI API, key or subscription is needed. The extension has no runtime dependencies.
 
-## Downloads — version 0.1.0
+## Downloads — version 0.1.1
 
 The extension currently appears in the browser as **News Filter**.
 
 | Download | Use |
 | --- | --- |
-| [Desktop extension ZIP](https://github.com/smo82-dev/filta/raw/refs/heads/main/downloads/news-filter-0.1.0.zip) | Extract, then **Load unpacked** in desktop Chrome or Edge |
-| [Android extension CRX](https://github.com/smo82-dev/filta/raw/refs/heads/main/downloads/news-filter-0.1.0.crx) | Import through Lemur Browser's local extension manager; this is not an APK |
-| [Source ZIP](https://github.com/smo82-dev/filta/raw/refs/heads/main/downloads/news-filter-source-0.1.0.zip) | Source, tests, documentation and a built `dist/` folder |
+| [Desktop extension ZIP](https://github.com/smo82-dev/filta/raw/refs/heads/main/downloads/news-filter-0.1.1.zip) | Extract, then **Load unpacked** in desktop Chrome or Edge |
+| [Android extension CRX](https://github.com/smo82-dev/filta/raw/refs/heads/main/downloads/news-filter-0.1.1.crx) | Import through Lemur Browser's local extension manager; this is not an APK |
+| [Source ZIP](https://github.com/smo82-dev/filta/raw/refs/heads/main/downloads/news-filter-source-0.1.1.zip) | Source, tests, documentation and a built `dist/` folder |
 | [SHA-256 checksums](downloads/SHA256SUMS.txt) | Verify the downloaded packages |
+
+Version 0.1.1 adds sponsored labels and category filtering. Previous 0.1.0 packages remain in `downloads/` for reference. Existing preferences remain intact; no new topic is selected for you. For an unpacked update, replace the extracted extension files, click **Reload** on the browser extensions page and refresh news tabs.
 
 The source code lives at the repository root. The GitHub **Code → Download ZIP** button downloads the repository, rather than just the installable extension. Use the desktop extension ZIP above when installing. Android/Lemur still needs real-device testing; installation details follow below.
 
@@ -21,7 +23,7 @@ The source code lives at the repository root. The GitHub **Code → Download ZIP
 
 ### Chrome desktop
 
-1. Extract `news-filter-0.1.0.zip` into a permanent folder. `manifest.json` should be directly inside that folder.
+1. Extract `news-filter-0.1.1.zip` into a permanent folder. `manifest.json` should be directly inside that folder.
 2. Open `chrome://extensions`, enable **Developer mode**, select **Load unpacked**, and choose that folder.
 3. Open **Settings** from the extension. Choose topics or custom phrases, keep **Collapse** for initial testing, and select **Start filtering**. The settings tab also opens on first installation.
 4. Open or refresh a BBC, The Guardian or RNZ news listing. Some uncertain cards will deliberately remain visible.
@@ -40,13 +42,13 @@ Official installation references: [Chrome development basics](https://developer.
 
 The initial Android target is **Lemur Browser – Extensions**, package `com.lemurbrowser.exts`. Its [developer's Google Play listing](https://play.google.com/store/apps/details?id=com.lemurbrowser.exts) documents Chromium, Chrome/Edge extensions and local CRX import.
 
-Use the supplied `news-filter-0.1.0.crx` in Lemur's extension manager/local import control. Enable developer mode if the installed version requires it, choose the CRX, review the access request, and enable the extension. Menu labels depend on Lemur's version. Open the extension settings, choose your rules, and try the same listing-page workflow. Settings open as a full tab, so they do not depend on a desktop options-page menu.
+Use the supplied `news-filter-0.1.1.crx` in Lemur's extension manager/local import control. Enable developer mode if the installed version requires it, choose the CRX, review the access request, and enable the extension. Menu labels depend on Lemur's version. Open the extension settings, choose your rules, and try the same listing-page workflow. Settings open as a full tab, so they do not depend on a desktop options-page menu.
 
 **No Android browser/device was available for testing here.** Lemur is the target, rather than a verified phone compatibility claim. Check that the installed Lemur release supports MV3 service workers, local CRX imports, popup controls, storage notifications and page messaging. If local import rejects the package, record the browser/version/error; do not assume a desktop ZIP can be loaded by every Android browser. Standard Chrome for Android does not load this extension.
 
 ## Behaviour and precedence
 
-Each story is extracted once, scored and evaluated. The classifier considers its headline, summary, detected section and decoded URL path. Images are recorded as URLs where available, but the extension never fetches or renders them.
+Each story is extracted once, scored and evaluated. The classifier considers its headline, summary, detected section, decoded URL path and short visible story labels or badges. Images are recorded as URLs where available, but the extension never fetches or renders them.
 
 In priority order:
 
@@ -59,7 +61,7 @@ In priority order:
 7. A selected category with a score at or above its threshold applies the chosen mode.
 8. Everything else stays visible.
 
-Custom phrases match whole words, ignore case and normalise punctuation. Enter one phrase per line. They do not match query strings or URL fragments. A deliberate custom hide phrase is stronger than contextual category adjustments; add an always-show phrase to exempt it. Exact URL exceptions ignore query strings and fragments.
+Hide words/topics and Always show words/topics match the headline, summary, section, URL path and detected story labels or badges. For example, adding `sponsored` now matches a separate **SPONSORED** badge. Custom phrases match whole words, ignore case and normalise punctuation. Enter one phrase per line. They do not match query strings or URL fragments. A deliberate custom hide phrase is stronger than contextual category adjustments; add an always-show phrase to exempt it. Exact URL exceptions ignore query strings and fragments.
 
 **Hide** removes the card from the visual layout without deleting its DOM node. Use **View filtered stories** to explain and restore it. Story review also offers **Include visible stories**, **Hide this story** and **Hide stories like this**. Page-only show/hide choices reset on refresh. “Stories like this” opens an editable phrase form; it updates the visible settings lists, rather than silently learning a broad rule. Exact persistent story exceptions can be entered in advanced settings.
 
@@ -75,7 +77,7 @@ Custom phrases match whole words, ignore case and normalise punctuation. Enter o
 | `src/platform/contracts.ts` | Storage, messaging, tabs and permissions interfaces |
 | `src/platform/chromium.ts` | All native Chromium API calls, in one adapter |
 | `src/platform/background.ts` | MV3 worker; serialised local preference writes and page-count badges |
-| `src/content/detectors/` | Generic DOM detector and isolated site adapters |
+| `src/content/detectors/` | Generic DOM detector, shared bounded labels/summaries and isolated site adapters |
 | `src/content/page-scanner.ts` | Incremental scanning, fingerprint cache and observer batching |
 | `src/content/presentation.ts` | Reversible card display, explanations and feedback/review UI |
 | `src/ui/`, `public/` | Touch-friendly popup, settings, styles and manifest |
@@ -96,13 +98,21 @@ Cards keep their original elements and inline display values/priorities. Replace
 
 ## Classification rules
 
-There are 13 seed categories: Celebrity & Gossip, Crime, Death & Tragedy, Sexual Content, War & Conflict, Disaster, Politics, Sport, Entertainment, Opinion, Business, Technology and Science.
+There are 14 seed categories: Celebrity & Gossip, Crime, Death & Tragedy, Sexual Content, War & Conflict, Disaster, Politics, Sport, Entertainment, Opinion, Business, Technology, Science and **Sponsored & Paid Content**.
 
-Term weights are multiplied by field weights: headline **1**, description **0.35**, URL path **0.25**, section **1.5**. Current thresholds are **4**. Each term counts once per field. Headline combinations add confidence, and contextual phrases subtract scores. Scores cannot go below zero. For example, “New technology could prevent road deaths” receives a technology signal and a tragedy exception. An incidental actor mention alone is below the celebrity threshold.
+Term weights are multiplied by field weights: headline **1**, description **0.35**, URL path **0.25**, section **1.5**, labels **1.5** (Sponsored & Paid Content labels **2**). Current thresholds are **4**. Each term counts once per field. Duplicate labels and labels already exposed as the section do not add duplicate evidence. Phrases never match across separate labels. Headline combinations add confidence, and contextual phrases subtract scores. Scores cannot go below zero. For example, “New technology could prevent road deaths” receives a technology signal and a tragedy exception. An incidental actor mention alone is below the celebrity threshold.
 
 This is intentionally limited English rule matching, not natural-language understanding. Scores describe rule evidence, not calibrated probabilities. Current rules do not infer every name, euphemism, inflection, non-English term or subtle context. You can inspect contributions and correct mismatches.
 
 To add or tune rules, edit `categories.ts`: add weighted terms, combinations, negative contexts or a threshold, then add a test. For a new category, also extend `CATEGORY_IDS` in `types.ts`; settings renders the definitions automatically. No categories become selected automatically.
+
+## Sponsored and promotional stories
+
+Select **Sponsored & Paid Content** in settings to filter cards marked Sponsored, Paid Content, Partner Content, Promoted, Advertisement, Advertorial, Brand Partner, Presented by and similar commercial disclosures. This category is off until you choose it. Collapse/Hide and always-show corrections work just like other topics.
+
+Only short metadata belonging to the individual story is extracted. Nearby ads, site-wide banners, navigation, buttons, timestamps, hidden badges and embedded recommendations are excluded. The whole card's text is never passed to phrase matching. Generic extraction is shared by BBC, RNZ, Guardian and other supported/opted-in sites, including Stuff. Unrecognised badge markup is left alone; site layouts can still need a tuned adapter.
+
+Explicit commercial labels are strong rule signals. Ambiguous narrative words such as “promoted” or “advertisement” are weak outside metadata, so ordinary reporting about advertising or a promotion is less likely to be filtered. Labels are identified from bounded metadata classes/data attributes, tag links and appropriate accessible badge names. Label text and marker changes on dynamic cards trigger reevaluation; CSS-only visibility changes without a tracked mutation may need a refresh.
 
 ## Add a site adapter
 
@@ -138,7 +148,7 @@ CHROMIUM_PATH=/path/to/full/chrome npm run test:extension
 
 `test:browser` runs real Chromium DOM, UI, MutationObserver and production JavaScript **with a simulated WebExtension API**. It covers detection fixtures, settings, popup, feedback, persistence, pause/resume, dynamic insertion, virtualised cards, cached classification, original-style restoration, reading-view safety, mobile-width layout and concurrent preference updates. It does not prove native unpacked installation. `test:extension` is a separate native MV3 smoke test using a full Chrome for Testing/Chromium browser, a fresh profile, the real worker/storage and automatic content-script injection. Desktop/headless builds without extension support cannot run that test.
 
-`npm run package` creates `release/news-filter-0.1.0.zip` with `manifest.json` at its root. No build tools are included in the release. To create a local CRX3 for Lemur, use Chrome's **Pack extension** control, or:
+`npm run package` creates `release/news-filter-0.1.1.zip` with `manifest.json` at its root. No build tools are included in the release. To create a local CRX3 for Lemur, use Chrome's **Pack extension** control, or:
 
 ```sh
 CHROMIUM_PATH=/path/to/full/chrome npm run package:crx
@@ -151,11 +161,11 @@ Enable **Debug mode** in advanced settings to outline detected cards. Story revi
 
 ## Validation and remaining manual checks
 
-See `VALIDATION.md` for the exact release checks and their limits. Core tests and Chromium DOM/UI checks pass. TypeScript and production/package checks pass. Static homepage HTML from BBC and The Guardian was also inspected without running website scripts; RNZ could not be fetched in this environment.
+See `VALIDATION.md` for the exact release checks and their limits. 60 core tests and 26 Chromium DOM/UI workflow checks pass. TypeScript, production build and package audits pass. Static homepage HTML from BBC and The Guardian was also inspected without running website scripts; RNZ could not be fetched in this environment.
 
-Native Chrome profile testing was blocked by this execution environment's Unix-socket restrictions. Native Chrome/Edge unpacked installation, Android Lemur CRX installation and real live-site layout/interaction checks remain manual. No Firefox, Safari, iPhone or iPad implementation is included.
+The original native Chrome profile attempt was blocked by the execution environment; current validation results and any remaining native checks are recorded in `VALIDATION.md`. Native Chrome/Edge unpacked installation, Android Lemur CRX installation and real live-site layout/interaction checks remain manual. No Firefox, Safari, iPhone or iPad implementation is included.
 
-Manually check install/setup, each adapter's actual desktop/mobile homepage, category collapse, explanations, restoration, Hide review, phrase precedence, site/global pause, refresh persistence, dynamic loading, normal article reading, consent/login/navigation controls, Android touch/keyboard and background/resume behaviour. Record browser version, OS, page URL and any layout problem. Test a domain opt-in and confirm unrelated websites stay inactive.
+Manually check install/setup, each adapter's actual desktop/mobile homepage, category collapse, explanations, restoration, Hide review, phrase precedence, site/global pause, refresh persistence, dynamic loading, normal article reading, consent/login/navigation controls, Android touch/keyboard and background/resume behaviour. On **Stuff.co.nz**, test **Sport** filtering first, then `sponsored` in **Hide words/topics**, and then **Sponsored & Paid Content** with the custom hide phrase cleared. Remove conflicting always-show phrases before each filtering test; separately confirm an always-show phrase restores matching sponsored stories. Check that nearby ad banners and ordinary articles stay unchanged. Record browser version, OS, page URL and any layout problem. Test a domain opt-in and confirm unrelated websites stay inactive.
 
 ## Future portability
 

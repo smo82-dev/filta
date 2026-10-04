@@ -1,32 +1,41 @@
-# Release validation — News Filter 0.1.0
+# Release validation — News Filter 0.1.1
 
-Validation performed 4 October 2026 (Pacific/Efate).
+Validation performed 4 October 2026. Version 0.1.1 adds shared story-label extraction and **Sponsored & Paid Content**, without changing user rule precedence or default topic choices.
 
 | Check | Result and scope |
 | --- | --- |
-| Portable engine tests | 37 passed, including the 13 category seeds |
-| Chromium DOM/UI suite | 21 workflow checks passed; 22 tests including the enclosing suite |
+| Portable engine tests | 60 passed, including all 14 category seeds, 17 sponsored disclosure variants and existing scoring/precedence/context checks |
+| Chromium DOM/UI suite | 26 workflow checks passed; 28 tests including the two enclosing suites |
 | Browser used for DOM/UI | Headless Chromium 153.0.8010.0, Playwright 1.62.1 |
 | Browser API boundary | Simulated WebExtension APIs; production content, adapter, worker, settings and popup code executed unchanged |
 | TypeScript | Strict typecheck passed |
-| Production build | Passed; four self-contained IIFE bundles, local HTML/CSS, Manifest V3 |
-| Package audit | Passed: files exist, minimal permissions, browser APIs isolated, core has no DOM/browser coupling, no network API/remote asset/eval |
-| Mobile UI | 360 px width inspected; no horizontal overflow; primary controls at least 44 px high |
-| Native Chrome package creation | CRX3 created by Chrome for Testing 154.0.8037.92; signature and embedded ZIP checked |
-| Native unpacked extension execution | Pending: full Chrome profile launch is blocked here by Unix-socket restrictions |
-| Desktop Edge | Manual install/runtime/live-page checks pending |
+| Production build | Passed; four self-contained IIFE bundles, local HTML/CSS, Manifest V3 0.1.1 |
+| Package audit | Passed: referenced files, minimal permissions, browser API isolation, portable core, no network API/remote asset/eval |
+| Mobile UI | Existing 360 px checks pass with the additional category; no horizontal overflow |
+| Desktop ZIP | Versioned package created successfully; all entries match current production dist bytes |
+| Android CRX3 | Signed locally with the existing development key; developer signature, unchanged public-key identity, embedded ZIP and manifest version verified |
+| Native unpacked extension execution | Inconclusive: available Chromium timed out before a service worker appeared; the unchanged 0.1.0 package also produced no worker in a baseline check |
+| Chrome/Edge live pages | Manual installation, native runtime and live-site layout checks pending |
 | Android target | Lemur Browser – Extensions; no Android device/browser tested |
 | Firefox / Safari | Not implemented |
 
-The DOM/UI suite exercises the complete product workflow through a browser API simulator. This is stronger than a UI mock-up, but it is **not** evidence that native extension installation, MV3 background lifecycle or Android browser integration has passed.
+`npm run check` passed: core tests, TypeScript/build, both browser suites and package audit. `npm run package` and `npm run audit:crx` passed. `git diff --check` passed.
 
-Core tests cover scores, field weights, combinations, explicit hide/always-show keywords, category choices, contextual exceptions, emergency preservation, precedence, each action, URL exceptions, validation and asynchronous classifier substitution.
+The available Chromium's native `--pack-extension` attempt did not produce a package and was stopped. The downloadable CRX was instead signed from the production ZIP using Node's local crypto API, the original CRX identity and the same private signing key. No private key is included in the repository or archives. The full Chrome/Chromium CLI packaging script remains available and now times out after 30 seconds if the selected executable cannot pack an extension.
 
-Browser checks cover generic extraction, three adapter fixtures, article-body rejection, incremental scan roots and caching, empty first-run choices, collapse explanations, immediate restoration, refresh persistence, popup counts/modes, Hide review, custom phrases, site/global pause, dynamic insertion, virtualised cards, original display/priority restoration, corrections, debug scores, unrelated-site gating, mobile layout and concurrent rule writes. No browser page errors were observed.
+The DOM/UI suite is evidence for DOM extraction, rule evaluation and user controls; it does not prove native MV3 installation, service-worker lifecycle or Android browser compatibility. The native smoke test includes sponsored-category checks, but its available-browser launch did not reach those assertions. No live Stuff homepage was validated in this environment.
+
+## Sponsored-content regression coverage
+
+Core tests cover case-insensitive Sponsored, Paid Content, Partner Content, Presented by, Sponsored by and all other seed disclosures; label-only hide/always-show phrases; whole-word boundaries; no phrase spanning separate labels; duplicate evidence; conservative narrative/URL weighting; Allow/Collapse/Hide; emergency, pause, temporary overrides and URL exceptions; and preservation of existing topic choices.
+
+A Stuff-style fixture contains separate badges, accessible icon metadata, editorial labels, site-wide and adjacent ad banners, embedded ad/recommendation text, hidden badges, controls/timestamps, oversized metadata, ambiguous collections and an article reading view. Tests verify that unrelated material cannot become labels or summaries, and that uncertain containers are rejected. No story-card boundary safety check was weakened.
+
+The five added Chromium workflow checks cover shared generic extraction, BBC/RNZ/Guardian adapters (including Guardian overlay cards), settings selection and explanations/restoration, phrase/category precedence in both modes, and dynamic insertion plus badge text/class/hidden-state changes on already filtered cards. The original 21 workflow checks also pass, covering Sport and other existing rules, caches, feedback, persistence, pause/resume, reading safety and mobile controls.
 
 ## Static real-site checks
 
-BBC and Guardian homepage HTML was fetched and examined with website scripts and resource requests disabled. Snapshots are not distributed.
+During the original 0.1.0 validation, BBC and Guardian homepage HTML was fetched and examined with website scripts and resource requests disabled. Snapshots are not distributed.
 
 | Source | Result |
 | --- | --- |
@@ -38,18 +47,13 @@ These counts are single-snapshot checks, not coverage guarantees or live-page la
 
 ## Manual acceptance checklist
 
-- Load the extracted release ZIP using **Load unpacked** in actual Chrome and Edge. Check the worker and extensions page for errors.
-- Import the supplied CRX in Lemur on Android. Record browser/engine version, device/OS and any import or MV3 limitation.
-- Start with no categories selected; explicitly select a topic and verify matching cards collapse on each supported live homepage.
-- Expand **Why was this hidden?**, confirm the stated rule, restore a card, and add an always-show correction.
-- Change to **Hide**; open story review from the popup and restore a fully hidden card.
-- Add hide and always-show phrases; verify always-show precedence, refresh persistence and fresh dynamically inserted cards.
-- Pause/resume the current site and globally; confirm navigation, consent controls and deliberately opened articles remain usable.
-- On Android, check popup/settings opening, touch targets, text keyboard, scrolling, background/resume and persistence after restarting the browser.
-- Check fixed-height/grid wrappers for gaps and unrelated sites for unintended activation. Use explicit domain opt-in where generic discovery lacks news context.
+1. In desktop Chrome and Edge, update the unpacked folder using `news-filter-0.1.1.zip`, click **Reload** in the extensions page, and refresh news tabs. Existing preferences should remain; the new category should initially be unselected.
+2. On **Stuff.co.nz**, test **Sport** filtering. Remove conflicting always-show phrases first and opt the domain into detection if the popup says it is not enabled.
+3. Test `sponsored` in **Hide words/topics** with the sponsored category unselected. A card's separate Sponsored badge should cause filtering even when the headline, summary and URL do not contain the word.
+4. Clear that custom hide phrase, select **Sponsored & Paid Content**, and check Paid Content, Partner Content, Presented by and Sponsored by cards. Nearby site-wide ad banners, normal stories and deliberately opened article bodies must remain unchanged.
+5. Check **Why was this hidden?**, the label signal, **Show story**, Collapse/Hide and hidden-story review. Add an always-show phrase matching a headline or label and confirm it overrides sponsored filtering.
+6. Refresh, pause/resume, and scroll/load more stories. Check newly inserted and changed cards. CSS-only label visibility changes without a tracked mutation may need a refresh.
+7. Repeat representative checks on RNZ, BBC and Guardian, including navigation, consent/login controls, mobile widths and fixed-height layouts. Record browser version, OS, page URL and badge markup for any missed card.
+8. Import the same-identity 0.1.1 CRX in Lemur on Android and check updates, touch controls, keyboard, background/resume and persistence. Android remains unverified.
 
-The source includes `npm run test:extension` for an automated native MV3 installation/storage/injection smoke test on a machine able to launch a full extension-capable Chrome for Testing/Chromium build.
-
-## GitHub import verification
-
-Before publishing the source and downloads to `smo82-dev/filta`, the 37 core tests, strict TypeScript check, production build, package audit and CRX signature audit were rerun successfully. Each desktop ZIP entry and each embedded CRX entry was compared with the current production `dist/` files. The source snapshot excludes dependencies, local browser profiles and all private signing keys. Browser DOM/UI results above are from the original MVP validation; that suite was not rerun for this documentation/import-only change because the downloaded browser executable was no longer present. Native desktop and Android checks remain pending.
+Use `npm run test:extension` with a full extension-capable Chrome for Testing/Chromium executable on a machine that supports native extension loading. The current headless runtime's lack of a worker was also observed with the previous release and is not a demonstrated sponsored-feature regression.

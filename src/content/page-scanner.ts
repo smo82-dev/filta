@@ -57,7 +57,13 @@ export class PageScanner {
         const changed = mutation.type !== 'childList' || [...mutation.addedNodes, ...mutation.removedNodes].some(node =>
           !(node instanceof HTMLElement && node.hasAttribute('data-news-filter-ui')));
         if (!changed) continue;
-        const card = target.closest<HTMLElement>('article, li, [class*="story"], [class*="card"], [class*="teaser"]');
+        // A card-label wrapper can itself match the card selector. Prefer the
+        // known complete card when its badge changes, keeping scans incremental.
+        let tracked: HTMLElement | undefined;
+        for (let ancestor: HTMLElement | null = target; ancestor; ancestor = ancestor.parentElement) {
+          if (this.records.has(ancestor)) { tracked = ancestor; break; }
+        }
+        const card = tracked ?? target.closest<HTMLElement>('article, li, [class*="story"], [class*="card"], [class*="teaser"]');
         if (card || mutation.type !== 'childList') this.schedule(card ?? target);
         else for (const node of [...mutation.addedNodes, ...mutation.removedNodes]) {
           if (node instanceof HTMLElement && !node.hasAttribute('data-news-filter-ui')) this.schedule(node);
@@ -67,7 +73,8 @@ export class PageScanner {
     });
     this.observer.observe(document.body ?? document.documentElement, {
       childList: true, subtree: true, characterData: true, attributes: true,
-      attributeFilter: ['href', 'src', 'data-section'],
+      attributeFilter: ['href', 'src', 'data-section', 'data-label', 'data-kicker', 'data-topic', 'data-category',
+        'data-sponsored', 'data-partner', 'data-testid', 'data-component', 'rel', 'aria-label', 'aria-hidden', 'hidden', 'class'],
     });
     window.addEventListener('popstate', this.navigate);
     this.schedule(document);

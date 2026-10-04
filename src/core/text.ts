@@ -6,10 +6,13 @@ export function matchesPhrase(text: string, phrase: string): boolean {
   const term = normalise(phrase);
   return !!term && (` ${normalise(text)} `).includes(` ${term} `);
 }
-export function storyFields(story: Story): Record<Field, string> {
+export function storyFields(story: Story): Record<Field, string[]> {
   let url = story.url ?? '';
   try { url = decodeURIComponent(new URL(url).pathname); } catch { /* malformed URLs stay plain text */ }
-  return { headline: story.headline, description: story.description ?? '', section: story.section ?? '', url };
+  // Keep labels separate so phrases cannot be fabricated across badge boundaries.
+  // A label already exposed as the section must not double its existing score.
+  const labels = [...new Set(story.labels ?? [])].filter(label => normalise(label) !== normalise(story.section ?? ''));
+  return { headline: [story.headline], description: [story.description ?? ''], section: [story.section ?? ''], url: [url], label: labels };
 }
 export function canonicalUrl(value: string): string {
   try {

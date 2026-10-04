@@ -1,7 +1,7 @@
 import type { ClassificationResult, Field, Story, StoryClassifier, Signal } from './types';
 import { CATEGORIES, type CategoryDefinition } from './rules/categories';
 import { matchesPhrase, storyFields } from './text';
-const FIELD_WEIGHTS: Record<Field, number> = { headline: 1, description: 0.35, url: 0.25, section: 1.5 };
+const FIELD_WEIGHTS: Record<Field, number> = { headline: 1, description: 0.35, url: 0.25, section: 1.5, label: 1.5 };
 export class RuleBasedClassifier implements StoryClassifier {
   constructor(private readonly definitions: CategoryDefinition[] = CATEGORIES) {}
   async classify(story: Story): Promise<ClassificationResult> {
@@ -9,17 +9,18 @@ export class RuleBasedClassifier implements StoryClassifier {
     const signals: Signal[] = [];
     const categories = this.definitions.map(category => {
       let score = 0;
-      for (const [field, text] of Object.entries(fields) as [Field, string][]) {
+      for (const [field, texts] of Object.entries(fields) as [Field, string[]][]) {
         for (const rule of category.terms) {
-          if (!matchesPhrase(text, rule.term)) continue;
-          const contribution = rule.weight * FIELD_WEIGHTS[field];
+          if (rule.fields && !rule.fields.includes(field)) continue;
+          if (!texts.some(text => matchesPhrase(text, rule.term))) continue;
+          const contribution = rule.weight * (category.fieldWeights?.[field] ?? FIELD_WEIGHTS[field]);
           score += contribution;
           signals.push({ category: category.id, field, term: rule.term, contribution, kind: 'term' });
         }
         // Context operates on meaningful text; a URL slug cannot neutralise a headline.
         if (field === 'headline' || field === 'description') {
           for (const rule of category.contexts ?? []) {
-            if (!matchesPhrase(text, rule.term)) continue;
+            if (!texts.some(text => matchesPhrase(text, rule.term))) continue;
             const contribution = rule.weight * (field === 'headline' ? 1 : 0.5);
             score += contribution;
             signals.push({ category: category.id, field, term: rule.term, contribution, kind: 'context' });

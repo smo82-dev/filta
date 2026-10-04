@@ -1,3 +1,6 @@
-f5b1dfcc849f9677b0b1ae47575ed7f87874f824ddacd81cee1e01ae45b1cea4  news-filter-0.1.0.zip
 c31471bf769d5dbf1f1ad6bba00f086febc157797f60f6ae92fc032da7c4ebde  news-filter-0.1.0.crx
+f5b1dfcc849f9677b0b1ae47575ed7f87874f824ddacd81cee1e01ae45b1cea4  news-filter-0.1.0.zip
+be7ef45581340ce4111d4e272ffe8a2b3dfd5c1bc5ffcac29da30f9d93fa43de  news-filter-0.1.1.crx
+ffd99bcecd12774a09f49c12b2f9ebe2d1d812adf4299e70999107b57b89dfb4  news-filter-0.1.1.zip
 0ad6edc59ead939eb462a589fb8b9ae8eac2775fc3890221d0615875c877bd21  news-filter-source-0.1.0.zip
+912c620557218caa110d848bdd221067a76b04a46ae6d446af454e55ab2166fc  news-filter-source-0.1.1.zip

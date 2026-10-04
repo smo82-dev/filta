@@ -28,5 +28,15 @@ test('native MV3 unpacked installation, service worker, local storage and conten
     await news.locator('#crime').waitFor({ state: 'visible' });
     await news.reload(); await news.locator('#crime').waitFor({ state: 'hidden' });
     assert.ok((await worker.evaluate(() => chrome.storage.local.get('newsFilterPreferences'))).newsFilterPreferences.filteredCategories.includes('crime'));
+    await settings.locator('input[value=sponsored]').check(); await settings.locator('#save').click();
+    const sponsored = await readFile(resolve(root, 'tests/fixtures/sponsored.html'));
+    await context.route('http://news-fixture.test/sponsored', route => route.fulfill({ contentType: 'text/html', body: sponsored }));
+    await news.goto('http://news-fixture.test/sponsored');
+    await news.locator('#sponsored').waitFor({ state: 'hidden' });
+    await news.locator('#nested-ad').waitFor({ state: 'visible' });
+    await news.locator('#clean').waitFor({ state: 'visible' });
+    const explanation = news.locator('#sponsored + [data-news-filter-ui=card]').locator('details');
+    assert.match(await explanation.textContent(), /Sponsored & Paid Content/);
+    assert.match(await explanation.textContent(), /sponsored.*label/i);
   } finally { await context?.close(); await rm(profile, { recursive: true, force: true }); }
 });

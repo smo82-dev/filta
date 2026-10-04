@@ -17,7 +17,8 @@ export class WebExtensionHarness {
       await route.fulfill({ contentType, body: await readFile(resolve(this.root, 'dist', path)) });
     });
     await this.context.route('http://news-fixture.test/**', async route => {
-      const file = new URL(route.request().url()).pathname.includes('reading') ? 'reading.html' : 'news.html';
+      const path = new URL(route.request().url()).pathname;
+      const file = path.includes('reading') ? 'reading.html' : path.includes('sponsored') ? 'sponsored.html' : 'news.html';
       await route.fulfill({ contentType: 'text/html', body: await readFile(resolve(this.root, 'tests/fixtures', file)) });
     });
     await this.context.exposeBinding('nfNative', async ({ page }, request) => {
