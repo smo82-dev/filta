@@ -1,12 +1,12 @@
 {
   "manifest_version": 3,
-  "name": "News Filter — Local & Private",
-  "version": "0.1.1",
+  "name": "FILTA — Take Control of Your News Feed",
+  "version": "0.2.0",
   "description": "Filter news cards using your own topics and phrases. Local rules, clear explanations, and easy story restoration.",
   "minimum_chrome_version": "110",
   "permissions": ["storage", "activeTab"],
   "background": { "service_worker": "background.js" },
-  "action": { "default_popup": "popup.html", "default_title": "News Filter" },
+  "action": { "default_popup": "popup.html", "default_title": "FILTA" },
   "options_ui": { "page": "settings.html", "open_in_tab": true },
   "content_scripts": [{
     "matches": ["http://*/*", "https://*/*"],
