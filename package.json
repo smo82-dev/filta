@@ -1,6 +1,6 @@
 {
   "name": "local-news-filter",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "description": "A local-first, transparent Manifest V3 news filter",
