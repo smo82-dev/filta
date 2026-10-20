@@ -19,6 +19,23 @@ test('every starter category has a working weighted seed signal', async t => {
     assert.ok(category.score >= category.threshold);
   });
 });
+test('FILTA sport detection covers major US, UK, Australian and NZ sporting language', async () => {
+  for (const headline of [
+    'NFL quarterback prepares for Super Bowl clash',
+    'NBA playoffs deliver a dramatic final',
+    'NRL Panthers name squad for next match',
+    'AFL finals series begins in Melbourne',
+    'All Blacks name squad for weekend clash',
+    'Verstappen leads Formula 1 qualifying lap',
+    'Black Caps take three wickets in first innings',
+    'Golf championship concludes in dramatic fashion'
+  ]) {
+    const result = await decision(story(headline), prefs({ filteredCategories: ['sport'] }));
+    assert.equal(result.action, 'collapse', headline);
+  }
+  const unrelated = await decision(story('New stadium community housing proposal announced'), prefs({ filteredCategories: ['sport'] }));
+  assert.equal(unrelated.action, 'allow');
+});
 test('headline, description, section and URL have different weights', async () => {
   assert.equal(await score('Technology transforms villages', 'technology'), 4);
   assert.equal(await score('A new development for villagers', 'technology', { description: 'technology' }), 1.4);
