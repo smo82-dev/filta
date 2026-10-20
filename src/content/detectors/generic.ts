@@ -88,7 +88,7 @@ export function deduplicate(cards: DetectedStory<HTMLElement>[]): DetectedStory<
 }
 export class GenericDetector implements StoryDetector<HTMLElement, Root> {
   detect(root: Root, pageUrl: string): DetectedStory<HTMLElement>[] {
-    const candidates = new Set(nodes(root, CARD));
+    const candidates = new Set(nodes(root, CARD).filter(element => element.tagName !== 'LI'));
     for (const heading of nodes(root, HEADINGS)) {
       const candidate = candidateFor(heading, pageUrl);
       if (candidate) candidates.add(candidate);
