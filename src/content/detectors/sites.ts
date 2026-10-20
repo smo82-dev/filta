@@ -1,3 +1,4 @@
+import { structuredSections } from './structured';
 import type { DetectedStory, StoryDetector } from '../../core/types';
 import { domainMatches } from '../../core/text';
 import { deduplicate, extractCard, nodes, type Root } from './generic';
@@ -10,6 +11,7 @@ class SelectorAdapter implements SiteAdapter {
   constructor(readonly id: string, readonly domains: string[], private readonly selector: string) {}
   matches(host: string) { return this.domains.some(domain => domainMatches(host, domain)); }
   detect(root: Root, pageUrl: string): DetectedStory<HTMLElement>[] {
+    structuredSections(root.ownerDocument ?? root as Document, true);
     return deduplicate(nodes(root, this.selector).map(element => extractCard(element, pageUrl, this.id))
       .filter((value): value is DetectedStory<HTMLElement> => !!value));
   }
@@ -25,7 +27,9 @@ class GuardianAdapter extends SelectorAdapter {
       if (!card || card.querySelectorAll('h2,h3,h4').length !== 1) continue;
       const links = card.querySelectorAll<HTMLAnchorElement>('a[href][data-link-name*="card-@"][data-link-name*="media-picture"]');
       if (links.length !== 1) continue;
-      const story = extractCard(card, pageUrl, this.id, { headline, link: links[0]! });
+      const text = headline.querySelector<HTMLElement>('.headline-text') ?? headline;
+      const kicker = text !== headline ? headline.firstElementChild?.textContent?.trim() : undefined;
+      const story = extractCard(card, pageUrl, this.id, { headline: text, link: links[0]!, section: kicker && kicker.length <= 96 ? kicker : undefined });
       if (story) cards.push(story);
     }
     return deduplicate(cards);

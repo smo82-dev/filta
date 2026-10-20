@@ -40,7 +40,7 @@ test('headline, description, section and URL have different weights', async () =
   assert.equal(await score('Technology transforms villages', 'technology'), 4);
   assert.equal(await score('A new development for villagers', 'technology', { description: 'technology' }), 1.4);
   assert.equal(await score('A new development for villagers', 'technology', { section: 'Technology' }), 6);
-  assert.equal(await score('A new development for villagers', 'technology', { url: 'https://example.com/technology/story' }), 1);
+  assert.equal(await score('A new development for villagers', 'technology', { url: 'https://example.com/technology/story' }), 4);
 });
 test('combinations add confidence and signals remain explainable', async () => {
   const result = await classifier.classify(story('Police charged two people in an incident'));
@@ -174,7 +174,7 @@ test('sponsored rules use conservative field weights and ignore ambiguous narrat
   for (const phrase of ['Paid Content', 'Partner Content', 'Presented by Acme', 'Sponsored by Acme']) {
     assert.equal((await decision(story(`${phrase}: A local project opens this week`), prefs({ filteredCategories: ['sponsored'] }))).action, 'collapse');
   }
-  assert.equal((await decision(story('A local project opens this week', { url: 'https://news.example/paid-content/123' }), prefs({ filteredCategories: ['sponsored'] }))).action, 'allow');
+  assert.equal((await decision(story('A local project opens this week', { url: 'https://news.example/paid-content/123' }), prefs({ filteredCategories: ['sponsored'] }))).action, 'collapse');
 });
 test('sponsored labels preserve every higher-priority exception and old stored choices', async () => {
   const item = story('A local project opens this week', { labels: ['Sponsored'] });

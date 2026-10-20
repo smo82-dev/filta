@@ -4,7 +4,7 @@ import { defaultPreferences } from '../core/preferences';
 import { domainMatches } from '../core/text';
 import type { Preferences, StoryClassifier, DetectedStory } from '../core/types';
 import type { Platform, PageStatus } from '../platform/contracts';
-import { GenericDetector, deduplicate, type Root } from './detectors/generic';
+import { GenericDetector, deduplicate, CARD, type Root } from './detectors/generic';
 import { SITE_ADAPTERS } from './detectors/sites';
 import { eligiblePage } from './page-eligibility';
 import { CardRenderer, StoryReview, type StoryRecord, type Feedback } from './presentation';
@@ -54,6 +54,8 @@ export class PageScanner {
       for (const mutation of mutations) {
         const target = mutation.target instanceof HTMLElement ? mutation.target : mutation.target.parentElement;
         if (!target || target.closest('[data-news-filter-ui]')) continue;
+        if (mutation.type === 'attributes' && mutation.attributeName === 'style' && this.records.has(target)) continue;
+        if (target.closest('head, script[type="application/ld+json"]')) { this.schedule(document); continue; }
         const changed = mutation.type !== 'childList' || [...mutation.addedNodes, ...mutation.removedNodes].some(node =>
           !(node instanceof HTMLElement && node.hasAttribute('data-news-filter-ui')));
         if (!changed) continue;
@@ -63,7 +65,7 @@ export class PageScanner {
         for (let ancestor: HTMLElement | null = target; ancestor; ancestor = ancestor.parentElement) {
           if (this.records.has(ancestor)) { tracked = ancestor; break; }
         }
-        const card = tracked ?? target.closest<HTMLElement>('article, li, [class*="story"], [class*="card"], [class*="teaser"]');
+        const card = tracked ?? target.closest<HTMLElement>(CARD);
         if (card || mutation.type !== 'childList') this.schedule(card ?? target);
         else for (const node of [...mutation.addedNodes, ...mutation.removedNodes]) {
           if (node instanceof HTMLElement && !node.hasAttribute('data-news-filter-ui')) this.schedule(node);
@@ -71,12 +73,16 @@ export class PageScanner {
         }
       }
     });
-    this.observer.observe(document.body ?? document.documentElement, {
+    this.observer.observe(document.documentElement, {
       childList: true, subtree: true, characterData: true, attributes: true,
       attributeFilter: ['href', 'src', 'data-section', 'data-label', 'data-kicker', 'data-topic', 'data-category',
-        'data-sponsored', 'data-partner', 'data-testid', 'data-component', 'rel', 'aria-label', 'aria-hidden', 'hidden', 'class'],
+        'data-sponsored', 'data-partner', 'itemprop', 'content', 'itemtype', 'data-testid', 'data-component', 'rel', 'aria-label', 'aria-hidden', 'hidden', 'class', 'style'],
     });
     window.addEventListener('popstate', this.navigate);
+    const navigation = (window as Window & { navigation?: EventTarget }).navigation;
+    const routeChanged = () => { if (location.href !== this.pageUrl) this.navigate(); };
+    navigation?.addEventListener('currententrychange', routeChanged);
+    this.unsubscribers.push(() => navigation?.removeEventListener('currententrychange', routeChanged));
     this.schedule(document);
     this.report();
   }
@@ -93,7 +99,12 @@ export class PageScanner {
   status(): PageStatus {
     const records = this.liveRecords();
     return { domain: location.hostname, detected: records.length, filtered: records.filter(x => x.decision.action !== 'allow').length,
-      active: this.active(), eligible: eligiblePage(document, this.pageUrl, this.preferences), configured: this.preferences.configured };
+      active: this.active(), eligible: eligiblePage(document, this.pageUrl, this.preferences), configured: this.preferences.configured,
+      ...(this.preferences.debug ? { diagnostics: { discovery: this.generic.diagnostics,
+        noTopicEvidence: records.filter(record => !record.classification.categories.some(category => category.score >= category.threshold)).length,
+        selectedTopicMatches: records.filter(record => record.classification.categories.some(category => this.preferences.filteredCategories.includes(category.id) && category.score >= category.threshold)).length,
+        decisions: { allow: records.filter(record => record.decision.action === 'allow').length, collapse: records.filter(record => record.decision.action === 'collapse').length, hide: records.filter(record => record.decision.action === 'hide').length },
+      } } : {}) };
   }
   private liveRecords() { return [...this.records.values()].filter(record => record.element.isConnected); }
   private update(prefs: Preferences) {
@@ -119,7 +130,8 @@ export class PageScanner {
     try {
       while (this.pending.size) {
         const roots = [...this.pending]; this.pending.clear();
-        for (const [element] of this.records) if (!element.isConnected) { this.renderer.restore(element); this.records.delete(element); }
+        let changedRecords = false;
+        for (const [element] of this.records) if (!element.isConnected) { this.renderer.restore(element); this.records.delete(element); changedRecords = true; }
         if (!this.active() || !eligiblePage(document, this.pageUrl, this.preferences)) continue;
         const generation = this.generation;
         const adapter = SITE_ADAPTERS.find(value => value.matches(location.hostname));
@@ -134,13 +146,14 @@ export class PageScanner {
           if (previous?.fingerprint === fingerprint) continue;
           // Remove narrower old records if hydration introduced a complete outer card.
           for (const [element] of this.records) if (element !== candidate.handle && candidate.handle.contains(element)) {
-            this.renderer.restore(element); this.records.delete(element);
+            this.renderer.restore(element); this.records.delete(element); changedRecords = true;
           }
           if (previous) this.renderer.restore(previous.element);
           const classification = await this.classifier.classify(candidate.story);
           if (generation !== this.generation || !candidate.handle.isConnected) continue;
           const record: StoryRecord = { element: candidate.handle, story: candidate.story, detector: candidate.detector,
-            fingerprint, classification, decision: { action: 'allow', reason: '', categories: [], signals: [] } };
+            fingerprint, classification, override: previous?.story.url === candidate.story.url ? previous?.override : undefined, decision: { action: 'allow', reason: '', categories: [], signals: [] } };
+          changedRecords = true;
           this.records.set(candidate.handle, record); this.apply(record);
           if (++processed % 20 === 0) await new Promise<void>(resolve => setTimeout(resolve, 0));
         }
@@ -148,17 +161,17 @@ export class PageScanner {
         for (const [element, record] of this.records) {
           if (!roots.some(root => root === document || root === element || root.contains(element))) continue;
           if (!batch.some(card => card.handle === element)) {
-            this.renderer.restore(element); element.removeAttribute('data-news-filter-detected'); this.records.delete(record.element);
+            this.renderer.restore(element); element.removeAttribute('data-news-filter-detected'); this.records.delete(record.element); changedRecords = true;
           }
         }
-        if (this.review.isOpen()) this.review.open();
+        if (changedRecords && this.review.isOpen()) this.review.open();
         this.report();
-        if (this.preferences.debug) console.debug('[News Filter]', { candidates: batch.length, classified: processed, cached: batch.length - processed, ...this.status() });
+        if (this.preferences.debug) console.debug('[FILTA]', { candidates: batch.length, classified: processed, cached: batch.length - processed, ...this.status() });
       }
     } catch (error) {
       // Fail open: never leave cards hidden if a scanning stage fails unexpectedly.
       this.renderer.clear(); this.records.clear(); this.report();
-      if (this.preferences.debug) console.warn('[News Filter] scanning stopped safely', error);
+      if (this.preferences.debug) console.warn('[FILTA] scanning stopped safely', error);
     } finally {
       this.draining = false;
       if (this.pending.size) this.schedule(document);

@@ -8,7 +8,7 @@
     "typecheck": "tsc --noEmit",
     "build": "npm run typecheck && node scripts/build.mjs",
     "test": "node scripts/test.mjs",
-    "test:browser": "node --test tests/browser.test.mjs tests/sponsored.test.mjs",
+    "test:browser": "node --test tests/browser.test.mjs tests/sponsored.test.mjs tests/reliability-browser.test.mjs tests/publisher-fixtures.test.mjs",
     "test:extension": "node tests/native.test.mjs",
     "check": "npm run test && npm run build && npm run test:browser && node scripts/audit.mjs",
     "package": "npm run build && node scripts/package.mjs",
@@ -17,9 +17,11 @@
     "audit:crx": "node scripts/verify-crx.mjs"
   },
   "devDependencies": {
-    "esbuild": "0.28.0",
+    "esbuild": "0.28.2",
     "playwright": "1.62.1",
     "typescript": "5.9.3"
   },
-  "engines": { "node": ">=22" }
+  "engines": {
+    "node": ">=22"
+  }
 }

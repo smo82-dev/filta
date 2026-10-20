@@ -14,5 +14,5 @@ await build({ stdin: { contents: "export * from './src/content/detectors/generic
   bundle: true, outfile: 'tests/.generated/detectors.js', platform: 'browser', format: 'iife', globalName: 'NFDetectors' });
 await build({ stdin: { contents: "export * from './src/content/page-scanner';", resolveDir: process.cwd(), loader: 'ts' },
   bundle: true, outfile: 'tests/.generated/scanner.js', platform: 'browser', format: 'iife', globalName: 'NFScanner' });
-const result = spawnSync(process.execPath, ['--test', 'tests/core.test.mjs'], { stdio: 'inherit' });
+const result = spawnSync(process.execPath, ['--test', 'tests/core.test.mjs', 'tests/reliability-core.test.mjs'], { stdio: 'inherit' });
 process.exitCode = result.status ?? 1;

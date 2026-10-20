@@ -1,11 +1,13 @@
 import type { DetectedStory, StoryDetector } from '../../core/types';
-import { canonicalUrl } from '../../core/text';
+import { canonicalUrl, normalise } from '../../core/text';
 import { extractMetadata, ownedVisibleContent } from './labels';
+import { structuredSections } from './structured';
 export type Root = Document | HTMLElement;
 const PROTECTED = 'nav, footer, [role="navigation"], [role="banner"], [role="contentinfo"], [role="dialog"], [role="alert"], [role="menu"], form, [data-news-filter-ui], [data-emergency], .article-body, .article__body, [itemprop="articleBody"]';
-const CARD = 'article, li, [class*="story"], [class*="card"], [class*="teaser"], [class*="fc-item"], [data-testid*="card"], [data-testid*="story"], [data-testid*="article"], [data-type="article"], [itemtype*="NewsArticle"]';
-const HEADINGS = 'h2, h3, h4, h5, [role="heading"], [data-testid*="headline"], [class*="headline"], [class*="heading"], [class*="title"]';
+export const CARD = 'article, li, [class*="story"], [class*="card"], [class*="teaser"], [class*="fc-item"], [data-testid*="card"], [data-testid*="story"], [data-testid*="article"], [data-type="article"], [itemtype*="NewsArticle"]';
+const HEADINGS = 'h2, h3, h4, h5, h6, [role="heading"], [itemprop="headline"], [data-testid*="headline"], [class*="headline"], [class*="heading"], [class*="title"]';
 const clean = (value: string | null | undefined) => (value ?? '').replace(/\s+/g, ' ').trim();
+const plausible = (value: string) => !/<[a-z][^>]*>/i.test(value) && value.length >= 12 && value.length <= 320 && /\s/.test(value);
 export function nodes(root: Root, selector: string): HTMLElement[] {
   const all = [...root.querySelectorAll<HTMLElement>(selector)];
   if (root instanceof HTMLElement && root.matches(selector)) all.unshift(root);
@@ -15,48 +17,74 @@ export function headingLink(heading: HTMLElement): HTMLAnchorElement | null {
   return heading.closest<HTMLAnchorElement>('a[href]') ?? heading.querySelector<HTMLAnchorElement>('a[href]');
 }
 function linkUrl(link: HTMLAnchorElement, pageUrl: string): string {
-  try { return canonicalUrl(new URL(link.getAttribute('href') ?? '', pageUrl).href); }
-  catch { return ''; }
+  const href = link.getAttribute('href')?.trim();
+  if (!href || href.startsWith('#')) return '';
+  try { return canonicalUrl(new URL(href, pageUrl).href); } catch { return ''; }
+}
+function headlineAnchor(link: HTMLAnchorElement): boolean {
+  let text = clean(link.textContent);
+  for (const caption of link.querySelectorAll('figcaption, [class*="caption" i], [class*="credit" i]')) text = text.replace(clean(caption.textContent), '').trim();
+  return !link.matches('[rel~="tag"], [download]') && !link.closest('p, time, button, [data-news-filter-ui], [class*="byline"], [class*="category"], [class*="section-label"]') &&
+    plausible(text) && !/^(?:read more|view all|see all|subscribe|sign in|log in)\b/i.test(clean(link.textContent));
 }
 function storyLinks(element: HTMLElement): HTMLAnchorElement[] {
-  return [...new Set(nodes(element, HEADINGS).map(headingLink).filter((x): x is HTMLAnchorElement => !!x))];
+  return [...new Set([
+    ...nodes(element, HEADINGS).map(headingLink).filter((x): x is HTMLAnchorElement => !!x),
+    ...nodes(element, 'a[href]').filter((x): x is HTMLAnchorElement => x instanceof HTMLAnchorElement && headlineAnchor(x)),
+  ])].filter(link => (link === element || element.contains(link)) && !link.closest('[data-news-filter-ui]'));
 }
 export function protectedElement(element: HTMLElement): boolean {
   if (element.closest(PROTECTED)) return true;
+  if (element.closest('[itemtype$="/Person"], [itemprop="author"]')) return true;
   const header = element.closest('header');
   if (header && !header.closest(CARD)) return true;
   for (let ancestor: HTMLElement | null = element; ancestor && ancestor !== document.body; ancestor = ancestor.parentElement) {
     if (/(?:^|[-_\s])(cookie|consent|privacy|advert|advertisement|navigation|emergency|alert)(?:$|[-_\s])/i
-      .test(`${ancestor.className} ${ancestor.id}`)) return true;
+      .test(`${ancestor.className} ${ancestor.id}`.replace(/([a-z])([A-Z])/g, '$1 $2'))) return true;
+    if (/(?:^|[-_\s])(byline|promotional|toolbar|menu)(?:$|[-_\s])/i.test(`${ancestor.className} ${ancestor.id}`.replace(/([a-z])([A-Z])/g, '$1 $2'))) return true;
   }
   return false;
 }
-export interface ExtractionHints { headline: HTMLElement; link: HTMLAnchorElement }
-export function extractCard(element: HTMLElement, pageUrl: string, detector: string, hints?: ExtractionHints): DetectedStory<HTMLElement> | null {
-  if (!element.isConnected || protectedElement(element)) return null;
-  if (['BODY', 'MAIN', 'SECTION', 'HTML', 'HEADER', 'FOOTER', 'NAV'].includes(element.tagName)) return null;
+export interface DiscoveryDiagnostics { candidates: number; detected: number; rejected: Record<string, number> }
+export interface ExtractionHints { headline: HTMLElement; link: HTMLAnchorElement; section?: string }
+export function extractCard(element: HTMLElement, pageUrl: string, detector: string, hints?: ExtractionHints, rejected?: (reason: string) => void): DetectedStory<HTMLElement> | null {
+  const reject = (reason: string) => { rejected?.(reason); return null; };
+  if (!element.isConnected || protectedElement(element) || element.matches(HEADINGS)) return reject('protected-or-fragment');
+  if (['BODY', 'MAIN', 'SECTION', 'HTML', 'HEADER', 'FOOTER', 'NAV', 'P'].includes(element.tagName)) return reject('page-container');
   // A reading view or a collection of multiple stories is never a card.
-  if (element.querySelector('h1, [itemprop="articleBody"], .article-body, .article__body')) return null;
+  if (element.querySelector('h1, [itemprop="articleBody"], .article-body, .article__body')) return reject('reading-view');
+  if ([...element.querySelectorAll<HTMLElement>('article, li')].some(child =>
+    nodes(child, HEADINGS).some(heading => !!headingLink(heading)) || nodes(child, 'a[href]').some(link => link instanceof HTMLAnchorElement && headlineAnchor(link)))) return reject('nested-story-boundary');
   const links = [...new Set([...(hints ? [hints.link] : []), ...storyLinks(element)])];
   const urls = new Set(links.map(link => linkUrl(link, pageUrl)).filter(Boolean));
-  if (urls.size !== 1) return null;
-  const link = links.find(value => clean(value.textContent).length >= 12 || value === hints?.link);
-  if (!link) return null;
-  const headlineElement = hints?.headline ?? nodes(element, HEADINGS).find(heading => headingLink(heading) === link);
+  if (urls.size > 1) return reject('multiple-stories');
+  let link = links.find(value => plausible(clean(value.textContent)) || value === hints?.link);
+  // Overlay cards may keep headline text outside an empty, accessible story link.
+  const headings = nodes(element, HEADINGS).filter(value => plausible(clean(value.textContent)) && !value.querySelector(HEADINGS));
+  if (!link && headings.length === 1) {
+    const overlays = nodes(element, 'a[href]').filter((value): value is HTMLAnchorElement => value instanceof HTMLAnchorElement &&
+      !value.matches('[rel~="tag"]') && !value.closest('p') && !!linkUrl(value, pageUrl));
+    if (new Set(overlays.map(value => linkUrl(value, pageUrl))).size === 1) link = overlays[0];
+  }
+  if (!link) return reject('no-headline-link');
+  const headlineElement = hints?.headline ?? headings.find(heading => headingLink(heading) === link) ?? (headings.length === 1 ? headings[0] : undefined);
   const headline = clean(headlineElement?.textContent || link.textContent);
-  if (headline.length < 12 || headline.length > 320 || !headline.includes(' ')) return null;
-  if (element.querySelectorAll('p').length > 3 || clean(element.textContent).length > 1600) return null;
-  if (element.querySelector('form, input, select, [role="dialog"], [role="alert"]')) return null;
+  if (!plausible(headline)) return reject('implausible-headline');
+  if (element.querySelectorAll('p').length > 3 || clean(element.textContent).length > 1600) return reject('oversized');
+  if (element.querySelector('form, input, select, [role="dialog"], [role="alert"]')) return reject('interactive-controls');
   const url = linkUrl(link, pageUrl);
-  if (!url || url === canonicalUrl(pageUrl)) return null;
+  if (!url || url === canonicalUrl(pageUrl)) return reject('invalid-or-current-url');
   const parsed = new URL(url);
-  if (/\/(?:login|signin|subscribe|account|privacy|cookie|tag|tags|category|categories)\/?$/i.test(parsed.pathname)) return null;
-  if (parsed.pathname === '/' || parsed.pathname.split('/').filter(Boolean).length === 0) return null;
-  const descriptionElement = [...element.querySelectorAll<HTMLElement>('p, [data-testid="card-description"], [class*="summary"], [class*="description"]')]
+  if (/\/(?:login|signin|subscribe|account|privacy|cookie|tag|tags|category|categories|profile|authors?|app)(?:\/|$)/i.test(parsed.pathname)) return reject('navigation-url');
+  if (parsed.pathname === '/' || !parsed.pathname.split('/').filter(Boolean).length) return reject('navigation-url');
+  const lastSegment = parsed.pathname.split('/').filter(Boolean).at(-1) ?? '';
+  try { if (headline.split(/\s+/).length <= 3 && normalise(headline) === normalise(decodeURIComponent(lastSegment))) return reject('section-landing-link'); } catch { /* optional URL hint */ }
+  const descriptionElement = [...element.querySelectorAll<HTMLElement>('p, [itemprop="description"], [data-testid="card-description"], [class*="summary"], [class*="description"]')]
     .find(value => ownedVisibleContent(value, element) && !value.querySelector('h1,h2,h3,h4,h5,h6,article,aside,nav,footer,form,button,time,[data-ad-slot],[data-recommendations]'));
   const description = clean(descriptionElement?.textContent);
   const metadata = extractMetadata(element, headlineElement);
-  const section = clean(element.getAttribute('data-section') || metadata.section);
+  const section = clean(hints?.section || element.getAttribute('data-section') || element.getAttribute('data-category') ||
+    element.querySelector('[itemprop="articleSection"]')?.getAttribute('content') || metadata.section || structuredSections(element.ownerDocument).get(url));
   const image = element.querySelector<HTMLImageElement>('img');
   let imageUrl: string | undefined;
   try {
@@ -65,35 +93,80 @@ export function extractCard(element: HTMLElement, pageUrl: string, detector: str
     if (resolved && ['http:', 'https:'].includes(resolved.protocol)) imageUrl = resolved.href;
   } catch { /* an image is optional; never fetch it */ }
   return { handle: element, detector, story: { headline, description: description || undefined, url,
-    imageUrl, section: section || undefined, labels: metadata.labels.length ? metadata.labels : undefined,
+    imageUrl, section: section.slice(0, 96) || undefined, labels: metadata.labels.length ? metadata.labels : undefined,
     sourceDomain: new URL(pageUrl).hostname } };
 }
-function candidateFor(heading: HTMLElement, pageUrl: string): HTMLElement | null {
-  let parent = heading.parentElement;
-  for (let depth = 0; parent && depth < 6; depth++, parent = parent.parentElement) {
+function candidateFor(seed: HTMLElement, pageUrl: string, extract: (element: HTMLElement) => DetectedStory<HTMLElement> | null, urlCache: Map<HTMLElement, Set<string>>, siblingCache: Map<HTMLElement, Map<string, number>>): HTMLElement | null {
+  let parent: HTMLElement | null = seed.matches('a[href]') ? seed : seed.parentElement;
+  let candidate: HTMLElement | null = null;
+  for (let depth = 0; parent && depth < 8; depth++, parent = parent.parentElement) {
     if (protectedElement(parent) || ['BODY', 'MAIN', 'SECTION', 'HTML'].includes(parent.tagName)) break;
-    const links = storyLinks(parent);
-    if (links.length > 1 && new Set(links.map(x => linkUrl(x, pageUrl))).size > 1) break;
-    const namedCard = parent.matches(CARD);
-    const repeated = !namedCard && parent.parentElement && [...parent.parentElement.children].filter(sibling =>
-      sibling.tagName === parent!.tagName && sibling.className === parent!.className).length >= 2;
-    if ((namedCard || repeated) && extractCard(parent, pageUrl, 'generic')) return parent;
+    let urls = urlCache.get(parent);
+    if (!urls) { urls = new Set(storyLinks(parent).map(link => linkUrl(link, pageUrl)).filter(Boolean)); urlCache.set(parent, urls); }
+    if (urls.size > 1) break;
+    const named = parent.matches(CARD) || parent instanceof HTMLAnchorElement && !!parent.querySelector(HEADINGS);
+    const siblings = parent.parentElement;
+    let counts = siblings && siblingCache.get(siblings);
+    if (siblings && !counts) {
+      counts = new Map<string, number>();
+      for (const child of siblings.children) { const key = `${child.tagName}:${child.className}`; counts.set(key, (counts.get(key) ?? 0) + 1); }
+      siblingCache.set(siblings, counts);
+    }
+    const repeated = !named && (counts?.get(`${parent.tagName}:${parent.className}`) ?? 0) >= 2;
+    if ((named || repeated) && extract(parent)) candidate = parent;
   }
-  return null;
+  return candidate;
 }
 export function deduplicate(cards: DetectedStory<HTMLElement>[]): DetectedStory<HTMLElement>[] {
-  const unique = [...new Map(cards.map(card => [card.handle, card])).values()];
-  // Prefer a complete outer card when wrappers refer to the same single story.
-  return unique.filter(card => !unique.some(other => other !== card && other.handle.contains(card.handle)));
+  // Publisher adapters run first; preserve their explicit extraction hints.
+  const byHandle = new Map<HTMLElement, DetectedStory<HTMLElement>>();
+  for (const card of cards) if (!byHandle.has(card.handle)) byHandle.set(card.handle, card);
+  const unique = [...byHandle.values()];
+  const complete = new Map<HTMLElement, DetectedStory<HTMLElement>>();
+  for (const card of unique) {
+    let outer = card;
+    for (let parent = card.handle.parentElement; parent; parent = parent.parentElement) {
+      const ancestor = byHandle.get(parent);
+      if (ancestor && ancestor.story.url === card.story.url) outer = ancestor;
+    }
+    const previous = complete.get(outer.handle) ?? outer;
+    // Keep the complete outer boundary and the richer inner card's exact-story metadata.
+    const labels = [...new Set([...(previous.story.labels ?? []), ...(card.story.labels ?? [])])];
+    complete.set(outer.handle, { ...previous,
+      detector: card.detector === 'generic' ? previous.detector : card.detector,
+      story: { ...previous.story, section: previous.story.section ?? card.story.section,
+        description: previous.story.description ?? card.story.description,
+        imageUrl: previous.story.imageUrl ?? card.story.imageUrl, labels: labels.length ? labels : undefined },
+    });
+  }
+  return [...complete.values()];
 }
 export class GenericDetector implements StoryDetector<HTMLElement, Root> {
+  diagnostics: DiscoveryDiagnostics = { candidates: 0, detected: 0, rejected: {} };
   detect(root: Root, pageUrl: string): DetectedStory<HTMLElement>[] {
+    this.diagnostics = { candidates: 0, detected: 0, rejected: {} };
+    structuredSections(root.ownerDocument ?? root as Document, true);
+    const resultCache = new Map<HTMLElement, DetectedStory<HTMLElement> | null>();
+    const urlCache = new Map<HTMLElement, Set<string>>();
+    const siblingCache = new Map<HTMLElement, Map<string, number>>();
+    const extract = (element: HTMLElement) => {
+      if (!resultCache.has(element)) {
+        this.diagnostics.candidates++;
+        resultCache.set(element, extractCard(element, pageUrl, 'generic', undefined, reason => {
+          this.diagnostics.rejected[reason] = (this.diagnostics.rejected[reason] ?? 0) + 1;
+        }));
+      }
+      return resultCache.get(element)!;
+    };
     const candidates = new Set(nodes(root, CARD).filter(element => element.tagName !== 'LI'));
-    for (const heading of nodes(root, HEADINGS)) {
-      const candidate = candidateFor(heading, pageUrl);
+    for (const seed of nodes(root, `${HEADINGS}, a[href]`)) {
+      if (seed instanceof HTMLAnchorElement && !headlineAnchor(seed)) continue;
+      const candidate = candidateFor(seed, pageUrl, extract, urlCache, siblingCache);
       if (candidate) candidates.add(candidate);
     }
-    return deduplicate([...candidates].map(element => extractCard(element, pageUrl, 'generic'))
+    const detected = deduplicate([...candidates].map(extract)
       .filter((value): value is DetectedStory<HTMLElement> => !!value));
+    this.diagnostics.detected = detected.length;
+    return detected;
   }
 }

@@ -26,6 +26,7 @@ function draw() {
     : !preferences.enabled ? 'Filtering is off globally'
     : sitePaused ? 'Filtering is paused on this site'
     : !page.eligible ? 'Generic detection is off on this site'
+    : page.detected === 0 ? 'No news stories found yet. Scroll or refresh; this layout may need support.'
     : `Filtering this site: ON · ${page.detected} cards detected`;
   element('count').textContent = String(page?.filtered ?? 0);
   pause.disabled = !page || !preferences.configured;

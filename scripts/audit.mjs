@@ -1,5 +1,6 @@
 import { readdir, readFile } from 'node:fs/promises';
 import assert from 'node:assert/strict';
+import ts from 'typescript';
 import { resolve } from 'node:path';
 process.chdir(resolve(import.meta.dirname, '..'));
 async function files(path) {
@@ -8,6 +9,11 @@ async function files(path) {
 }
 const manifest = JSON.parse(await readFile('dist/manifest.json', 'utf8'));
 assert.equal(manifest.manifest_version, 3);
+const pkg = JSON.parse(await readFile('package.json', 'utf8'));
+const lock = JSON.parse(await readFile('package-lock.json', 'utf8'));
+assert.equal(manifest.version, pkg.version);
+assert.equal(lock.version, pkg.version);
+assert.equal(lock.packages[''].version, pkg.version);
 assert.deepEqual(manifest.permissions, ['storage', 'activeTab']);
 assert.equal(manifest.host_permissions, undefined);
 assert.equal(manifest.externally_connectable, undefined);
@@ -19,7 +25,15 @@ for (const file of await files('src')) {
   const text = await readFile(file, 'utf8');
   assert.doesNotMatch(text, /\b(fetch\s*\(|XMLHttpRequest|WebSocket|EventSource|sendBeacon\s*\()/, `Network API in ${file}`);
   if (!file.endsWith('platform/chromium.ts')) assert.doesNotMatch(text, /\bchrome\s*\./, `Scattered native API in ${file}`);
-  if (file.startsWith('src/core/')) assert.doesNotMatch(text, /\b(document|window|HTMLElement|chrome)\b/, `Platform/DOM coupling in ${file}`);
+  if (file.startsWith('src/core/')) {
+    const syntax = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true);
+    const forbidden = new Set(['document', 'window', 'HTMLElement', 'chrome']);
+    const visit = node => {
+      if (ts.isIdentifier(node)) assert.ok(!forbidden.has(node.text), `Platform/DOM coupling in ${file}: ${node.text}`);
+      ts.forEachChild(node, visit);
+    };
+    visit(syntax);
+  }
 }
 for (const file of await files('dist')) {
   if (!/\.(js|css|html)$/.test(file)) continue;
