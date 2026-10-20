@@ -36,7 +36,23 @@ export const CATEGORIES: CategoryDefinition[] = [
   { id: 'politics', name: 'Politics', threshold: 4,
     terms: [...terms(4, 'politics', 'election', 'elections', 'parliament', 'prime minister', 'president'), ...terms(2, 'government', 'minister', 'policy')] },
   { id: 'sport', name: 'Sport', threshold: 4,
-    terms: terms(4, 'sport', 'sports', 'football', 'rugby', 'cricket', 'tennis', 'olympics', 'world cup', 'basketball') },
+    terms: [
+      ...terms(4, 'sport', 'sports', 'football', 'rugby', 'cricket', 'tennis', 'olympics', 'world cup', 'basketball',
+        'nfl', 'nba', 'nrl', 'afl', 'mlb', 'nhl', 'fifa', 'uefa', 'premier league', 'champions league',
+        'formula 1', 'formula one', 'f1', 'grand prix', 'super bowl', 'baseball', 'golf',
+        'netball', 'motorsport', 'motogp', 'boxing', 'mma', 'ufc', 'wimbledon',
+        'all blacks', 'black caps', 'silver ferns', 'wallabies', 'state of origin', 'ashes'),
+      ...terms(3, 'goalkeeper', 'touchdown', 'quarterback', 'hat trick', 'penalty shootout',
+        'playoffs', 'semifinal', 'semi-final', 'finals series', 'matchday', 'try scorer',
+        'test match', 'pole position', 'qualifying lap', 'wicket', 'innings'),
+      ...terms(2, 'coach', 'fixture', 'league', 'squad', 'tournament', 'championship', 'stadium',
+        'striker', 'midfielder', 'referee', 'medal', 'podium', 'victory', 'season opener')
+    ],
+    combinations: [
+      { terms: ['match', 'win'], weight: 4 }, { terms: ['team', 'defeat'], weight: 4 },
+      { terms: ['coach', 'squad'], weight: 4 }, { terms: ['player', 'injury'], weight: 3 },
+      { terms: ['race', 'pole'], weight: 4 }
+    ] },
   { id: 'entertainment', name: 'Entertainment', threshold: 4,
     terms: terms(4, 'entertainment', 'movie', 'movies', 'film', 'concert', 'music festival', 'television', 'tv show') },
   { id: 'opinion', name: 'Opinion', threshold: 4,
