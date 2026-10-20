@@ -3,7 +3,7 @@ import { domainMatches } from '../core/text';
 import { SITE_ADAPTERS } from './detectors/sites';
 // Curated publisher coverage complements structural detection; neither runs on excluded shop/app pages.
 const NEWS_PUBLISHERS = [
-  'yahoo.com', 'cnn.com', 'foxnews.com', 'nytimes.com', 'nbcnews.com',
+  'news.yahoo.com', 'cnn.com', 'foxnews.com', 'nytimes.com', 'nbcnews.com',
   'cbsnews.com', 'abcnews.go.com', 'usatoday.com', 'apnews.com',
   'reuters.com', 'washingtonpost.com', 'msn.com', 'bbc.com', 'bbc.co.uk',
   'theguardian.com', 'news.sky.com', 'dailymail.co.uk', 'telegraph.co.uk',
