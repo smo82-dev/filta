@@ -3,8 +3,8 @@ import { canonicalUrl } from '../../core/text';
 import { extractMetadata, ownedVisibleContent } from './labels';
 export type Root = Document | HTMLElement;
 const PROTECTED = 'nav, footer, [role="navigation"], [role="banner"], [role="contentinfo"], [role="dialog"], [role="alert"], [role="menu"], form, [data-news-filter-ui], [data-emergency], .article-body, .article__body, [itemprop="articleBody"]';
-const CARD = 'article, li, [class*="story"], [class*="card"], [class*="teaser"], [class*="fc-item"], [data-testid*="card"]';
-const HEADINGS = 'h2, h3, h4, [data-testid="card-headline"], [class*="headline"], [class*="heading"]';
+const CARD = 'article, li, [class*="story"], [class*="card"], [class*="teaser"], [class*="fc-item"], [data-testid*="card"], [data-testid*="story"], [data-testid*="article"], [data-type="article"], [itemtype*="NewsArticle"]';
+const HEADINGS = 'h2, h3, h4, h5, [role="heading"], [data-testid*="headline"], [class*="headline"], [class*="heading"], [class*="title"]';
 const clean = (value: string | null | undefined) => (value ?? '').replace(/\s+/g, ' ').trim();
 export function nodes(root: Root, selector: string): HTMLElement[] {
   const all = [...root.querySelectorAll<HTMLElement>(selector)];
@@ -88,7 +88,7 @@ export function deduplicate(cards: DetectedStory<HTMLElement>[]): DetectedStory<
 }
 export class GenericDetector implements StoryDetector<HTMLElement, Root> {
   detect(root: Root, pageUrl: string): DetectedStory<HTMLElement>[] {
-    const candidates = new Set(nodes(root, 'article'));
+    const candidates = new Set(nodes(root, CARD));
     for (const heading of nodes(root, HEADINGS)) {
       const candidate = candidateFor(heading, pageUrl);
       if (candidate) candidates.add(candidate);
