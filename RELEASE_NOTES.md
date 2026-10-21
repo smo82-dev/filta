@@ -14,15 +14,19 @@ This branch improves article discovery, topic evidence and dynamic updates acros
 - Cache normalised classifier rules and discovery work; preserve original card styles and rule precedence.
 - Handle Navigation API route changes, recycled URLs, badge mutations and detached cards; retain Show story for the same story after metadata changes.
 - Show a short popup explanation when an eligible page yields no stories. Deeper stage counts remain debug-only and in memory.
-- Use FILTA and the approved tagline. Existing CSS, artwork inputs and previous installation archives are preserved.
+- Restore the authentic FILTA gradient logo throughout the manifest, toolbar popup, settings and setup. Source artwork is preserved byte-for-byte in `branding/`.
+- Add connected three-step onboarding and a five-section settings hub, with accessible topic cards and explicit save/retry feedback. Returning users retain all preferences and skip setup.
+- Refine the popup around current-site status, filtered count, pause/resume, story review and Manage FILTA.
+- Fix the owner’s three BBC misses with explainable contextual classification; allow combinations to use the same card’s headline and summary across categories. No page-wide topic forcing.
+- Add automated accessibility, onboarding, returning-user, failed-save and BBC DOM/presentation regressions, plus review screenshots.
 - Align manifest/package/lock versions and update the development-only esbuild dependency to the audited patch release.
 
 ## Owner testing and release gates
 
-Extract `news-filter-0.2.0.zip`, then load its folder using Chrome or Edge's **Load unpacked** control. Use a separate browser profile for a parallel preview of the published extension. A separately loaded unpacked extension can have a different ID and separate preferences; this is not a same-identity Chrome Store update.
+Extract `FILTA-0.2.0-development.zip` (or the `news-filter-0.2.0.zip` produced by `npm run package`), then load its folder using Chrome or Edge's **Load unpacked** control. Use a separate browser profile for a parallel preview of the published extension. A separately loaded unpacked extension can have a different ID and separate preferences; this is not a same-identity Chrome Store update.
 
 Check several selected and unselected topics, always-show exceptions, Hide/Collapse, scrolling, navigation, normal article reading and restoring a story. Repeat on Stuff, RNZ, BBC and other sites you use. Record a missed headline, its URL, the chosen category and whether it appears in debug story review.
 
-Native Chrome/Edge installation and same-identity update behaviour remain unverified because the full browser could not launch under this environment's socket restrictions. Stuff's mixed filtering report could not be reproduced here because its homepage rendered loading placeholders. The repository and prior archives contain no original logo image or manifest icon entries; verify the published package's artwork and signing identity before any store submission. No replacement artwork or signing key has been created.
+Native Chrome/Edge installation and same-identity update behaviour remain unverified because the full browser could not launch under this environment's socket restrictions. Stuff's mixed filtering report could not be reproduced here because its homepage rendered loading placeholders. Original artwork is now included and its packaged bytes and dimensions are verified. Native toolbar rendering and same-identity store upgrades remain manual acceptance gates. No signing key or new store identity has been created. Live browser validation was stopped by automatic approval review when publisher scripts attempted third-party telemetry; captured-source replays with external requests blocked are recorded separately.
 
 The deterministic fixture results are strong regression evidence, not a real-world accuracy guarantee. A separate publisher headline challenge records remaining misses. Keep PR #1 draft and unmerged pending independent review and owner acceptance. Do not submit this build to the Chrome Web Store yet.

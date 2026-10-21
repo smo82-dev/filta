@@ -6,7 +6,7 @@
 
 PR #1 contains the universal detection and classification reliability work. This is an **unpublished test build**, ready for independent review and owner testing, with release gates still open. See [release notes](RELEASE_NOTES.md), [validation](VALIDATION.md), [publisher compatibility](docs/validation-0.2.0/COMPATIBILITY.md) and [handover](HANDOVER.md).
 
-Build the installable ZIP with `npm ci` then `npm run package`. No account, server or runtime dependency is needed. The original logo image and store signing inputs are absent from the repository; they have not been replaced or regenerated.
+Build the installable ZIP with `npm ci` then `npm run package`. No account, server or runtime dependency is needed. The owner’s original artwork is preserved in `branding/` and packaged without alteration. Store signing inputs remain private and are not included. See [completed UI and BBC regression evidence](docs/validation-0.2.0/UX-AND-BBC.md).
 
 ## Product
 
@@ -35,10 +35,10 @@ The source code lives at the repository root. The GitHub **Code → Download ZIP
 
 1. Extract `news-filter-0.1.1.zip` into a permanent folder. `manifest.json` should be directly inside that folder.
 2. Open `chrome://extensions`, enable **Developer mode**, select **Load unpacked**, and choose that folder.
-3. Open **Settings** from the extension. Choose topics or custom phrases, keep **Collapse** for initial testing, and select **Start filtering**. The settings tab also opens on first installation.
+3. Open **Manage FILTA** from the extension. Complete the three-step setup: choose topics, choose Collapse or Hide, then review and select **Start filtering**. The settings tab also opens on first installation.
 4. Open or refresh a BBC, The Guardian or RNZ news listing. Some uncertain cards will deliberately remain visible.
 5. A matching card becomes a small replacement with **Show story** and **Why was this hidden?**. Expand the explanation for **Don’t hide stories like this** and add a phrase you want to always see.
-6. The popup provides the current page count, **View filtered stories**, the Collapse/Hide switch, global enable, settings and per-site pause/resume.
+6. The popup provides site status, the current page count, **View filtered stories**, per-site pause/resume and **Manage FILTA**. Change mode, phrases, global enable and advanced controls in the settings hub.
 
 Existing tabs opened before installation need a refresh to receive the content script. After an extension reload, refresh website tabs too. Chrome's protected pages and extension stores cannot be modified.
 
@@ -100,7 +100,7 @@ The generic detector looks for semantic articles, linked headings, named story/c
 
 BBC, The Guardian and RNZ have isolated adapters, with generic fallback. The Guardian adapter also recognises current fronts with a sibling overlay link and an unlinked `.card-headline`. Compound cards containing several different stories are deliberately skipped; complete sub-story cards are processed individually. Deduplication keeps the outer single-story boundary while retaining exact-story metadata supplied by an adapter inside that boundary.
 
-On other sites, detection requires news context in the domain, path, title or site metadata. Use **Detect news cards on this site** in the popup, or add a domain in advanced settings, to opt another site in. These conservative checks reduce activity on unrelated sites, but are heuristics rather than a perfect news-site classifier.
+On other sites, detection requires news context in the domain, path, title or site metadata. Use **Enable news detection here** in the popup, or add a domain in Website Controls, to opt another site in. These conservative checks reduce activity on unrelated sites, but are heuristics rather than a perfect news-site classifier.
 
 Dynamic additions are batched for 140 ms and scanned within changed subtrees. Unchanged Story fingerprints reuse cached classification. Headline and link changes in reused cards trigger reevaluation. Disconnected records are pruned; cards that become reading content are restored. The scanner yields between groups of 20 classifications. Preference edits and navigation may trigger a full discovery pass. Mutation observation ignores the extension's UI and its own display changes. Browser history navigation, DOM changes and Chromium Navigation API current-entry changes are handled, including a route change with no DOM mutation. Navigation listeners are removed when the scanner stops.
 

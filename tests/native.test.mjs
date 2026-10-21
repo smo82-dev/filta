@@ -19,7 +19,7 @@ test('native MV3 unpacked installation, service worker, local storage and conten
     const settings = await context.newPage(); await settings.goto(`chrome-extension://${id}/settings.html`);
     await settings.waitForFunction(() => !document.querySelector('#save').disabled);
     assert.equal(await settings.locator('input[name=category]:checked').count(), 0);
-    await settings.locator('input[value=crime]').check(); await settings.locator('#save').click();
+    await settings.locator('input[value=crime]').check(); await settings.locator('#next').click(); await settings.locator('#next').click(); await settings.locator('#save').click();
     const fixture = await readFile(resolve(root, 'tests/fixtures/news.html'));
     await context.route('http://news-fixture.test/**', route => route.fulfill({ contentType: 'text/html', body: fixture }));
     const news = await context.newPage(); await news.goto('http://news-fixture.test/');

@@ -1,6 +1,6 @@
 # FILTA 0.2.0 — approved UX implementation map
 
-Status: approved specification; implementation and native visual validation **not yet complete**.
+Status: connected UI, branding and BBC regression implementation completed. Automated and visual evidence: [UX-AND-BBC.md](validation-0.2.0/UX-AND-BBC.md). Native installation/toolbar rendering, same-identity upgrade and Stuff live acceptance remain open.
 
 ## Preserve first
 Keep the existing Manifest V3 extension identity, permissions, `GET_PREFS`, `PATCH_PREFS`, `SET_SITE`, `PAGE_STATUS`, `OPEN_REVIEW`, `Preferences` category IDs, storage key and rule precedence. Use the owner-provided original image files, not substitutes. Never reset configured users when adding an onboarding-completed marker. `configured` already denotes existing completion; distinguish explicit "Run setup again" UI state without wiping selected topics.

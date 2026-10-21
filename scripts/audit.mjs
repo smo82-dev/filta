@@ -1,6 +1,7 @@
 import { readdir, readFile } from 'node:fs/promises';
 import assert from 'node:assert/strict';
 import ts from 'typescript';
+import { createHash } from 'node:crypto';
 import { resolve } from 'node:path';
 process.chdir(resolve(import.meta.dirname, '..'));
 async function files(path) {
@@ -18,6 +19,24 @@ assert.deepEqual(manifest.permissions, ['storage', 'activeTab']);
 assert.equal(manifest.host_permissions, undefined);
 assert.equal(manifest.externally_connectable, undefined);
 assert.match(manifest.content_security_policy.extension_pages, /connect-src 'none'/);
+const digest = bytes => createHash('sha256').update(bytes).digest('hex');
+for (const size of [16, 32, 48, 128]) {
+  const path = `icons/icon-${size}.png`;
+  assert.equal(manifest.icons[size], path); assert.equal(manifest.action.default_icon[size], path);
+  const bytes = await readFile(`dist/${path}`);
+  assert.equal(bytes.subarray(0, 8).toString('hex'), '89504e470d0a1a0a');
+  assert.equal(bytes.readUInt32BE(16), size); assert.equal(bytes.readUInt32BE(20), size);
+  assert.equal(digest(bytes), digest(await readFile(`branding/icon-${size}.png`)), 'Original icon bytes must be preserved');
+}
+for (const name of ['original-store-icon-128.png', 'original-fullsize-logo-1254.png']) {
+  assert.equal(digest(await readFile(`branding/${name}`)), digest(await readFile(name)), 'Owner source artwork changed');
+}
+assert.equal(digest(await readFile('dist/icons/logo.png')), digest(await readFile('branding/original-store-icon-128.png')));
+for (const page of ['popup.html', 'settings.html']) {
+  const html = await readFile(`dist/${page}`, 'utf8');
+  assert.match(html, /src="icons\/logo.png"/);
+  assert.doesNotMatch(html, />N<\//);
+}
 const referenced = [manifest.background.service_worker, manifest.action.default_popup, manifest.options_ui.page,
   ...manifest.content_scripts.flatMap(script => [...script.js, ...script.css])];
 for (const file of referenced) assert.ok((await readFile(`dist/${file}`)).length, `${file} is missing`);

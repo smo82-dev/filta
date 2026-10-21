@@ -4,7 +4,13 @@ Validation date: 21 October 2026, Vanuatu time. PR #1 remains draft, open and un
 
 ## Readiness
 
-The implementation is ready for independent code review and owner testing. **It is not cleared for Chrome Store submission.** Native installation/update checks, original published artwork/signing verification, reproduction of the Stuff report and broader independent real-headline accuracy evaluation remain open.
+The implementation is ready for independent code review and owner testing. **It is not cleared for Chrome Store submission.** Native installation/update checks, native toolbar rendering/signing verification, reproduction of the Stuff report and broader independent real-headline accuracy evaluation remain open.
+
+## Latest continuation evidence
+
+The connected onboarding, settings hub, popup and original branding are implemented. **64 core + 72 browser tests passed** in this continuation, together with strict TypeScript, build/package audit and a zero-vulnerability dependency audit. Axe checks reported no violations for the tested WCAG A/AA rules; this is not a complete accessibility certification. Screenshots and exact BBC stage evidence: [UX-AND-BBC.md](docs/validation-0.2.0/UX-AND-BBC.md).
+
+The current BBC Film & TV HTTP response reproduced 35 discoveries; all three owner examples were correctly extracted but scored zero before the classification changes. New regressions verify classification, overrides and actual Collapse/Hide rendering. Stuff’s current HTTP response was a script-dependent shell with no usable cards. Additional live-browser validation was stopped by automatic approval review because publisher scripts attempted third-party telemetry. No completed live-site acceptance pass is claimed from that interrupted run. Historical publisher checks below are labelled evidence from the earlier checkpoint.
 
 ## A. Root causes and diagnosis
 
@@ -27,7 +33,7 @@ Debug-only status now separates discovery rejections, no-topic evidence, selecte
 - Bounded local articleSection microdata and exact-URL-linked NewsArticle JSON-LD are supported. Structured metadata is parsed once per discovery pass and cached; unrelated page-level metadata never labels sibling articles.
 - The original `version: 1` preference schema, storage key, category IDs, initial unselected topics, override precedence and native API boundary remain unchanged. Existing preference compatibility is exercised through the simulated storage/UI suite. Same-identity native upgrade testing remains unverified.
 - Permissions remain exactly `storage` and `activeTab`, with existing top-frame HTTP(S) content-script declarations. No remote classifier, account, API call, analytics or runtime dependencies were added.
-- `public/ui.css`, `public/content.css` and previous download archives match `main` byte-for-byte. No original image/icon files or manifest icon entries exist in this repository or its previous ZIP archives; the original store artwork therefore cannot be verified from these sources. No new artwork, signing identity or signing key was substituted. Verify the published inputs before a store update.
+- The owner’s six PNG files are preserved byte-for-byte in `branding/`; manifest and action icons use all four supplied sizes. UI logo bytes match the supplied store icon. The shared UI stylesheet is redesigned; `public/content.css` and prior download archives are unchanged. No new artwork, signing identity or key is substituted. Native toolbar rendering and store-signing verification remain open.
 - Manifest, package and lock versions are 0.2.0. The customer-facing product is FILTA with “Take control of your news feed.” Internal identifiers are retained.
 
 ## C. Publisher compatibility
@@ -77,17 +83,17 @@ Raw measurements and remaining misses are stored in `docs/validation-0.2.0/`. Do
 | Check | Result |
 | --- | --- |
 | Portable/core automated tests | 64 passed |
-| Browser automated tests | 62 passed, including enclosing suites; real DOM/MutationObserver/UI with a simulated WebExtension API |
+| Browser automated tests | 72 passed, including enclosing suites; real DOM/MutationObserver/UI with a simulated WebExtension API |
 | Overall `npm run check` | Passed: tests, strict TypeScript, build, browser suites and package audit |
 | Controlled performance | 600-card feed discovered completely; timing recorded in `performance.json`; bounded under the 10-second test budget. Existing incremental-cache regression verifies one initial full scan and cached small updates. |
 | Package audit | Passed: required MV3 files, version consistency, minimal unchanged permissions, portable core, native API isolation, no network APIs/remote assets/eval |
 | Dependency audit | `npm audit` reported zero vulnerabilities after development-only esbuild 0.28.2 update |
 | ZIP | Built from production dist, manifest at archive root; archive entries compared byte-for-byte with dist |
-| Original archives/styles/preferences | Prior downloads and style files unchanged; preference schema/storage unchanged; compatibility and UI persistence tests pass |
+| Original artwork/archives/preferences | Source and packaged icon hashes/dimensions verified; prior downloads unchanged; preference schema/storage unchanged; all-field compatibility and UI persistence tests pass |
 | Native MV3 smoke test | Blocked/inconclusive. Lightweight Chromium produced no service worker. Full Chrome for Testing 151.0.7922.34 failed to launch because process singleton socket creation is disallowed in this execution environment. No native pass is claimed. |
 | Windows/Edge/Android | Not physically tested here; native installation/update and Lemur remain owner/manual checks |
 
-Validation used the available lightweight Chromium with Playwright and a separate downloaded full Chrome for Testing only for the native attempt. Website resource loading and access varied; 200 responses containing “Site Unavailable” are treated as failures.
+The current continuation used lightweight Chromium 153.0.8010.0 with Playwright. Its native smoke test timed out waiting for an extension service worker. The full Chrome singleton-socket failure above belongs to the earlier checkpoint; it was not rerun. Website resource loading and access varied; 200 responses containing “Site Unavailable” are treated as failures.
 
 ## F. Next acceptance steps
 
@@ -95,6 +101,6 @@ Validation used the available lightweight Chromium with Playwright and a separat
 2. Load the test ZIP in an appropriate Chrome/Edge profile. A separate unpacked extension is a separate identity and does not prove a same-identity store upgrade preserves settings.
 3. Reproduce Stuff's owner-observed misses with fully loaded real cards; inspect the debug discovery/classification/decision evidence for a missed headline.
 4. Broaden independent labelled publisher sampling, especially opaque URLs/proper names and Science/Sponsored, before describing classification as reliably complete.
-5. Verify the original published logo/icon assets and existing store/signing identity, then complete native installation and same-identity update checks.
+5. Verify native toolbar display of the packaged authentic icon and the existing store/signing identity; complete installation and same-identity update checks.
 
 Do not merge, publish or submit to the Chrome Web Store until the owner authorises it after review.

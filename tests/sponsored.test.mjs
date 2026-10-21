@@ -74,7 +74,7 @@ test('sponsored content: shared extraction, safety, settings and dynamic filteri
       await settings.waitForFunction(() => !document.querySelector('#save').disabled);
       const choice = settings.getByRole('checkbox', { name: 'Sponsored & Paid Content', exact: true });
       assert.equal(await choice.isChecked(), false);
-      await choice.check(); await settings.locator('#save').click();
+      await choice.check(); await settings.locator('#next').click(); await settings.locator('#next').click(); await settings.locator('#save').click();
       news = await harness.loadNews(undefined, '/sponsored');
       for (const id of ['sponsored', 'paid', 'partner', 'presented', 'sponsored-by', 'aria-badge']) await hidden(news, id);
       for (const id of ['clean', 'nested-ad', 'nested-related', 'hidden-labels', 'controls', 'incidental', 'long-label', 'editorial']) await visible(news, id);

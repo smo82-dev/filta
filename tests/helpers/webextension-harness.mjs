@@ -13,7 +13,7 @@ export class WebExtensionHarness {
       const path = new URL(route.request().url()).pathname.slice(1) || 'settings.html';
       if (path.includes('..')) return route.abort();
       if (path === 'worker.html') return route.fulfill({ contentType: 'text/html', body: '<title>API harness background host</title>' });
-      const contentType = { '.html': 'text/html', '.css': 'text/css', '.js': 'application/javascript', '.json': 'application/json' }[extname(path)] ?? 'text/plain';
+      const contentType = { '.html': 'text/html', '.css': 'text/css', '.js': 'application/javascript', '.json': 'application/json', '.png': 'image/png' }[extname(path)] ?? 'text/plain';
       await route.fulfill({ contentType, body: await readFile(resolve(this.root, 'dist', path)) });
     });
     await this.context.route('http://news-fixture.test/**', async route => {

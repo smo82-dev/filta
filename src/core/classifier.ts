@@ -17,6 +17,7 @@ export class RuleBasedClassifier implements StoryClassifier {
   async classify(story: Story): Promise<ClassificationResult> {
     const fields = Object.entries(storyFields(story)).map(([field, texts]) => [field, texts.map(normalise)] as [Field, string[]]);
     const headline = normalise(story.headline);
+    const narrative = [headline, normalise(story.description ?? '')];
     let path: string[] = [];
     try { path = new URL(story.url ?? '').pathname.split('/').filter(Boolean).slice(0, -1).map(value => normalise(decodeURIComponent(value))); }
     catch { /* optional URL */ }
@@ -51,9 +52,12 @@ export class RuleBasedClassifier implements StoryClassifier {
         }
       }
       for (const combination of category.combinations) {
-        if (!combination.alternatives.every(terms => terms.some(term => contains(headline, term)))) continue;
+        // A card’s summary can supply the missing context for an opaque headline.
+        // Keep fields separate so a phrase cannot be invented across their boundary.
+        const inHeadline = combination.alternatives.every(terms => terms.some(term => contains(headline, term)));
+        if (!inHeadline && !combination.alternatives.every(terms => terms.some(term => narrative.some(text => contains(text, term))))) continue;
         score += combination.weight;
-        signals.push({ category: category.id, field: 'headline', term: combination.terms.join(' + '), contribution: combination.weight, kind: 'combination' });
+        signals.push({ category: category.id, field: inHeadline ? 'headline' : 'description', term: combination.terms.join(' + '), contribution: combination.weight, kind: 'combination' });
       }
       return { id: category.id, name: category.name, score: Math.round(Math.max(0, score) * 100) / 100, threshold: category.threshold };
     });
