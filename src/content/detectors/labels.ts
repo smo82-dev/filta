@@ -9,10 +9,14 @@ const EXCLUDED = 'nav, aside, footer, form, button, time, input, select, textare
 const PROMOTIONAL_ARIA = /^(?:sponsored(?: by .+)?|paid content|paid post|partner content|promoted|advertisement|advertorial|brand partner|branded content|presented by(?: .+)?|commercial content|native advertising)$/i;
 const clean = (text: string | null) => (text ?? '').replace(/\s+/g, ' ').trim();
 export function markers(element: HTMLElement): string {
-  return [element.className, element.id, element.getAttribute('data-testid'), element.getAttribute('data-component')]
+  const cached = scan?.markers.get(element);
+  if (cached !== undefined) return cached;
+  const value = [element.className, element.id, element.getAttribute('data-testid'), element.getAttribute('data-component')]
     .join(' ').replace(/([a-z])([A-Z])/g, '$1 $2')
     // Feature flags describe a layout, not an author/byline region.
     .replace(/\b(?:with|has|without|no)[-_](?:byline|author)\b/gi, '');
+  scan?.markers.set(element, value);
+  return value;
 }
 export function metadataElement(element: HTMLElement): boolean {
   return METADATA.test(markers(element)) || element.matches('[data-label], [data-kicker], [data-topic], [data-category], [data-sponsored], [data-partner], a[rel~="tag"]') ||
@@ -20,13 +24,19 @@ export function metadataElement(element: HTMLElement): boolean {
 }
 // Discovery asks about the same ancestors thousands of times on a busy front page.
 // Within one scan, layout does not change, so each element's own style is read once.
-let visibility: Map<Element, boolean> | undefined;
-export function withStyleCache<T>(scan: () => T): T {
-  const outer = visibility;
-  visibility ??= new Map();
-  try { return scan(); } finally { if (!outer) visibility = undefined; }
+// The same ancestors are inspected tens of thousands of times on a busy front page
+// (live Stuff: ~360,000 attribute reads per scan). Within one synchronous scan the
+// DOM and layout do not change, so per-element facts are computed once.
+export interface ScanCache { visible: Map<Element, boolean>; markers: Map<Element, string>; protectedChain: Map<Element, boolean>; headlineAnchors: Map<Element, boolean>; urls: Map<string, string> }
+let scan: ScanCache | undefined;
+export function scanCache(): ScanCache | undefined { return scan; }
+export function withStyleCache<T>(run: () => T): T {
+  const outer = scan;
+  scan ??= { visible: new Map(), markers: new Map(), protectedChain: new Map(), headlineAnchors: new Map(), urls: new Map() };
+  try { return run(); } finally { if (!outer) scan = undefined; }
 }
 function selfVisible(element: HTMLElement): boolean {
+  const visibility = scan?.visible;
   let visible = visibility?.get(element);
   if (visible === undefined) {
     const style = getComputedStyle(element);

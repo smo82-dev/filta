@@ -1,6 +1,6 @@
 import type { DetectedStory, StoryDetector } from '../../core/types';
 import { canonicalUrl, normalise } from '../../core/text';
-import { extractMetadata, markers, metadataElement, ownedVisibleContent, withStyleCache } from './labels';
+import { extractMetadata, markers, metadataElement, ownedVisibleContent, scanCache, withStyleCache } from './labels';
 import { structuredSections } from './structured';
 export type Root = Document | HTMLElement | ShadowRoot;
 // Web-component feeds (MSN and others) render cards inside open shadow roots,
@@ -50,9 +50,23 @@ export function headingLink(heading: HTMLElement): HTMLAnchorElement | null {
 function linkUrl(link: HTMLAnchorElement, pageUrl: string): string {
   const href = link.getAttribute('href')?.trim();
   if (!href || href.startsWith('#')) return '';
-  try { return canonicalUrl(new URL(href, pageUrl).href); } catch { return ''; }
+  const memo = scanCache()?.urls, key = `${pageUrl} ${href}`;
+  const cached = memo?.get(key);
+  if (cached !== undefined) return cached;
+  let url = '';
+  try { url = canonicalUrl(new URL(href, pageUrl).href); } catch { /* malformed */ }
+  memo?.set(key, url);
+  return url;
 }
 function headlineAnchor(link: HTMLAnchorElement): boolean {
+  const memo = scanCache()?.headlineAnchors;
+  const cached = memo?.get(link);
+  if (cached !== undefined) return cached;
+  const value = isHeadlineAnchor(link);
+  memo?.set(link, value);
+  return value;
+}
+function isHeadlineAnchor(link: HTMLAnchorElement): boolean {
   let text = clean(link.textContent);
   for (const caption of link.querySelectorAll('figcaption, [class*="caption" i], [class*="credit" i]')) text = text.replace(clean(caption.textContent), '').trim();
   return !link.matches('[rel~="tag"], [download]') && !link.closest('p, time, button, [data-news-filter-ui]') &&
@@ -78,14 +92,30 @@ export function protectedElement(element: HTMLElement): boolean {
   if (composedClosest(element, '[itemtype$="/Person"], [itemprop="author"]')) return true;
   const header = composedClosest(element, 'header');
   if (header && !header.closest(CARD)) return true;
+  return protectedChain(element);
+}
+// Marker-based protection holds for an element if it holds for any composed ancestor
+// below <body>; memoise along the chain so shared ancestors are judged once per scan.
+function protectedChain(element: HTMLElement): boolean {
+  const memo = scanCache()?.protectedChain;
+  const pending: HTMLElement[] = [];
+  let result = false;
   for (let ancestor: HTMLElement | null = element; ancestor && ancestor !== document.body; ancestor = composedParent(ancestor)) {
-    // Custom elements carry their role in the tag name (responsive-header, site-nav-menu).
-    if (ancestor.tagName.includes('-') && /(?:^|-)(header|footer|nav|navigation|menu|toolbar|banner|masthead|consent|cookie)(?:-|$)/i.test(ancestor.tagName)) return true;
-    if (/(?:^|[-_\s])(cookie|consent|privacy|advert|advertisement|navigation|emergency|alert)(?:$|[-_\s])/i
-      .test(markers(ancestor))) return true;
-    if (/(?:^|[-_\s])(byline|toolbar|menu)(?:$|[-_\s])/i.test(markers(ancestor))) return true;
+    const known = memo?.get(ancestor);
+    if (known !== undefined) { result = known; break; }
+    pending.push(ancestor);
+    if (ownProtectedMarker(ancestor)) { result = true; break; }
   }
-  return false;
+  // Every element walked shares the outcome: protected ancestors protect descendants.
+  if (memo) for (const value of pending) memo.set(value, result);
+  return result;
+}
+function ownProtectedMarker(ancestor: HTMLElement): boolean {
+  // Custom elements carry their role in the tag name (responsive-header, site-nav-menu).
+  if (ancestor.tagName.includes('-') && /(?:^|-)(header|footer|nav|navigation|menu|toolbar|banner|masthead|consent|cookie)(?:-|$)/i.test(ancestor.tagName)) return true;
+  const value = markers(ancestor);
+  return /(?:^|[-_\s])(cookie|consent|privacy|advert|advertisement|navigation|emergency|alert)(?:$|[-_\s])/i.test(value) ||
+    /(?:^|[-_\s])(byline|toolbar|menu)(?:$|[-_\s])/i.test(value);
 }
 export interface DiscoveryDiagnostics { candidates: number; detected: number; rejected: Record<string, number> }
 export interface ExtractionHints { headline: HTMLElement; link: HTMLAnchorElement; section?: string }
@@ -125,6 +155,10 @@ export function extractCard(element: HTMLElement, pageUrl: string, detector: str
     .find(value => ownedVisibleContent(value, element) && !value.querySelector('h1,h2,h3,h4,h5,h6,article,aside,nav,footer,form,button,time,[data-ad-slot],[data-recommendations]'));
   const description = clean(descriptionElement?.textContent);
   const metadata = extractMetadata(element, headlineElement);
+  // Native ads rarely repeat a disclosure on every tile; the ad network still shows in
+  // the click URL, the widget around the tile, or a lone "Sponsored" link.
+  const commercial = commercialDisclosure(element, link, pageUrl);
+  if (commercial && !metadata.labels.some(label => normalise(label) === normalise(commercial))) metadata.labels.push(commercial);
   const section = clean(hints?.section || element.getAttribute('data-section') || element.getAttribute('data-category') ||
     element.querySelector('[itemprop="articleSection"]')?.getAttribute('content') || metadata.section || structuredSections(element.ownerDocument).get(url));
   const image = element.querySelector<HTMLImageElement>('img');
@@ -137,6 +171,28 @@ export function extractCard(element: HTMLElement, pageUrl: string, detector: str
   return { handle: element, detector, story: { headline, description: description || undefined, url,
     imageUrl, section: section.slice(0, 96) || undefined, labels: metadata.labels.length ? metadata.labels : undefined,
     sourceDomain: new URL(pageUrl).hostname } };
+}
+// Click and redirect endpoints that only ad networks use, and widgets that only carry
+// paid placements. Ordinary links to other publishers are never treated as ads.
+const AD_CLICK = /(?:^|\.)(?:taboola\.com|outbrain\.com|zemanta\.com|doubleclick\.net|googleadservices\.com|googlesyndication\.com|adnxs\.com|criteo\.com|amazon-adsystem\.com|revcontent\.com|mgid\.com|nativo\.com|ntv\.io|sharethrough\.com|dianomi\.com|zergnet\.com|plista\.com|ligatus\.com|teads\.tv|smartadserver\.com|clickserve\.dartsearch\.net)$/i;
+const AD_PATH = /^(?:www\.)?bing\.com\/(?:api\/v\d+\/mediation|aclick)|^beap\.gemini\.yahoo\.com\//i;
+const PAID_UTM = /^(?:taboola|outbrain|zemanta|dianomi|revcontent|mgid|nativo|plista|ligatus|sharethrough)$/i;
+const PAID_MEDIUM = /^(?:paid|cpc|ppc|native|nativead|native-ad|sponsored|paidsocial|paid[-_ ]?content)$/i;
+const NATIVE_WIDGET = /(?:^|[-_\s])(taboola|trc|outbrain|ob-widget|ob|zergnet|dianomi|revcontent|mgid|nativo|ntv|plista|ligatus|nativead|native-ad|native_ad|nativeads)(?:$|[-_\s\d])/i;
+const DISCLOSURE = /^(?:sponsored|sponsored content|promoted|promoted content|paid content|paid post|paid partnership|partner content|advertisement|advertorial|ad|ads)$/i;
+function commercialDisclosure(card: HTMLElement, link: HTMLAnchorElement, pageUrl: string): string | undefined {
+  try {
+    const target = new URL(link.getAttribute('href') ?? '', pageUrl);
+    if (AD_CLICK.test(target.hostname) || AD_PATH.test(target.hostname + target.pathname)) return 'Sponsored (ad network link)';
+    if (PAID_UTM.test(target.searchParams.get('utm_source') ?? '') || PAID_MEDIUM.test(target.searchParams.get('utm_medium') ?? '')) return 'Sponsored (paid tracking)';
+  } catch { /* malformed links carry no evidence */ }
+  // The widget wraps its tiles; a card's own id or class (often a slug) is not evidence.
+  for (let current: HTMLElement | null = composedParent(card), depth = 0; current && current !== document.body && depth < 12; current = composedParent(current), depth++) {
+    if (NATIVE_WIDGET.test(`${markers(current)} ${current.tagName}`) || current.hasAttribute('data-native-ad')) return 'Sponsored (native ad widget)';
+  }
+  const lone = [...card.querySelectorAll<HTMLElement>('a, span, div, p, small, [data-native-label]')].find(value =>
+    value.hasAttribute('data-native-label') || !value.children.length && DISCLOSURE.test(clean(value.textContent)));
+  return lone && ownedVisibleContent(lone, card, true) ? 'Sponsored' : undefined;
 }
 function candidateFor(seed: HTMLElement, pageUrl: string, extract: (element: HTMLElement) => DetectedStory<HTMLElement> | null, urlCache: Map<HTMLElement, Set<string>>, siblingCache: Map<HTMLElement, Map<string, number>>): HTMLElement | null {
   let parent: HTMLElement | null = seed.matches('a[href]') ? seed : seed.parentElement;
