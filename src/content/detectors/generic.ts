@@ -20,16 +20,20 @@ export function composedClosest(element: Element, selector: string): Element | n
   }
   return null;
 }
+// Content scripts may reach closed roots through the platform; tests and pages use open ones.
+let shadowRootOf: (element: Element) => ShadowRoot | null = element => element.shadowRoot;
+export function useShadowRootResolver(resolver: (element: Element) => ShadowRoot | null) { shadowRootOf = resolver; }
 export function openShadowRoots(root: Root, limit = 4000): ShadowRoot[] {
   const found: ShadowRoot[] = [];
   const visit = (scope: Document | Element | ShadowRoot) => {
     for (const element of scope.querySelectorAll('*')) {
-      const shadow = element.shadowRoot;
+      const shadow = shadowRootOf(element);
       if (!shadow || found.length >= limit) continue;
       found.push(shadow); visit(shadow);
     }
   };
-  if (root instanceof Element && root.shadowRoot) { found.push(root.shadowRoot); visit(root.shadowRoot); }
+  const own = root instanceof Element ? shadowRootOf(root) : null;
+  if (own) { found.push(own); visit(own); }
   visit(root);
   return found;
 }

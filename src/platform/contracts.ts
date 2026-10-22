@@ -36,4 +36,6 @@ export interface Platform {
   permissions: PermissionAdapter;
   installed(listener: (reason: string) => void): void;
   badge(tabId: number, count: number): Promise<void>;
+  /** Extension-only access to an element's shadow root, including closed ones (content scripts). */
+  shadowRoot?(element: Element): ShadowRoot | null;
 }

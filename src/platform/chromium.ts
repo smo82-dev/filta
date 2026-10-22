@@ -15,6 +15,7 @@ interface NativeApi {
   tabs: { query(query: { active: boolean; currentWindow: boolean }): Promise<Tab[]>;
     sendMessage(id: number, message: Message): Promise<unknown>; create(properties: { url: string }): Promise<Tab> };
   permissions: { contains(query: { origins: string[] }): Promise<boolean> };
+  dom?: { openOrClosedShadowRoot?(element: Element): ShadowRoot | null };
   action: { setBadgeText(options: { tabId: number; text: string }): Promise<void>;
     setBadgeBackgroundColor(options: { tabId: number; color: string }): Promise<void> };
 }
@@ -59,6 +60,10 @@ export function chromiumPlatform(): Platform {
     },
     permissions: { contains(origins) { return native.permissions.contains({ origins }); } },
     installed(listener) { native.runtime.onInstalled.addListener(details => listener(details.reason)); },
+    shadowRoot(element) {
+      // chrome.dom is available to content scripts; elsewhere fall back to open roots only.
+      try { return native.dom?.openOrClosedShadowRoot?.(element) ?? element.shadowRoot; } catch { return element.shadowRoot; }
+    },
     async badge(tabId, count) {
       await native.action.setBadgeBackgroundColor({ tabId, color: '#146453' });
       await native.action.setBadgeText({ tabId, text: count ? String(count) : '' });
