@@ -95,3 +95,24 @@ test('New Zealand sport names, with ambiguous club names needing sporting contex
     assert.ok(!(await flagged(headline)).includes('sport'), headline);
   }
 });
+
+test('qualified publisher sections: politics_election-2026, crime-and-justice, sponsored-stories; combined sections decide neither', async () => {
+  const at = (path, headline = 'A plain update from the region today') => flagged(headline, { url: `https://news.example/${path}/story-123` });
+  assert.ok((await at('news/politics_election-2026')).includes('politics'));
+  assert.ok((await at('news/crime-and-justice')).includes('crime'));
+  assert.ok((await at('sponsored-stories')).includes('sponsored'));
+  assert.ok((await at('nz-politics')).includes('politics'));
+  const combined = await at('news/science-and-technology');
+  assert.ok(!combined.includes('science') && !combined.includes('technology'));
+  assert.ok(!(await at('news/crime-wave-hits-suburbs-hard')).includes('crime'), 'long slugs are not sections');
+});
+
+test('opinion leads, sexual offending vocabulary, conflict-zone attacks and technology words', async () => {
+  assert.ok((await flagged('Analysis: The real roadblock to reform is not the Prime Minister')).includes('opinion'));
+  assert.ok((await flagged('Some text', { url: 'https://news.example/commentisfree/2026/oct/23/piece' })).includes('opinion'));
+  assert.ok((await flagged('Influencer pleads not guilty to raping teen')).includes('sexual'));
+  assert.ok((await flagged('Russia bombs Kyiv as Ukraine fires drones towards Moscow')).includes('war'));
+  assert.ok((await flagged('Remote-controlled robot nudges kitten to safety')).includes('technology'));
+  assert.ok(!(await flagged('Redwood: The KGB agent who helped stop the Cold War turning hot')).includes('war'));
+  assert.ok(!(await flagged('Opinion polls show the race tightening in the capital')).includes('opinion'));
+});

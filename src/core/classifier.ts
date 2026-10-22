@@ -3,6 +3,8 @@ import { CATEGORIES, type CategoryDefinition } from './rules/categories';
 import { normalise, storyFields } from './text';
 import { topicEvidence } from './topic-model';
 const FIELD_WEIGHTS: Record<Field, number> = { headline: 1, description: 0.35, url: 0.25, section: 1.5, label: 1.5 };
+const TAXONOMY_QUALIFIERS = new Set(['news', 'stories', 'story', 'content', 'and', 'the', 'latest', 'live', 'local', 'world', 'national',
+  'international', 'nz', 'au', 'uk', 'us', 'election', 'elections', 'justice', 'reports', 'features', 'updates']);
 const contains = (text: string, phrase: string) => !!phrase && (` ${text} `).includes(` ${phrase} `);
 export class RuleBasedClassifier implements StoryClassifier {
   private readonly compiled;
@@ -17,6 +19,19 @@ export class RuleBasedClassifier implements StoryClassifier {
       supportKeys: (category.support?.cues ?? []).map(normalise),
       workKeys: (category.personFocus?.works ?? []).map(normalise),
     }));
+    for (const category of this.compiled) for (const key of category.sectionKeys) if (!this.sectionOwner.has(key)) this.sectionOwner.set(key, category.id);
+  }
+  // Publisher taxonomy often qualifies a section: "politics_election-2026", "crime-and-justice",
+  // "science-and-technology", "sponsored-stories", "NZ Politics". Accept the section name at either
+  // end when every other word is a generic qualifier or another section name; slugs never qualify.
+  private readonly sectionOwner = new Map<string, string>();
+  private taxonomy(text: string, key: string): boolean {
+    if (text === key) return true;
+    const words = text.split(' ');
+    if (words.length > 5 || !(text.startsWith(`${key} `) || text.endsWith(` ${key}`))) return false;
+    const rest = (text.startsWith(`${key} `) ? text.slice(key.length + 1) : text.slice(0, -key.length - 1)).split(' ');
+    // "crime and justice" names one topic; "science and technology" spans two, so it decides neither.
+    return rest.every(word => TAXONOMY_QUALIFIERS.has(word) || /^\d+$/.test(word) || this.sectionOwner.get(word) === this.sectionOwner.get(key));
   }
   async classify(story: Story): Promise<ClassificationResult> {
     const fields = Object.entries(storyFields(story)).map(([field, texts]) => [field, texts.map(normalise)] as [Field, string[]]);
@@ -71,7 +86,7 @@ export class RuleBasedClassifier implements StoryClassifier {
         }
         // Exact publisher taxonomy is contextual evidence, not an incidental slug keyword.
         const alias = category.sectionKeys.find(key => field === 'section' || field === 'label'
-          ? texts.some(text => text === key) : field === 'url' && path.includes(key));
+          ? texts.some(text => this.taxonomy(text, key)) : field === 'url' && path.some(segment => this.taxonomy(segment, key)));
         if (alias && fieldScore < category.threshold) {
           const contribution = category.threshold - fieldScore;
           fieldScore += contribution;

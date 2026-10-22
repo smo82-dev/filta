@@ -14,6 +14,7 @@ This branch improves article discovery, topic evidence and dynamic updates acros
 - Reach closed shadow roots; scan busy front pages about 2.4× faster.
 - Broaden War & Conflict (with a learned war model), Death & Tragedy, Disaster and Celebrity & Gossip, and New Zealand sport names.
 - Recognise celebrity stories about a person (not a film, show or chart), and train on newer headlines (to 2022).
+- Understand qualified publisher sections (election, crime-and-justice, sponsored-stories), opinion leads such as "Analysis:", and sexual-offending language. On today's 1News, BBC and Guardian headlines, topic recall rose from 25% (PR #1) to 45%.
 - Credit the training datasets in `THIRD_PARTY_NOTICES`.
 - See `docs/validation-0.2.0/DEV3.md` for evidence, limits and the training-data licence decision.
 
