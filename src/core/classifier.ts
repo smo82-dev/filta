@@ -12,11 +12,16 @@ export class RuleBasedClassifier implements StoryClassifier {
       combinations: (category.combinations ?? []).map(rule => ({ ...rule,
         alternatives: rule.terms.map(term => term.split('|').map(normalise)) })),
       sectionKeys: (category.sections ?? []).map(normalise),
+      disclosureKeys: (category.headlineDisclosures ?? []).map(normalise),
     }));
   }
   async classify(story: Story): Promise<ClassificationResult> {
     const fields = Object.entries(storyFields(story)).map(([field, texts]) => [field, texts.map(normalise)] as [Field, string[]]);
     const headline = normalise(story.headline);
+    // A delimited leading disclosure is editorial metadata embedded in a title.
+    // Do not upgrade incidental narrative mentions, quotes or undelimited words.
+    const disclosure = story.headline.normalize('NFKC').trim().match(/^(?:\[([^\]]+)\]|([\p{L} ]+?)\s*[:|–—-])\s*\S/u);
+    const disclosureKey = normalise(disclosure?.[1] ?? disclosure?.[2] ?? '');
     const narrative = [headline, normalise(story.description ?? '')];
     let path: string[] = [];
     try { path = new URL(story.url ?? '').pathname.split('/').filter(Boolean).slice(0, -1).map(value => normalise(decodeURIComponent(value))); }
@@ -24,6 +29,10 @@ export class RuleBasedClassifier implements StoryClassifier {
     const signals: Signal[] = [];
     const categories = this.compiled.map(category => {
       let score = 0;
+      if (category.disclosureKeys.includes(disclosureKey)) {
+        score += category.threshold;
+        signals.push({ category: category.id, field: 'headline', term: `Disclosure: ${disclosureKey}`, contribution: category.threshold, kind: 'term' });
+      }
       for (const [field, texts] of fields) {
         let fieldScore = 0;
         for (const rule of category.terms) {

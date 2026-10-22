@@ -1,11 +1,12 @@
 import type { DetectedStory, StoryDetector } from '../../core/types';
 import { canonicalUrl, normalise } from '../../core/text';
-import { extractMetadata, ownedVisibleContent } from './labels';
+import { extractMetadata, markers, metadataElement, ownedVisibleContent } from './labels';
 import { structuredSections } from './structured';
 export type Root = Document | HTMLElement;
-const PROTECTED = 'nav, footer, [role="navigation"], [role="banner"], [role="contentinfo"], [role="dialog"], [role="alert"], [role="menu"], form, [data-news-filter-ui], [data-emergency], .article-body, .article__body, [itemprop="articleBody"]';
+const PROTECTED = 'nav, footer, [role="navigation"], [role="banner"], [role="contentinfo"], [role="dialog"], [role="alert"], [role="menu"], form, [data-related], [data-recommendations], [data-news-filter-ui], [data-emergency], .article-body, .article__body, [itemprop="articleBody"]';
 export const CARD = 'article, li, [class*="story"], [class*="card"], [class*="teaser"], [class*="fc-item"], [data-testid*="card"], [data-testid*="story"], [data-testid*="article"], [data-type="article"], [itemtype*="NewsArticle"]';
 const HEADINGS = 'h2, h3, h4, h5, h6, [role="heading"], [itemprop="headline"], [data-testid*="headline"], [class*="headline"], [class*="heading"], [class*="title"]';
+const NAVIGATION_URL = /\/(?:login|signin|subscribe|account|privacy|cookie|tag|tags|topic|topics|category|categories|profile|authors?|app)(?:\/|$)/i;
 const clean = (value: string | null | undefined) => (value ?? '').replace(/\s+/g, ' ').trim();
 const plausible = (value: string) => !/<[a-z][^>]*>/i.test(value) && value.length >= 12 && value.length <= 320 && /\s/.test(value);
 export function nodes(root: Root, selector: string): HTMLElement[] {
@@ -24,14 +25,23 @@ function linkUrl(link: HTMLAnchorElement, pageUrl: string): string {
 function headlineAnchor(link: HTMLAnchorElement): boolean {
   let text = clean(link.textContent);
   for (const caption of link.querySelectorAll('figcaption, [class*="caption" i], [class*="credit" i]')) text = text.replace(clean(caption.textContent), '').trim();
-  return !link.matches('[rel~="tag"], [download]') && !link.closest('p, time, button, [data-news-filter-ui], [class*="byline"], [class*="category"], [class*="section-label"]') &&
+  return !link.matches('[rel~="tag"], [download]') && !link.closest('p, time, button, [data-news-filter-ui]') &&
     plausible(text) && !/^(?:read more|view all|see all|subscribe|sign in|log in)\b/i.test(clean(link.textContent));
 }
-function storyLinks(element: HTMLElement): HTMLAnchorElement[] {
+function storyLinks(element: HTMLElement, pageUrl: string): HTMLAnchorElement[] {
   return [...new Set([
     ...nodes(element, HEADINGS).map(headingLink).filter((x): x is HTMLAnchorElement => !!x),
     ...nodes(element, 'a[href]').filter((x): x is HTMLAnchorElement => x instanceof HTMLAnchorElement && headlineAnchor(x)),
-  ])].filter(link => (link === element || element.contains(link)) && !link.closest('[data-news-filter-ui]'));
+  ])].filter(link => {
+    if (!(link === element || element.contains(link)) || !ownedVisibleContent(link, element, false, true)) return false;
+    const url = linkUrl(link, pageUrl);
+    if (!url || NAVIGATION_URL.test(new URL(url).pathname)) return false;
+    // Taxonomy, byline and related-story links are not competing story URLs.
+    for (let current: HTMLElement | null = link; current && current !== element; current = current.parentElement) {
+      if (metadataElement(current) && !current.querySelector(HEADINGS) && !current.matches(HEADINGS)) return false;
+    }
+    return true;
+  });
 }
 export function protectedElement(element: HTMLElement): boolean {
   if (element.closest(PROTECTED)) return true;
@@ -40,8 +50,8 @@ export function protectedElement(element: HTMLElement): boolean {
   if (header && !header.closest(CARD)) return true;
   for (let ancestor: HTMLElement | null = element; ancestor && ancestor !== document.body; ancestor = ancestor.parentElement) {
     if (/(?:^|[-_\s])(cookie|consent|privacy|advert|advertisement|navigation|emergency|alert)(?:$|[-_\s])/i
-      .test(`${ancestor.className} ${ancestor.id}`.replace(/([a-z])([A-Z])/g, '$1 $2'))) return true;
-    if (/(?:^|[-_\s])(byline|promotional|toolbar|menu)(?:$|[-_\s])/i.test(`${ancestor.className} ${ancestor.id}`.replace(/([a-z])([A-Z])/g, '$1 $2'))) return true;
+      .test(markers(ancestor))) return true;
+    if (/(?:^|[-_\s])(byline|toolbar|menu)(?:$|[-_\s])/i.test(markers(ancestor))) return true;
   }
   return false;
 }
@@ -53,17 +63,17 @@ export function extractCard(element: HTMLElement, pageUrl: string, detector: str
   if (['BODY', 'MAIN', 'SECTION', 'HTML', 'HEADER', 'FOOTER', 'NAV', 'P'].includes(element.tagName)) return reject('page-container');
   // A reading view or a collection of multiple stories is never a card.
   if (element.querySelector('h1, [itemprop="articleBody"], .article-body, .article__body')) return reject('reading-view');
-  if ([...element.querySelectorAll<HTMLElement>('article, li')].some(child =>
+  if ([...element.querySelectorAll<HTMLElement>('article, li')].filter(child => ownedVisibleContent(child, element)).some(child =>
     nodes(child, HEADINGS).some(heading => !!headingLink(heading)) || nodes(child, 'a[href]').some(link => link instanceof HTMLAnchorElement && headlineAnchor(link)))) return reject('nested-story-boundary');
-  const links = [...new Set([...(hints ? [hints.link] : []), ...storyLinks(element)])];
+  const links = [...new Set([...(hints ? [hints.link] : []), ...storyLinks(element, pageUrl)])];
   const urls = new Set(links.map(link => linkUrl(link, pageUrl)).filter(Boolean));
   if (urls.size > 1) return reject('multiple-stories');
   let link = links.find(value => plausible(clean(value.textContent)) || value === hints?.link);
   // Overlay cards may keep headline text outside an empty, accessible story link.
-  const headings = nodes(element, HEADINGS).filter(value => plausible(clean(value.textContent)) && !value.querySelector(HEADINGS));
+  const headings = nodes(element, HEADINGS).filter(value => ownedVisibleContent(value, element, false, true) && plausible(clean(value.textContent)) && !value.querySelector(HEADINGS));
   if (!link && headings.length === 1) {
     const overlays = nodes(element, 'a[href]').filter((value): value is HTMLAnchorElement => value instanceof HTMLAnchorElement &&
-      !value.matches('[rel~="tag"]') && !value.closest('p') && !!linkUrl(value, pageUrl));
+      !value.matches('[rel~="tag"]') && !value.closest('p') && ownedVisibleContent(value, element) && !metadataElement(value) && !!linkUrl(value, pageUrl));
     if (new Set(overlays.map(value => linkUrl(value, pageUrl))).size === 1) link = overlays[0];
   }
   if (!link) return reject('no-headline-link');
@@ -75,7 +85,7 @@ export function extractCard(element: HTMLElement, pageUrl: string, detector: str
   const url = linkUrl(link, pageUrl);
   if (!url || url === canonicalUrl(pageUrl)) return reject('invalid-or-current-url');
   const parsed = new URL(url);
-  if (/\/(?:login|signin|subscribe|account|privacy|cookie|tag|tags|category|categories|profile|authors?|app)(?:\/|$)/i.test(parsed.pathname)) return reject('navigation-url');
+  if (NAVIGATION_URL.test(parsed.pathname)) return reject('navigation-url');
   if (parsed.pathname === '/' || !parsed.pathname.split('/').filter(Boolean).length) return reject('navigation-url');
   const lastSegment = parsed.pathname.split('/').filter(Boolean).at(-1) ?? '';
   try { if (headline.split(/\s+/).length <= 3 && normalise(headline) === normalise(decodeURIComponent(lastSegment))) return reject('section-landing-link'); } catch { /* optional URL hint */ }
@@ -102,7 +112,7 @@ function candidateFor(seed: HTMLElement, pageUrl: string, extract: (element: HTM
   for (let depth = 0; parent && depth < 8; depth++, parent = parent.parentElement) {
     if (protectedElement(parent) || ['BODY', 'MAIN', 'SECTION', 'HTML'].includes(parent.tagName)) break;
     let urls = urlCache.get(parent);
-    if (!urls) { urls = new Set(storyLinks(parent).map(link => linkUrl(link, pageUrl)).filter(Boolean)); urlCache.set(parent, urls); }
+    if (!urls) { urls = new Set(storyLinks(parent, pageUrl).map(link => linkUrl(link, pageUrl)).filter(Boolean)); urlCache.set(parent, urls); }
     if (urls.size > 1) break;
     const named = parent.matches(CARD) || parent instanceof HTMLAnchorElement && !!parent.querySelector(HEADINGS);
     const siblings = parent.parentElement;

@@ -139,7 +139,7 @@ test('Chromium: production DOM/UI with a simulated WebExtension API (native inst
       await visible(news, 'crime'); await visible(news, 'celebrity'); await popup.close();
       await harness.loadNews(news); await visible(news, 'crime');
       popup = await harness.popup(news);
-      await popup.getByRole('button', { name: 'Resume filtering on this site' }).click();
+      await popup.getByRole('button', { name: 'Resume this site' }).click();
       await hidden(news, 'crime'); await popup.close();
     });
     await t.test('global pause and resume apply immediately', async () => {

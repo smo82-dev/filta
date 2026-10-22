@@ -1,0 +1,146 @@
+{
+  "provenance": "Small publisher headline challenge sample, captured 20 October 2026 UTC. Hand-labelled binary category judgements use headline and supplied card context; other categories are unspecified. Investigation informed general grammar/context corrections, so this is not an independent accuracy estimate. No sponsored/science positive examples in this sample.",
+  "samples": 28,
+  "categories": {
+    "politics": {
+      "tp": 3,
+      "fp": 0,
+      "tn": 0,
+      "fn": 2,
+      "precision": 1,
+      "recall": 0.6
+    },
+    "tragedy": {
+      "tp": 0,
+      "fp": 0,
+      "tn": 0,
+      "fn": 1,
+      "precision": null,
+      "recall": 0
+    },
+    "entertainment": {
+      "tp": 3,
+      "fp": 0,
+      "tn": 0,
+      "fn": 1,
+      "precision": 1,
+      "recall": 0.75
+    },
+    "crime": {
+      "tp": 3,
+      "fp": 0,
+      "tn": 0,
+      "fn": 0,
+      "precision": 1,
+      "recall": 1
+    },
+    "celebrity": {
+      "tp": 2,
+      "fp": 0,
+      "tn": 0,
+      "fn": 0,
+      "precision": 1,
+      "recall": 1
+    },
+    "sport": {
+      "tp": 2,
+      "fp": 0,
+      "tn": 1,
+      "fn": 0,
+      "precision": 1,
+      "recall": 1
+    },
+    "business": {
+      "tp": 1,
+      "fp": 0,
+      "tn": 0,
+      "fn": 1,
+      "precision": 1,
+      "recall": 0.5
+    },
+    "sexual": {
+      "tp": 1,
+      "fp": 0,
+      "tn": 0,
+      "fn": 0,
+      "precision": 1,
+      "recall": 1
+    },
+    "technology": {
+      "tp": 1,
+      "fp": 0,
+      "tn": 0,
+      "fn": 1,
+      "precision": 1,
+      "recall": 0.5
+    },
+    "disaster": {
+      "tp": 2,
+      "fp": 0,
+      "tn": 1,
+      "fn": 0,
+      "precision": 1,
+      "recall": 1
+    },
+    "opinion": {
+      "tp": 1,
+      "fp": 0,
+      "tn": 0,
+      "fn": 0,
+      "precision": 1,
+      "recall": 1
+    },
+    "war": {
+      "tp": 0,
+      "fp": 0,
+      "tn": 1,
+      "fn": 0,
+      "precision": null,
+      "recall": null
+    }
+  },
+  "misses": [
+    {
+      "publisher": "bbc",
+      "category": "politics",
+      "headline": "Zelensky says US intelligence sharing 'works now' after talks with Trump envoy",
+      "expected": true,
+      "score": 0
+    },
+    {
+      "publisher": "bbc",
+      "category": "politics",
+      "headline": "Alberta's decisive decision to stay in Canada gives Carney backing to take on Trump",
+      "expected": true,
+      "score": 0
+    },
+    {
+      "publisher": "bbc",
+      "category": "tragedy",
+      "headline": "As Kim Jong Un appears in photos, why do rumours of his death keep coming back?",
+      "expected": true,
+      "score": 3
+    },
+    {
+      "publisher": "bbc",
+      "category": "entertainment",
+      "headline": "Christina Applegate says she was wrongly diagnosed with MS",
+      "expected": true,
+      "score": 0
+    },
+    {
+      "publisher": "rnz",
+      "category": "technology",
+      "headline": "Facebook could soon cost your small business $900 a month",
+      "expected": true,
+      "score": 0
+    },
+    {
+      "publisher": "nz-herald",
+      "category": "business",
+      "headline": "Founders of South Island's biggest property development firm split, divide $800m empire",
+      "expected": true,
+      "score": 0
+    }
+  ]
+}

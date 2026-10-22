@@ -42,7 +42,12 @@ export function explanation(record: StoryRecord, debug = false): HTMLDetailsElem
     list.append(node('li', `“${signal.term}” in ${signal.field}${signal.kind === 'context' ? ' — contextual exception, lowers score' : ''} (${signal.contribution > 0 ? '+' : ''}${signal.contribution})`));
   }
   if (list.children.length) details.append(list);
-  if (debug) details.append(node('small', `Detector: ${record.detector}. Final action: ${record.decision.action}.`));
+  if (debug) {
+    details.append(node('small', `Detector: ${record.detector}. Final action: ${record.decision.action}.`));
+    for (const [field, value] of Object.entries(record.story)) {
+      if (value) details.append(node('p', `${field}: ${Array.isArray(value) ? value.join(', ') : value}`));
+    }
+  }
   return details;
 }
 function keywordEditor(record: StoryRecord, kind: 'allowedKeywords' | 'blockedKeywords', feedback: Feedback): HTMLElement {

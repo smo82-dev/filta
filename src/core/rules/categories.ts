@@ -10,6 +10,7 @@ export interface CategoryDefinition {
   contexts?: TermRule[];
   fieldWeights?: Partial<Record<Field, number>>;
   sections?: string[];
+  headlineDisclosures?: string[];
 }
 const terms = (weight: number, ...values: string[]): TermRule[] => values.map(term => ({ term, weight }));
 export const CATEGORIES: CategoryDefinition[] = [
@@ -79,6 +80,7 @@ export const CATEGORIES: CategoryDefinition[] = [
     combinations: [{ terms: ['researchers', 'discover|discovered|experiment|findings'], weight: 4 }, { terms: ['space|nasa', 'telescope|planet|mission|galaxy'], weight: 4 }],
     contexts: terms(-6, 'market research', 'bible study') },
   { id: 'sponsored', sections: ['sponsored', 'promoted', 'paid content', 'partner content', 'advertorial', 'branded content'], name: 'Sponsored & Paid Content', threshold: 4, fieldWeights: { label: 2 },
+    headlineDisclosures: ['sponsored', 'paid content', 'paid post', 'partner content', 'advertorial', 'advertisement', 'branded content', 'promoted'],
     terms: [
       ...terms(4, 'paid content', 'paid post', 'partner content', 'brand partner', 'branded content',
         'commercial content', 'presented by', 'brought to you by', 'in partnership with',

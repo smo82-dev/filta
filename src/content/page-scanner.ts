@@ -76,7 +76,7 @@ export class PageScanner {
     this.observer.observe(document.documentElement, {
       childList: true, subtree: true, characterData: true, attributes: true,
       attributeFilter: ['href', 'src', 'data-section', 'data-label', 'data-kicker', 'data-topic', 'data-category',
-        'data-sponsored', 'data-partner', 'itemprop', 'content', 'itemtype', 'data-testid', 'data-component', 'rel', 'aria-label', 'aria-hidden', 'hidden', 'class', 'style'],
+        'data-sponsored', 'data-partner', 'data-related', 'data-recommendations', 'data-emergency', 'itemprop', 'content', 'itemtype', 'data-testid', 'data-component', 'rel', 'role', 'aria-label', 'aria-hidden', 'hidden', 'inert', 'class', 'style'],
     });
     window.addEventListener('popstate', this.navigate);
     const navigation = (window as Window & { navigation?: EventTarget }).navigation;

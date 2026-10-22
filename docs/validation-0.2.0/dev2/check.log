@@ -1,0 +1,229 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> local-news-filter@0.2.0 check
+> npm run test && npm run build && npm run test:browser && node scripts/audit.mjs
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> local-news-filter@0.2.0 test
+> node scripts/test.mjs
+
+✔ no categories selected at first run, default collapse, no action before setup (4.831381ms)
+▶ every starter category has a working weighted seed signal
+  ✔ Celebrity & Gossip (0.985918ms)
+  ✔ Crime (0.866217ms)
+  ✔ Death & Tragedy (1.456047ms)
+  ✔ Sexual Content (0.588107ms)
+  ✔ War & Conflict (0.560857ms)
+  ✔ Disaster (0.634908ms)
+  ✔ Politics (0.530952ms)
+  ✔ Sport (1.054592ms)
+  ✔ Entertainment (0.659866ms)
+  ✔ Opinion (0.573425ms)
+  ✔ Business (0.647146ms)
+  ✔ Technology (0.452373ms)
+  ✔ Science (0.996664ms)
+  ✔ Sponsored & Paid Content (0.489809ms)
+✔ every starter category has a working weighted seed signal (13.245959ms)
+✔ FILTA sport detection covers major US, UK, Australian and NZ sporting language (5.603437ms)
+✔ headline, description, section and URL have different weights (1.594275ms)
+✔ combinations add confidence and signals remain explainable (0.602129ms)
+✔ an incidental actor mention alone does not trigger celebrity gossip (0.663932ms)
+✔ context: technology preventing deaths stays visible (0.739295ms)
+✔ context exclusions cover crime, disaster and figurative war (1.507054ms)
+✔ a URL context cannot neutralise a fatal headline (0.383118ms)
+✔ repeated terms count once per field (0.317469ms)
+✔ whole-word, punctuation, Unicode and case-insensitive matching (0.687707ms)
+✔ selected categories collapse and unselected categories allow (0.726075ms)
+✔ hide mode makes the same category decision with a different action (0.369417ms)
+✔ blocked custom phrase filters even without categories and explains its location (0.601447ms)
+✔ always-show keyword takes precedence over blocked phrases, selected categories and hide once (0.458843ms)
+✔ URL paths are decoded and included in keyword matching, query strings are not (0.830223ms)
+✔ disabled globally or on a domain always allows, even for manual hide (0.906568ms)
+✔ restore once allows a matching story and manual hide works when active (1.187231ms)
+✔ emergency information remains visible even when a matching rule asks to hide (0.393764ms)
+✔ exact URL exceptions are canonical and always-show beats blocked URLs (0.686836ms)
+✔ preferences are validated, deduplicated and bounded; malformed values fail safely (0.691954ms)
+✔ patching a field preserves existing preferences (0.213763ms)
+✔ domain matching respects boundaries and subdomains (0.142885ms)
+✔ canonical URLs strip query/fragment and refuse non-web URLs (0.088083ms)
+✔ filter pipeline accepts an independent asynchronous classifier implementation (0.171679ms)
+▶ explicit sponsored and paid labels are strong, case-insensitive category signals
+  ✔ Sponsored (0.424611ms)
+  ✔ SPONSORED (0.388867ms)
+  ✔ Paid Content (0.440004ms)
+  ✔ Paid Post (0.398361ms)
+  ✔ Partner Content (0.579143ms)
+  ✔ Promoted (0.508007ms)
+  ✔ Advertisement (0.431501ms)
+  ✔ Advertorial (0.308305ms)
+  ✔ Brand Partner (0.399172ms)
+  ✔ Branded Content (0.5496ms)
+  ✔ Commercial content (0.282176ms)
+  ✔ Presented by Acme (0.317429ms)
+  ✔ Brought to you by Acme (0.243347ms)
+  ✔ In partnership with Acme (0.734107ms)
+  ✔ Native advertising (0.323268ms)
+  ✔ Sponsored by Acme (0.288926ms)
+  ✔ Partner feature (0.262967ms)
+✔ explicit sponsored and paid labels are strong, case-insensitive category signals (7.902015ms)
+✔ hide and always-show phrases match labels with existing whole-phrase boundaries (1.054441ms)
+✔ labels do not inflate repeated rule evidence or duplicate existing section scores (0.869732ms)
+✔ sponsored rules use conservative field weights and ignore ambiguous narrative words (1.973599ms)
+✔ sponsored labels preserve every higher-priority exception and old stored choices (2.278899ms)
+✔ balanced 14-category challenge corpus: separate classification and preference outcomes (67.735935ms)
+✔ taxonomy segments differ from incidental slug, query, fragment and substring mentions (1.070886ms)
+✔ normalised duplicate labels cannot accumulate weak evidence (0.353423ms)
+✔ explicit leading disclosures are decisive; reporting on sponsorship stays conservative (4.045485ms)
+ℹ tests 65
+ℹ suites 0
+ℹ pass 65
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 159.153194
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> local-news-filter@0.2.0 build
+> npm run typecheck && node scripts/build.mjs
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> local-news-filter@0.2.0 typecheck
+> tsc --noEmit
+
+Built dist/: self-contained Manifest V3 extension.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> local-news-filter@0.2.0 test:browser
+> node --test tests/browser.test.mjs tests/sponsored.test.mjs tests/reliability-browser.test.mjs tests/publisher-fixtures.test.mjs tests/ui.test.mjs tests/bbc-owner.test.mjs tests/pipeline-regressions.test.mjs tests/popup-layout.test.mjs tests/stuff-owner.test.mjs
+
+✔ BBC owner examples: real captured markup through discovery, extraction, classification and rendering (895.870584ms)
+✔ context combinations use exact-card headline and summary across categories without phrase-boundary fabrication (7.713475ms)
+▶ Chromium: production DOM/UI with a simulated WebExtension API (native installation is separate)
+  ✔ generic detection extracts complete single cards and protects navigation, cookies, advertisements and emergencies (217.794838ms)
+  ✔ BBC, Guardian and RNZ adapters detect their representative structures (127.626353ms)
+  ✔ article reading views and uncertain collection wrappers stay untouched (102.425381ms)
+  ✔ mutation batching caches existing stories and scans inserted subtrees rather than the whole page (614.332665ms)
+  ✔ first-run settings select nothing and filtering starts only after explicit setup (896.381009ms)
+  ✔ collapse explains signals and restores a story immediately (91.988211ms)
+  ✔ preferences survive refresh; show-once overrides do not (269.463387ms)
+  ✔ popup reports current page counts; filtering mode is editable in settings (317.08319ms)
+  ✔ Hide mode review can explain and restore completely hidden stories (352.158023ms)
+  ✔ custom hide and always-show phrases apply live and retain precedence (370.438836ms)
+  ✔ site pause restores everything, survives refresh and resume reapplies rules (611.809918ms)
+  ✔ global pause and resume apply immediately (246.398199ms)
+  ✔ dynamic insertion and virtualised headline changes are filtered and corrected (221.553354ms)
+  ✔ restoration preserves the original inline display and priority; reused article bodies fail open (414.986809ms)
+  ✔ visible-story feedback uses understandable local phrases (294.760704ms)
+  ✔ don’t-hide feedback stores an always-show phrase and applies to later cards (219.46899ms)
+  ✔ debug mode outlines detected cards and exposes scores without changing rules (266.972397ms)
+  ✔ article body stays visible after deliberate navigation (60.863696ms)
+  ✔ unrelated websites are inactive until explicitly opted into detection (48.034164ms)
+  ✔ mobile-width settings, popup and explanation controls have no horizontal overflow (1442.255468ms)
+  ✔ concurrent feedback writes preserve both rules and there are no runtime page errors (29.072363ms)
+✔ Chromium: production DOM/UI with a simulated WebExtension API (native installation is separate) (7507.298344ms)
+▶ systemic pipeline: disclosures, ownership, metadata, delayed updates and safe rendering
+  ✔ reported headlines and ordinary publisher structures survive discovery and extract only owned fields (2.876921ms)
+  ✔ actual collapse decisions preserve protected content and precedence (367.658771ms)
+  ✔ actual hide decisions preserve protected content and precedence (153.883709ms)
+  ✔ late attribute-only metadata, recycled cards and loss of story boundaries are re-evaluated (608.324248ms)
+✔ systemic pipeline: disclosures, ownership, metadata, delayed updates and safe rendering (1555.177249ms)
+✔ 14 topics across five publisher layout families: extraction through rendering with unrelated cards visible (2061.548218ms)
+▶ compact toolbar: all states, no normal scroll/wrap, keyboard, narrow and doubled text
+  ✔ active example with 29 filtered / 72 detected stays compact (613.004706ms)
+  ✔ paused, no-cards, globally off, detection disabled and first-run states (2199.738098ms)
+  ✔ unsupported pages, connection failures and save errors remain usable (1348.717508ms)
+  ✔ long hostname truncates visually while retaining full accessible text; keyboard follows actions (330.049367ms)
+  ✔ 280px width and 200% text reflow preserve readable actions without horizontal clipping (643.11733ms)
+✔ compact toolbar: all states, no normal scroll/wrap, keyboard, narrow and doubled text (5628.26332ms)
+▶ captured publisher snippets: discovery and safe rendering (not whole-site recall)
+  ✔ Yahoo News (124.176593ms)
+  ✔ CNN (52.561581ms)
+  ✔ Fox News (30.228389ms)
+  ✔ NBC (27.888858ms)
+  ✔ CBS (38.79754ms)
+  ✔ ABC News (33.056856ms)
+  ✔ AP News (31.409661ms)
+  ✔ Washington Post (38.009691ms)
+  ✔ BBC (31.210045ms)
+  ✔ The Guardian (37.585451ms)
+  ✔ Sky News (39.497216ms)
+  ✔ Independent (28.83807ms)
+  ✔ The Sun (47.132349ms)
+  ✔ ABC Australia (19.134687ms)
+  ✔ 9News (30.744853ms)
+  ✔ SBS (26.915298ms)
+  ✔ 7NEWS (28.334821ms)
+  ✔ RNZ (17.457997ms)
+  ✔ NZ Herald (19.565887ms)
+  ✔ 1News (35.976373ms)
+  ✔ Otago Daily Times (29.412612ms)
+  ✔ The Press (32.563191ms)
+  ✔ The Post (17.767899ms)
+  ✔ Newsroom (35.664377ms)
+  ✔ The Spinoff (23.15937ms)
+✔ captured publisher snippets: discovery and safe rendering (not whole-site recall) (1163.078757ms)
+▶ captured publisher snippets: complete-card filtering, restoration and neighbour isolation
+  ✔ Yahoo News (738.479698ms)
+  ✔ CNN (661.121354ms)
+  ✔ Fox News (788.953543ms)
+  ✔ NBC (638.783229ms)
+  ✔ CBS (616.483486ms)
+  ✔ ABC News (648.226269ms)
+  ✔ AP News (595.609165ms)
+  ✔ Washington Post (573.006248ms)
+  ✔ BBC (576.64131ms)
+  ✔ The Guardian (585.4834ms)
+  ✔ Sky News (562.663924ms)
+  ✔ Independent (595.799354ms)
+  ✔ The Sun (523.627873ms)
+  ✔ ABC Australia (525.063556ms)
+  ✔ 9News (516.723545ms)
+  ✔ SBS (550.534093ms)
+  ✔ 7NEWS (515.075282ms)
+  ✔ RNZ (524.719081ms)
+  ✔ NZ Herald (518.113467ms)
+  ✔ 1News (540.425368ms)
+  ✔ Otago Daily Times (574.762148ms)
+  ✔ The Press (524.790062ms)
+  ✔ The Post (524.366047ms)
+  ✔ Newsroom (530.076936ms)
+  ✔ The Spinoff (521.80524ms)
+✔ captured publisher snippets: complete-card filtering, restoration and neighbour isolation (14676.083547ms)
+▶ universal reliability: labelled discovery, extraction, decisions, SPA and large feeds
+  ✔ labelled structural fixture meets 95% recall without modifying protected material (252.562051ms)
+  ✔ adapter metadata survives generic deduplication at an outer story boundary (114.674106ms)
+  ✔ all 14 categories filter complete cards in Collapse and Hide while other topics stay visible (591.098311ms)
+  ✔ dynamic metadata, insertion, removal and plain linked cards are processed incrementally (881.923565ms)
+  ✔ Show story survives metadata changes, resets for recycled URLs and URL-only SPA navigation (785.424653ms)
+  ✔ diagnostic counts are available only in debug mode and zero detection is understandable (243.619806ms)
+  ✔ 600-card feed keeps discovery bounded; cache reuse is covered by the incremental-scanner regression (291.166329ms)
+✔ universal reliability: labelled discovery, extraction, decisions, SPA and large feeds (3437.157038ms)
+▶ sponsored content: shared extraction, safety, settings and dynamic filtering
+  ✔ generic extraction keeps short visible metadata, without broad card text or unrelated advertisements (167.890176ms)
+  ✔ shared extraction works through BBC, RNZ and Guardian adapters including overlay cards (178.294297ms)
+  ✔ settings expose the unselected new category and category filtering explains/restores cards (1283.954323ms)
+  ✔ label-only hide phrases and always-show corrections keep precedence in both modes (112.643307ms)
+  ✔ inserted labels, text/marker/visibility changes and new cards are rescanned without losing hidden badges (1212.097337ms)
+✔ sponsored content: shared extraction, safety, settings and dynamic filtering (3263.980008ms)
+✔ Stuff owner rendered cards: exact discovery, field evidence, decisions and both rendering modes (599.439479ms)
+▶ guided setup, preference preservation, real popup interactions and accessibility
+  ✔ first run has no preselected categories; all 14 are accessible and setup is a draft until completed (2185.90142ms)
+  ✔ returning user skips onboarding; repeat setup and cancellation preserve preferences (1349.714988ms)
+  ✔ unsaved untouched lists never overwrite feedback from another tab (129.005846ms)
+  ✔ failed writes stay on the ready step, leave completion false and provide retry (317.681828ms)
+  ✔ existing version-1 users retain all settings and see the hub immediately (236.052911ms)
+  ✔ popup counts, site pause/resume, review, manage, unsupported and global-off states (1516.177866ms)
+  ✔ keyboard order, reduced motion, narrow layout and 200% text sizing (602.185202ms)
+✔ guided setup, preference preservation, real popup interactions and accessibility (6520.620205ms)
+ℹ tests 111
+ℹ suites 0
+ℹ pass 111
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 16338.535718
+Package audit passed: MV3 files, minimal permissions, isolated APIs, portable core, no network APIs/assets/eval.

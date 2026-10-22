@@ -1,0 +1,116 @@
+{
+  "baseline": "b41b5c2",
+  "provenance": "Read-only owner rendered DOM capture, offline replay; preferences set to sponsored for isolated diagnosis",
+  "before": [
+    {
+      "headline": "SPONSORED: The afterparty is the main event this year",
+      "extracted": {
+        "headline": "SPONSORED: The afterparty is the main event this year",
+        "url": "https://sponsoredinteractive.stuff.co.nz/when-singapore-turns-up-the-volume/index.html",
+        "imageUrl": "https://www.stuff.co.nz/media/images/9Tzi8ywRz924XE3uHaD6DZ3Ef+IdbOiYlvIROR5vlqUeRrexTocZGobKRJ9od%2Fgnk3B%2FCeKTmTAsIjj6Q0YaYQlP+0pbpAzYAuHEqDF289tM9Qd4ydWMK1xylY9KNlrqFAtKlHU3zSrBsztNX2oU1356Zb4BXDWMEqwdqVrpwn5Gl7rvVUBgyD%2FbjH1qXsSXpnhw6BKBmXbAlKR%2FYz0YHK+EqXkLHsxojRmTdPgfAq0=",
+        "labels": [
+          "Event"
+        ],
+        "sourceDomain": "www.stuff.co.nz"
+      },
+      "score": 1,
+      "decision": "allow"
+    },
+    {
+      "headline": "SPONSORED: The forest Dilmah is fighting to save",
+      "extracted": {
+        "headline": "SPONSORED: The forest Dilmah is fighting to save",
+        "url": "https://sponsoredinteractive.stuff.co.nz/a-better-cup-shared/index.html",
+        "imageUrl": "https://www.stuff.co.nz/media/images/9Tzi8ywRz924XE3uHaD6DZ3Ef+IdbOiYlvIROR5vlqUeRrexTocZGobKRJ9od%2Fgnk3B%2FCeKTmTAsIjj6Q0YaYfLbqh64JFTMQiuOeFALr8RHVwLiiEd2XsHXi0e2vbTIR1Wa7XHU3JeUUMv+T4Om+nmMTggNPkE1hsOkIVzi4JgVIbq2c1xjyAtRCH037rtBG1Yxq%2FxFrXrIm+FlQPRpe395PGOKKchKJOMZ9iulsATyyErudBFgzIzYwasdvKBEyhg3gk4Xqscf7y6zhTX5eQ==",
+        "labels": [
+          "Wellness"
+        ],
+        "sourceDomain": "www.stuff.co.nz"
+      },
+      "score": 1,
+      "decision": "allow"
+    },
+    {
+      "headline": "‘Pre-loved house’ for $195k and a lot of sweat equity makes a great first home",
+      "extracted": {
+        "headline": "‘Pre-loved house’ for $195k and a lot of sweat equity makes a great first home",
+        "url": "https://www.stuff.co.nz/home-property/361046408/pre-loved-house-195k-and-lot-sweat-equity-makes-great-first-home",
+        "imageUrl": "https://www.stuff.co.nz/media/images/9Tzi8ywRz924XE3uHaD6DZ3Ef+IdbOiYlvIROR5vlqUeRrexTocZGobKRJ9od%2Fgnk3B%2FCeKTmTAsIjj6Q0YaYc4r%2FW4By%2FPgi4JdJP2+xCk7zzM5Qfb0CNpJmRTEYj0mxMvljQuyTRrbZ%2FkI+rrupqO5ahaHMOk0tDxTgnRj3DgdNygu8VfttOj%2FCeehPsRIHl1Y6IsUXqHVyP3T%2Ft+CyMiAEebBVFx9que8cE6M5z5OypFvP0BHh+X%2F+xX5+BFHyuqUHGaV6FEtCFJ4bX84eZQX4aD6j9Hl8JTPmUrownmBLRr%2FawFtjFlRVG0fATX9lLoHbQ3n1cgpdUo8pjQV1zZBX7MMXdu2D2eTv%2FowIDrCVoYYHC+%2FjCj5FOdvdn+5gTnOTmkghVd%2FPsXp1JVIzodBZMxeUELuZ6AUIJ68UXxvsd0aLfXGdD17GpiCx6H%2FEuEOsXZFt%2FWXLglatGhJ7oTrByBATDszVGBuawEgbmxsTAe4a%2Fko+7iuQhiEpZa4PP2O9657qL9RjCkzaxx8xw==",
+        "labels": [
+          "Property"
+        ],
+        "sourceDomain": "www.stuff.co.nz"
+      },
+      "score": 0,
+      "decision": "allow"
+    },
+    {
+      "headline": "Butter, sauce or milk: What cafe extra do you resent paying for?",
+      "extracted": {
+        "headline": "Butter, sauce or milk: What cafe extra do you resent paying for?",
+        "url": "https://www.stuff.co.nz/food-drink/361045823/butter-sauce-or-milk-what-cafe-extra-do-you-resent-paying",
+        "sourceDomain": "www.stuff.co.nz"
+      },
+      "score": 0,
+      "decision": "allow"
+    }
+  ],
+  "after": [
+    {
+      "headline": "SPONSORED: The afterparty is the main event this year",
+      "extracted": {
+        "headline": "SPONSORED: The afterparty is the main event this year",
+        "url": "https://sponsoredinteractive.stuff.co.nz/when-singapore-turns-up-the-volume/index.html",
+        "imageUrl": "https://www.stuff.co.nz/media/images/9Tzi8ywRz924XE3uHaD6DZ3Ef+IdbOiYlvIROR5vlqUeRrexTocZGobKRJ9od%2Fgnk3B%2FCeKTmTAsIjj6Q0YaYQlP+0pbpAzYAuHEqDF289tM9Qd4ydWMK1xylY9KNlrqFAtKlHU3zSrBsztNX2oU1356Zb4BXDWMEqwdqVrpwn5Gl7rvVUBgyD%2FbjH1qXsSXpnhw6BKBmXbAlKR%2FYz0YHK+EqXkLHsxojRmTdPgfAq0=",
+        "labels": [
+          "Event"
+        ],
+        "sourceDomain": "www.stuff.co.nz"
+      },
+      "score": 5,
+      "decision": "collapse"
+    },
+    {
+      "headline": "SPONSORED: The forest Dilmah is fighting to save",
+      "extracted": {
+        "headline": "SPONSORED: The forest Dilmah is fighting to save",
+        "url": "https://sponsoredinteractive.stuff.co.nz/a-better-cup-shared/index.html",
+        "imageUrl": "https://www.stuff.co.nz/media/images/9Tzi8ywRz924XE3uHaD6DZ3Ef+IdbOiYlvIROR5vlqUeRrexTocZGobKRJ9od%2Fgnk3B%2FCeKTmTAsIjj6Q0YaYfLbqh64JFTMQiuOeFALr8RHVwLiiEd2XsHXi0e2vbTIR1Wa7XHU3JeUUMv+T4Om+nmMTggNPkE1hsOkIVzi4JgVIbq2c1xjyAtRCH037rtBG1Yxq%2FxFrXrIm+FlQPRpe395PGOKKchKJOMZ9iulsATyyErudBFgzIzYwasdvKBEyhg3gk4Xqscf7y6zhTX5eQ==",
+        "labels": [
+          "Wellness"
+        ],
+        "sourceDomain": "www.stuff.co.nz"
+      },
+      "score": 5,
+      "decision": "collapse"
+    },
+    {
+      "headline": "Butter, sauce or milk: What cafe extra do you resent paying for?",
+      "extracted": {
+        "headline": "Butter, sauce or milk: What cafe extra do you resent paying for?",
+        "url": "https://www.stuff.co.nz/food-drink/361045823/butter-sauce-or-milk-what-cafe-extra-do-you-resent-paying",
+        "imageUrl": "https://www.stuff.co.nz/media/images/9Tzi8ywRz924XE3uHaD6DZ3Ef+IdbOiYlvIROR5vlqUeRrexTocZGobKRJ9od%2Fgnk3B%2FCeKTmTAsIjj6Q0YaYclk%2FAbJPdakzemz2jxpb5zGRS8G209nvbWUxk8jKqAyBKl1LSOnd+JXXy3Ffut4BOnOVyWQrcCVPVKgK4waJ+eXAri95w7MLKF2mP0OjN33hDEjch1eJiY1a657h5UzZ5Qe6CJSZUrKHSht9tjQ%2FNNMX+gvoSq0W8fR0cWiLsyGRQ9n2j7MqsJe+szqNsEvi5J02ujJ3cEcHfx81n3W15f6Xf1jeqU6RL2DGyFcQ95dFW%2F7HbvNkNUy33CejcsiO7O2xi+yLDIr3QtvGb6ry9Is3iCiW%2FUPKCSCDBn2WA9A44EN%2FKWt7yqIOpwTgTBp76QEhpiv38+awI4v8RRlq3kZ8o8toKUAWqzYiXjQsJxl3oYoDdDPr1ewuczoPRdFR9K7DXWtMkJJTS4YlwCZ40Kc8r6GB5BJq2twvaEybDcOfmcTPQ2tQZ8%2FisvghVGzAg==",
+        "labels": [
+          "Have your say"
+        ],
+        "sourceDomain": "www.stuff.co.nz"
+      },
+      "score": 0,
+      "decision": "allow"
+    },
+    {
+      "headline": "‘Pre-loved house’ for $195k and a lot of sweat equity makes a great first home",
+      "extracted": {
+        "headline": "‘Pre-loved house’ for $195k and a lot of sweat equity makes a great first home",
+        "url": "https://www.stuff.co.nz/home-property/361046408/pre-loved-house-195k-and-lot-sweat-equity-makes-great-first-home",
+        "imageUrl": "https://www.stuff.co.nz/media/images/9Tzi8ywRz924XE3uHaD6DZ3Ef+IdbOiYlvIROR5vlqUeRrexTocZGobKRJ9od%2Fgnk3B%2FCeKTmTAsIjj6Q0YaYc4r%2FW4By%2FPgi4JdJP2+xCk7zzM5Qfb0CNpJmRTEYj0mxMvljQuyTRrbZ%2FkI+rrupqO5ahaHMOk0tDxTgnRj3DgdNygu8VfttOj%2FCeehPsRIHl1Y6IsUXqHVyP3T%2Ft+CyMiAEebBVFx9que8cE6M5z5OypFvP0BHh+X%2F+xX5+BFHyuqUHGaV6FEtCFJ4bX84eZQX4aD6j9Hl8JTPmUrownmBLRr%2FawFtjFlRVG0fATX9lLoHbQ3n1cgpdUo8pjQV1zZBX7MMXdu2D2eTv%2FowIDrCVoYYHC+%2FjCj5FOdvdn+5gTnOTmkghVd%2FPsXp1JVIzodBZMxeUELuZ6AUIJ68UXxvsd0aLfXGdD17GpiCx6H%2FEuEOsXZFt%2FWXLglatGhJ7oTrByBATDszVGBuawEgbmxsTAe4a%2Fko+7iuQhiEpZa4PP2O9657qL9RjCkzaxx8xw==",
+        "labels": [
+          "Property"
+        ],
+        "sourceDomain": "www.stuff.co.nz"
+      },
+      "score": 0,
+      "decision": "allow"
+    }
+  ]
+}

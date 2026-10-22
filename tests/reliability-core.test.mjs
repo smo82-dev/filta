@@ -39,3 +39,15 @@ test('normalised duplicate labels cannot accumulate weak evidence', async () => 
   const result = await classifier.classify({ headline: 'Neighbours gather for a local celebration', sourceDomain: 'news.example', labels: ['actor', 'ACTOR', 'ＡＣＴＯＲ'] });
   assert.equal(result.categories.find(category => category.id === 'celebrity').score, 1.5);
 });
+
+test('explicit leading disclosures are decisive; reporting on sponsorship stays conservative', async () => {
+  for (const headline of ['SPONSORED: The afterparty is the main event this year','SPONSORED: The forest Dilmah is fighting to save','sponsored — A project in the community','[Paid content] A project in the community','ＰＡＩＤ ＣＯＮＴＥＮＴ： A project in the community','Advertorial | A project in the community']) {
+    const story={headline,sourceDomain:'publisher.example'}; const result=await classifier.classify(story);
+    assert.equal(evaluate(story,result,prefs({filteredCategories:['sponsored']})).action,'collapse',headline);
+    assert.ok(result.signals.some(s=>s.category==='sponsored'&&s.field==='headline'&&s.contribution>=4),headline);
+  }
+  for (const headline of ['Council sponsored a community garden last year','Sponsored runners raise funds for the school','A minister was promoted after a cabinet reshuffle','The word “SPONSORED:” appears in advertising rules','“SPONSORED: a new project” is how the article was labelled']) {
+    const story={headline,sourceDomain:'publisher.example'};
+    assert.equal(evaluate(story,await classifier.classify(story),prefs({filteredCategories:['sponsored']})).action,'allow',headline);
+  }
+});

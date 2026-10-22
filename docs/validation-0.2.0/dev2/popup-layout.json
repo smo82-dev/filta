@@ -1,0 +1,423 @@
+[
+  {
+    "name": "active",
+    "width": 360,
+    "height": 392.375,
+    "viewport": {
+      "width": 360,
+      "height": 520
+    },
+    "overflowX": false,
+    "overflowY": false,
+    "buttons": [
+      {
+        "id": "pause",
+        "lines": 1,
+        "height": 44
+      },
+      {
+        "id": "review",
+        "lines": 1,
+        "height": 44
+      },
+      {
+        "id": "settings",
+        "lines": 1,
+        "height": 44
+      }
+    ],
+    "site": {
+      "height": 22.5,
+      "lineHeight": 22.5
+    }
+  },
+  {
+    "name": "paused",
+    "width": 360,
+    "height": 392.375,
+    "viewport": {
+      "width": 360,
+      "height": 520
+    },
+    "overflowX": false,
+    "overflowY": false,
+    "buttons": [
+      {
+        "id": "pause",
+        "lines": 1,
+        "height": 44
+      },
+      {
+        "id": "review",
+        "lines": 1,
+        "height": 44
+      },
+      {
+        "id": "settings",
+        "lines": 1,
+        "height": 44
+      }
+    ],
+    "site": {
+      "height": 22.5,
+      "lineHeight": 22.5
+    }
+  },
+  {
+    "name": "no-cards",
+    "width": 360,
+    "height": 392.375,
+    "viewport": {
+      "width": 360,
+      "height": 520
+    },
+    "overflowX": false,
+    "overflowY": false,
+    "buttons": [
+      {
+        "id": "pause",
+        "lines": 1,
+        "height": 44
+      },
+      {
+        "id": "review",
+        "lines": 1,
+        "height": 44
+      },
+      {
+        "id": "settings",
+        "lines": 1,
+        "height": 44
+      }
+    ],
+    "site": {
+      "height": 22.5,
+      "lineHeight": 22.5
+    }
+  },
+  {
+    "name": "global-off",
+    "width": 360,
+    "height": 392.375,
+    "viewport": {
+      "width": 360,
+      "height": 520
+    },
+    "overflowX": false,
+    "overflowY": false,
+    "buttons": [
+      {
+        "id": "pause",
+        "lines": 1,
+        "height": 44
+      },
+      {
+        "id": "review",
+        "lines": 1,
+        "height": 44
+      },
+      {
+        "id": "settings",
+        "lines": 1,
+        "height": 44
+      }
+    ],
+    "site": {
+      "height": 22.5,
+      "lineHeight": 22.5
+    }
+  },
+  {
+    "name": "detection-disabled",
+    "width": 360,
+    "height": 444.375,
+    "viewport": {
+      "width": 360,
+      "height": 520
+    },
+    "overflowX": false,
+    "overflowY": false,
+    "buttons": [
+      {
+        "id": "pause",
+        "lines": 1,
+        "height": 44
+      },
+      {
+        "id": "review",
+        "lines": 1,
+        "height": 44
+      },
+      {
+        "id": "detect",
+        "lines": 1,
+        "height": 44
+      },
+      {
+        "id": "settings",
+        "lines": 1,
+        "height": 44
+      }
+    ],
+    "site": {
+      "height": 22.5,
+      "lineHeight": 22.5
+    }
+  },
+  {
+    "name": "first-run",
+    "width": 360,
+    "height": 392.375,
+    "viewport": {
+      "width": 360,
+      "height": 520
+    },
+    "overflowX": false,
+    "overflowY": false,
+    "buttons": [
+      {
+        "id": "pause",
+        "lines": 1,
+        "height": 44
+      },
+      {
+        "id": "review",
+        "lines": 1,
+        "height": 44
+      },
+      {
+        "id": "setup",
+        "lines": 1,
+        "height": 44
+      }
+    ],
+    "site": {
+      "height": 22.5,
+      "lineHeight": 22.5
+    }
+  },
+  {
+    "name": "unsupported",
+    "width": 360,
+    "height": 392.375,
+    "viewport": {
+      "width": 360,
+      "height": 520
+    },
+    "overflowX": false,
+    "overflowY": false,
+    "buttons": [
+      {
+        "id": "pause",
+        "lines": 1,
+        "height": 44
+      },
+      {
+        "id": "review",
+        "lines": 1,
+        "height": 44
+      },
+      {
+        "id": "settings",
+        "lines": 1,
+        "height": 44
+      }
+    ],
+    "site": {
+      "height": 22.5,
+      "lineHeight": 22.5
+    }
+  },
+  {
+    "name": "disconnected",
+    "width": 360,
+    "height": 392.375,
+    "viewport": {
+      "width": 360,
+      "height": 520
+    },
+    "overflowX": false,
+    "overflowY": false,
+    "buttons": [
+      {
+        "id": "pause",
+        "lines": 1,
+        "height": 44
+      },
+      {
+        "id": "review",
+        "lines": 1,
+        "height": 44
+      },
+      {
+        "id": "settings",
+        "lines": 1,
+        "height": 44
+      }
+    ],
+    "site": {
+      "height": 22.5,
+      "lineHeight": 22.5
+    }
+  },
+  {
+    "name": "save-error",
+    "width": 360,
+    "height": 419.875,
+    "viewport": {
+      "width": 360,
+      "height": 520
+    },
+    "overflowX": false,
+    "overflowY": false,
+    "buttons": [
+      {
+        "id": "pause",
+        "lines": 1,
+        "height": 44
+      },
+      {
+        "id": "review",
+        "lines": 1,
+        "height": 44
+      },
+      {
+        "id": "settings",
+        "lines": 1,
+        "height": 44
+      }
+    ],
+    "site": {
+      "height": 22.5,
+      "lineHeight": 22.5
+    }
+  },
+  {
+    "name": "load-error",
+    "width": 360,
+    "height": 419.875,
+    "viewport": {
+      "width": 360,
+      "height": 520
+    },
+    "overflowX": false,
+    "overflowY": false,
+    "buttons": [
+      {
+        "id": "pause",
+        "lines": 1,
+        "height": 44
+      },
+      {
+        "id": "review",
+        "lines": 1,
+        "height": 44
+      },
+      {
+        "id": "settings",
+        "lines": 1,
+        "height": 44
+      }
+    ],
+    "site": {
+      "height": 22.5,
+      "lineHeight": 22.5
+    }
+  },
+  {
+    "name": "long-hostname",
+    "width": 360,
+    "height": 392.375,
+    "viewport": {
+      "width": 360,
+      "height": 520
+    },
+    "overflowX": false,
+    "overflowY": false,
+    "buttons": [
+      {
+        "id": "pause",
+        "lines": 1,
+        "height": 44
+      },
+      {
+        "id": "review",
+        "lines": 1,
+        "height": 44
+      },
+      {
+        "id": "settings",
+        "lines": 1,
+        "height": 44
+      }
+    ],
+    "site": {
+      "height": 22.5,
+      "lineHeight": 22.5
+    }
+  },
+  {
+    "name": "narrow-200-percent",
+    "width": 280,
+    "height": 739.671875,
+    "viewport": {
+      "width": 280,
+      "height": 600
+    },
+    "overflowX": false,
+    "overflowY": true,
+    "buttons": [
+      {
+        "id": "pause",
+        "lines": 2,
+        "height": 100.375
+      },
+      {
+        "id": "review",
+        "lines": 2,
+        "height": 100.375
+      },
+      {
+        "id": "settings",
+        "lines": 1,
+        "height": 61.1875
+      }
+    ],
+    "site": {
+      "height": 45,
+      "lineHeight": 45
+    }
+  },
+  {
+    "name": "desktop-200-percent",
+    "width": 360,
+    "height": 716.484375,
+    "viewport": {
+      "width": 360,
+      "height": 600
+    },
+    "overflowX": false,
+    "overflowY": true,
+    "buttons": [
+      {
+        "id": "pause",
+        "lines": 1,
+        "height": 61.1875
+      },
+      {
+        "id": "review",
+        "lines": 2,
+        "height": 100.375
+      },
+      {
+        "id": "settings",
+        "lines": 1,
+        "height": 61.1875
+      }
+    ],
+    "site": {
+      "height": 45,
+      "lineHeight": 45
+    }
+  }
+]

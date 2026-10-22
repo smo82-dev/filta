@@ -36,6 +36,9 @@ for (const page of ['popup.html', 'settings.html']) {
   const html = await readFile(`dist/${page}`, 'utf8');
   assert.match(html, /src="icons\/logo.png"/);
   assert.doesNotMatch(html, />N<\//);
+  for (const [, file] of html.matchAll(/(?:src|href)="([^"#]+)"/g)) {
+    assert.ok((await readFile(`dist/${file}`)).length, `${page} references missing asset ${file}`);
+  }
 }
 const referenced = [manifest.background.service_worker, manifest.action.default_popup, manifest.options_ui.page,
   ...manifest.content_scripts.flatMap(script => [...script.js, ...script.css])];

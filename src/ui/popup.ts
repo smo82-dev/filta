@@ -17,7 +17,9 @@ function draw() {
   element('setup').hidden = preferences.configured;
   element('settings').hidden = !preferences.configured;
   const http = !!tab?.url && /^https?:/.test(tab.url);
-  element('site').textContent = page?.domain || (http ? normaliseDomain(new URL(tab!.url!).hostname) : 'Open a news website');
+  const site = page?.domain || (http ? normaliseDomain(new URL(tab!.url!).hostname) : 'Open a news website');
+  element('site').textContent = site;
+  element('site').title = site;
   const sitePaused = page ? preferences.disabledDomains.some(domain => domainMatches(page!.domain, domain)) : false;
   element('state').textContent = !preferences.configured ? 'Choose your topics to begin'
     : !http ? 'Browser pages cannot be filtered'
@@ -25,13 +27,14 @@ function draw() {
     : !preferences.enabled ? 'Filtering is off globally'
     : sitePaused ? 'Filtering is paused on this site'
     : !page.eligible ? 'Generic detection is off on this site'
-    : page.detected === 0 ? 'No news stories found yet. Scroll or refresh; this layout may need support.'
-    : `Filtering this site: ON · ${page.detected} cards detected`;
+    : page.detected === 0 ? 'No news stories found yet'
+    : 'Filtering is on';
   element('count').textContent = page ? String(page.filtered) : '—';
-  element('indicator').dataset.active = String(!!page?.active && preferences.enabled && !sitePaused && preferences.configured);
+  element('detected').textContent = page ? `${page.detected} stories detected` : 'On this page';
+  element('indicator').dataset.active = String(!!page?.active && page.eligible && preferences.enabled && !sitePaused && preferences.configured);
   pause.disabled = busy || !page || !preferences.configured || !preferences.enabled || !page.eligible;
   review.disabled = busy || !page || page.filtered === 0;
-  pause.textContent = sitePaused ? 'Resume filtering on this site' : 'Pause on this site';
+  pause.textContent = sitePaused ? 'Resume this site' : 'Pause this site';
   detect.hidden = !page || page.eligible || !preferences.configured;
 }
 async function refreshPage() {
@@ -68,4 +71,8 @@ void Promise.all([platform.tabs.active(), platform.messaging.request<Preferences
     platform.storage.subscribe(prefs => { preferences = prefs; void refreshPage(); });
     // Counts refresh only while the popup is open; no background polling.
     setInterval(() => { void refreshPage(); }, 1000);
-  }).catch(error => { status.textContent = errorMessage(error); });
+  }).catch(error => {
+    element('site').textContent = 'FILTA is unavailable';
+    element('state').textContent = 'Open settings or try again';
+    status.dataset.error = 'true'; status.textContent = errorMessage(error);
+  });

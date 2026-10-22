@@ -63,7 +63,7 @@ test('guided setup, preference preservation, real popup interactions and accessi
  await t.test('popup counts, site pause/resume, review, manage, unsupported and global-off states',async()=>{
   await harness.prefs({configured:true,enabled:true,filteredCategories:['crime'],allowedKeywords:[],mode:'collapse'});news=await harness.loadNews();await news.locator('#crime').waitFor({state:'hidden'});
   const p=await harness.popup(news);await p.setViewportSize({width:360,height:650});assert.equal(await p.locator('#count').innerText(),'1');await axe(p);await capture(p,'popup-active');
-  await p.locator('#pause').click();await news.locator('#crime').waitFor({state:'visible'});await p.waitForFunction(()=>document.querySelector('#pause').textContent==='Resume filtering on this site');await capture(p,'popup-paused');
+  await p.locator('#pause').click();await news.locator('#crime').waitFor({state:'visible'});await p.waitForFunction(()=>document.querySelector('#pause').textContent==='Resume this site');await capture(p,'popup-paused');
   await p.locator('#pause').click();await news.locator('#crime').waitFor({state:'hidden'});
   await p.locator('#review').click();await news.locator('[data-news-filter-ui=review]').waitFor();
   const p2=await harness.popup(news);const opened=context.waitForEvent('page');await p2.locator('#settings').click();const managed=await opened;await managed.waitForURL('**/settings.html');assert.match(managed.url(),/settings.html/);await ready(managed);assert.equal(await managed.locator('#hub-header').isVisible(),true);
