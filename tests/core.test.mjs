@@ -44,7 +44,10 @@ test('headline, description, section and URL have different weights', async () =
 });
 test('combinations add confidence and signals remain explainable', async () => {
   const result = await classifier.classify(story('Police charged two people in an incident'));
-  assert.equal(result.categories.find(x => x.id === 'crime').score, 5);
+  // Rule evidence (1 + 1 + 3) is unchanged; the topic model may add its own, separately listed evidence.
+  const rules = result.signals.filter(x => x.category === 'crime' && x.kind !== 'model').reduce((sum, x) => sum + x.contribution, 0);
+  assert.equal(rules, 5);
+  assert.ok(result.categories.find(x => x.id === 'crime').score >= 5);
   assert.ok(result.signals.some(x => x.kind === 'combination' && x.term === 'police + charged'));
 });
 test('an incidental actor mention alone does not trigger celebrity gossip', async () => {

@@ -1,6 +1,7 @@
 import type { ClassificationResult, Field, Story, StoryClassifier, Signal } from './types';
 import { CATEGORIES, type CategoryDefinition } from './rules/categories';
 import { normalise, storyFields } from './text';
+import { topicEvidence } from './topic-model';
 const FIELD_WEIGHTS: Record<Field, number> = { headline: 1, description: 0.35, url: 0.25, section: 1.5, label: 1.5 };
 const contains = (text: string, phrase: string) => !!phrase && (` ${text} `).includes(` ${phrase} `);
 export class RuleBasedClassifier implements StoryClassifier {
@@ -27,8 +28,17 @@ export class RuleBasedClassifier implements StoryClassifier {
     try { path = new URL(story.url ?? '').pathname.split('/').filter(Boolean).slice(0, -1).map(value => normalise(decodeURIComponent(value))); }
     catch { /* optional URL */ }
     const signals: Signal[] = [];
+    // Learned word evidence catches ordinary headlines no keyword list anticipates
+    // ("Erstad's double lifts Angels to win"). Rules and exceptions still apply on top.
+    const learned = new Map(topicEvidence(story.headline, story.description).map(value => [value.category, value]));
     const categories = this.compiled.map(category => {
       let score = 0;
+      const evidence = learned.get(category.id);
+      // Only a calibrated, confident prediction counts; it then carries the same weight as one decisive term.
+      if (evidence && evidence.confidence > 0) {
+        score += category.threshold;
+        signals.push({ category: category.id, field: 'headline', term: `Topic model: ${evidence.phrases.join(', ')}`, contribution: category.threshold, kind: 'model' });
+      }
       if (category.disclosureKeys.includes(disclosureKey)) {
         score += category.threshold;
         signals.push({ category: category.id, field: 'headline', term: `Disclosure: ${disclosureKey}`, contribution: category.threshold, kind: 'term' });
