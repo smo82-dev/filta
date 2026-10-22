@@ -85,6 +85,9 @@ for k, c in enumerate(CLASSES):
 
 # Compact form: feature -> "classIndex:weight,classIndex:weight".
 compact = {f: ','.join(f'{k}:{v:g}' for k, v in sorted(ws.items())) for f, ws in model['weights'].items()}
+# Optional per-class cut raise, e.g. --cut-adjust crime=1 (benign police stories sit just above the cut).
+for spec in (sys.argv[sys.argv.index('--cut-adjust') + 1].split(',') if '--cut-adjust' in sys.argv else []):
+    name, value = spec.split('='); model['cut'][CLASSES.index(name)] = round(model['cut'][CLASSES.index(name)] + float(value), 3)
 out = {'version': 1, 'classes': CLASSES, 'bias': model['bias'], 'cut': model['cut'], 'weights': compact}
 Path(sys.argv[1]).write_text(json.dumps(out, separators=(',', ':'), ensure_ascii=False, sort_keys=True))
 print('features kept', len(compact), 'bytes', Path(sys.argv[1]).stat().st_size)

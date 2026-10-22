@@ -1,7 +1,7 @@
 {
  "provenance": "Held-out public labelled headlines: AG News official test split (7,600), BBC News 2004-05 30% hash split (672, never used for training), HuffPost 2018 temporal hold-out (5,769; trained on 2012-2017). headline = headline only; card = headline + summary. recall = share of stories in the category that are flagged; wrong = share of in-scope stories from other labelled categories that are flagged. Datasets are single-label, so many \"wrong\" hits are genuinely multi-topic stories.",
  "before": "6bf8330 rules only",
- "after": "dev3 rules + topic model",
+ "after": "dev3 final: rules + topic model (HuffPost v3 + AG News)",
  "results": {
   "ag/card/business": {
    "before": {
@@ -11,8 +11,8 @@
     "negatives": 5700
    },
    "after": {
-    "recall": 74.5,
-    "wrong": 3.14,
+    "recall": 72.2,
+    "wrong": 2.96,
     "positives": 1900,
     "negatives": 5700
    }
@@ -25,8 +25,8 @@
     "negatives": 5700
    },
    "after": {
-    "recall": 94.6,
-    "wrong": 1.25,
+    "recall": 94.8,
+    "wrong": 1.33,
     "positives": 1900,
     "negatives": 5700
    }
@@ -39,8 +39,8 @@
     "negatives": 5700
    },
    "after": {
-    "recall": 75.5,
-    "wrong": 2.98,
+    "recall": 76.2,
+    "wrong": 2.86,
     "positives": 1900,
     "negatives": 5700
    }
@@ -53,8 +53,8 @@
     "negatives": 5700
    },
    "after": {
-    "recall": 48.3,
-    "wrong": 1.75,
+    "recall": 46.3,
+    "wrong": 1.63,
     "positives": 1900,
     "negatives": 5700
    }
@@ -67,8 +67,8 @@
     "negatives": 5700
    },
    "after": {
-    "recall": 79.4,
-    "wrong": 1.6,
+    "recall": 80.5,
+    "wrong": 1.74,
     "positives": 1900,
     "negatives": 5700
    }
@@ -81,8 +81,8 @@
     "negatives": 5700
    },
    "after": {
-    "recall": 58.7,
-    "wrong": 2.68,
+    "recall": 59.4,
+    "wrong": 2.39,
     "positives": 1900,
     "negatives": 5700
    }
@@ -95,8 +95,8 @@
     "negatives": 507
    },
    "after": {
-    "recall": 61.2,
-    "wrong": 0.79,
+    "recall": 55.2,
+    "wrong": 0.99,
     "positives": 165,
     "negatives": 507
    }
@@ -109,8 +109,8 @@
     "negatives": 563
    },
    "after": {
-    "recall": 72.5,
-    "wrong": 1.07,
+    "recall": 77.1,
+    "wrong": 1.24,
     "positives": 109,
     "negatives": 563
    }
@@ -124,7 +124,7 @@
    },
    "after": {
     "recall": 31.0,
-    "wrong": 0.74,
+    "wrong": 0.55,
     "positives": 129,
     "negatives": 543
    }
@@ -138,7 +138,7 @@
    },
    "after": {
     "recall": 94.0,
-    "wrong": 0.77,
+    "wrong": 1.15,
     "positives": 150,
     "negatives": 522
    }
@@ -151,8 +151,8 @@
     "negatives": 553
    },
    "after": {
-    "recall": 79.0,
-    "wrong": 0.72,
+    "recall": 77.3,
+    "wrong": 1.08,
     "positives": 119,
     "negatives": 553
    }
@@ -165,8 +165,8 @@
     "negatives": 507
    },
    "after": {
-    "recall": 35.8,
-    "wrong": 0.39,
+    "recall": 30.9,
+    "wrong": 0.59,
     "positives": 165,
     "negatives": 507
    }
@@ -179,7 +179,7 @@
     "negatives": 563
    },
    "after": {
-    "recall": 33.9,
+    "recall": 42.2,
     "wrong": 0.71,
     "positives": 109,
     "negatives": 563
@@ -193,7 +193,7 @@
     "negatives": 543
    },
    "after": {
-    "recall": 17.1,
+    "recall": 16.3,
     "wrong": 0.18,
     "positives": 129,
     "negatives": 543
@@ -207,8 +207,8 @@
     "negatives": 522
    },
    "after": {
-    "recall": 62.7,
-    "wrong": 2.49,
+    "recall": 66.7,
+    "wrong": 2.68,
     "positives": 150,
     "negatives": 522
    }
@@ -221,8 +221,8 @@
     "negatives": 553
    },
    "after": {
-    "recall": 58.8,
-    "wrong": 0.9,
+    "recall": 54.6,
+    "wrong": 0.72,
     "positives": 119,
     "negatives": 553
    }
@@ -235,8 +235,8 @@
     "negatives": 5683
    },
    "after": {
-    "recall": 33.7,
-    "wrong": 1.18,
+    "recall": 29.1,
+    "wrong": 1.0,
     "positives": 86,
     "negatives": 5683
    }
@@ -249,8 +249,8 @@
     "negatives": 5595
    },
    "after": {
-    "recall": 73.0,
-    "wrong": 3.25,
+    "recall": 69.0,
+    "wrong": 2.41,
     "positives": 174,
     "negatives": 5595
    }
@@ -263,8 +263,8 @@
     "negatives": 4049
    },
    "after": {
-    "recall": 64.7,
-    "wrong": 1.53,
+    "recall": 72.7,
+    "wrong": 2.15,
     "positives": 1720,
     "negatives": 4049
    }
@@ -277,8 +277,8 @@
     "negatives": 2703
    },
    "after": {
-    "recall": 70.8,
-    "wrong": 2.85,
+    "recall": 70.5,
+    "wrong": 2.29,
     "positives": 3066,
     "negatives": 2703
    }
@@ -291,8 +291,8 @@
     "negatives": 5405
    },
    "after": {
-    "recall": 73.6,
-    "wrong": 1.83,
+    "recall": 77.7,
+    "wrong": 2.07,
     "positives": 364,
     "negatives": 5405
    }
@@ -305,8 +305,8 @@
     "negatives": 5674
    },
    "after": {
-    "recall": 52.6,
-    "wrong": 1.6,
+    "recall": 54.7,
+    "wrong": 1.52,
     "positives": 95,
     "negatives": 5674
    }
@@ -319,8 +319,8 @@
     "negatives": 5683
    },
    "after": {
-    "recall": 26.7,
-    "wrong": 0.97,
+    "recall": 24.4,
+    "wrong": 0.92,
     "positives": 86,
     "negatives": 5683
    }
@@ -333,8 +333,8 @@
     "negatives": 5595
    },
    "after": {
-    "recall": 66.7,
-    "wrong": 2.81,
+    "recall": 59.2,
+    "wrong": 2.29,
     "positives": 174,
     "negatives": 5595
    }
@@ -347,8 +347,8 @@
     "negatives": 4049
    },
    "after": {
-    "recall": 57.0,
-    "wrong": 1.41,
+    "recall": 64.5,
+    "wrong": 1.9,
     "positives": 1720,
     "negatives": 4049
    }
@@ -361,8 +361,8 @@
     "negatives": 2703
    },
    "after": {
-    "recall": 59.6,
-    "wrong": 2.52,
+    "recall": 58.9,
+    "wrong": 2.03,
     "positives": 3066,
     "negatives": 2703
    }
@@ -375,8 +375,8 @@
     "negatives": 5405
    },
    "after": {
-    "recall": 74.2,
-    "wrong": 2.28,
+    "recall": 78.3,
+    "wrong": 2.46,
     "positives": 364,
     "negatives": 5405
    }
@@ -389,8 +389,8 @@
     "negatives": 5674
    },
    "after": {
-    "recall": 52.6,
-    "wrong": 1.52,
+    "recall": 54.7,
+    "wrong": 1.39,
     "positives": 95,
     "negatives": 5674
    }

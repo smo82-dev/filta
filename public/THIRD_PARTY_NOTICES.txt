@@ -6,7 +6,7 @@ FILTA's topic model (`src/core/rules/topic-model.txt`) is a set of numeric word 
 
 - Rishabh Misra. *News Category Dataset*. arXiv:2209.11429, 2022. https://arxiv.org/abs/2209.11429
 - Rishabh Misra and Jigyasa Grover. *Sculpting Data for ML: The First Act of Machine Learning*. 2021.
-- Headlines and short descriptions from HuffPost, 2012–2018.
+- Version 3: headlines and short descriptions from HuffPost, 2012–2022 (January–May 2018 held out for evaluation).
 - Licence: Creative Commons Attribution 4.0 International (CC BY 4.0), as listed on the dataset's Kaggle page (kaggle.com/datasets/rmisra/news-category-dataset). https://creativecommons.org/licenses/by/4.0/
 - Changes: the text was lower-cased and split into words and word pairs, then used only to fit model weights.
 

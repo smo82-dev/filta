@@ -13,6 +13,8 @@ export interface CategoryDefinition {
   headlineDisclosures?: string[];
   /** Learned evidence for another category plus one of these cues counts for this one. */
   support?: { from: CategoryId; weight: number; minConfidence?: number; cues: string[] };
+  /** Learned evidence for another category counts here when the story is about a person, not a work. */
+  personFocus?: { from: CategoryId; weight: number; minConfidence: number; unless: CategoryId; works: string[] };
 }
 const terms = (weight: number, ...values: string[]): TermRule[] => values.map(term => ({ term, weight }));
 export const CATEGORIES: CategoryDefinition[] = [
@@ -26,7 +28,14 @@ export const CATEGORIES: CategoryDefinition[] = [
     support: { from: 'entertainment', weight: 4, minConfidence: -1, cues: ['baby', 'babies', 'pregnant', 'pregnancy', 'engaged', 'engagement', 'wedding', 'married',
       'divorce', 'divorcing', 'split', 'splits', 'breakup', 'break up', 'dating', 'romance', 'boyfriend', 'girlfriend', 'husband', 'hubby', 'wife',
       'ex', 'son', 'daughter', 'mom', 'dad', 'birthday', 'instagram', 'selfie', 'tattoo', 'outfit', 'hairstyle', 'shirtless', 'bikini', 'red carpet',
-      'feud', 'slams', 'claps back', 'shade', 'kiss', 'apologizes', 'apologises', 'sues', 'sued', 'arrested', 'sentenced', 'meme', 'love', 'single'] } },
+      'feud', 'slams', 'claps back', 'shade', 'kiss', 'apologizes', 'apologises', 'sues', 'sued', 'arrested', 'sentenced', 'meme', 'love', 'single'] },
+    // An entertainment story that is about a person rather than a film, show or album is gossip.
+    // Topical late-night comedy and stories led by a quoted title are entertainment, not gossip.
+    personFocus: { from: 'entertainment', weight: 4, minConfidence: -0.5, unless: 'politics', works: ['film', 'films', 'movie', 'movies',
+      'trailer', 'season', 'seasons', 'episode', 'episodes', 'series', 'album', 'box office', 'review', 'premiere', 'renewed', 'sequel', 'reboot',
+      'show', 'shows', 'soundtrack', 'chart', 'charts', 'cast', 'casting', 'netflix', 'hbo', 'streaming', 'kimmel', 'colbert', 'seth meyers', 'trevor noah', 'fallon',
+      'corden', 'snl', 'saturday night live', 'daily show', 'late show', 'late late show', 'tonight show', 'samantha bee', 'john oliver',
+      'bill maher', 'weekend update'] } },
   { id: 'crime', sections: ['crime', 'courts', 'police', 'justice'], name: 'Crime', threshold: 4,
     terms: [...terms(5, 'murder', 'murdered', 'robbery', 'rape', 'homicide'), ...terms(4, 'crime', 'arrested', 'burglary', 'fraud', 'burglaries', 'arrests', 'homicides', 'robberies'), ...terms(1, 'police', 'court', 'charged')],
     combinations: [{ terms: ['police', 'charged'], weight: 3 }, { terms: ['suspect|suspects', 'charged|arrest|custody'], weight: 4 }, { terms: ['court|trial', 'guilty|sentenced|verdict'], weight: 4 }, { terms: ['manhunt|police|suspect|suspects', 'stabbing|assault|knife|knifeman'], weight: 4 }],

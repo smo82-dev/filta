@@ -50,9 +50,9 @@ rows = []
 for label, title, desc in csv.reader(open(DATA / 'ag/data/ag_news_csv/train.csv', newline='', encoding='utf8')):
     clean = lambda s: re.sub(r'\s+', ' ', s.replace('\\', ' ').replace('#39;', "'").replace(' #36;', ' $')).strip()
     rows.append((re.sub(r'\s*\([A-Za-z.]+\)$', '', clean(title)), re.sub(r'^[A-Za-z.]+(?:\.com)? - ', '', clean(desc))[:300], 'AG' + label))
-for line in open(DATA / 'h_Noticias_PeakU/News_Category_Dataset_v2.json', encoding='utf8'):
+for line in open(DATA / 'v3/News_Category_Dataset_v3 copy.json', encoding='utf8'):
     d = json.loads(line)
-    if d['date'] < '2018-01-01' and len(d['headline']) > 12: rows.append((d['headline'], d['short_description'][:300], d['category']))
+    if not ('2018-01-01' <= d['date'] < '2018-06-01') and len(d['headline']) > 12: rows.append((d['headline'], d['short_description'][:300], d['category']))
 random.seed(5); random.shuffle(rows)
 
 examples = []

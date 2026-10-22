@@ -15,6 +15,7 @@ export class RuleBasedClassifier implements StoryClassifier {
       sectionKeys: (category.sections ?? []).map(normalise),
       disclosureKeys: (category.headlineDisclosures ?? []).map(normalise),
       supportKeys: (category.support?.cues ?? []).map(normalise),
+      workKeys: (category.personFocus?.works ?? []).map(normalise),
     }));
   }
   async classify(story: Story): Promise<ClassificationResult> {
@@ -39,6 +40,13 @@ export class RuleBasedClassifier implements StoryClassifier {
       if (evidence && evidence.confidence > 0) {
         score += category.threshold;
         signals.push({ category: category.id, field: 'headline', term: `Topic model: ${evidence.phrases.join(', ')}`, contribution: category.threshold, kind: 'model' });
+      }
+      const focus = category.personFocus;
+      const about = focus && learned.get(focus.from);
+      if (focus && about && about.confidence > focus.minConfidence && !((learned.get(focus.unless)?.confidence ?? -1) > 0) &&
+        !/^['‘“"][^'’”"]{3,}['’”"]/.test(story.headline.trim()) && !category.workKeys.some(key => contains(headline, key))) {
+        score += focus.weight;
+        signals.push({ category: category.id, field: 'headline', term: `Topic model (${focus.from}): story about a person (${about.phrases.join(', ')})`, contribution: focus.weight, kind: 'model' });
       }
       const support = category.support && learned.get(category.support.from);
       if (category.support && support && support.confidence > (category.support.minConfidence ?? 0)) {

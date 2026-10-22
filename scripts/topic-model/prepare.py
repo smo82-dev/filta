@@ -49,7 +49,7 @@ HUFF = {'CRIME': ['crime'], 'ENTERTAINMENT': ['entertainment'], 'POLITICS': ['po
         'BUSINESS': ['business'], 'MONEY': ['business'], 'TECH': ['technology'], 'SCIENCE': ['science']}
 CLEAN_NEG = {'WELLNESS', 'TRAVEL', 'STYLE & BEAUTY', 'PARENTING', 'HEALTHY LIVING', 'FOOD & DRINK', 'HOME & LIVING',
              'PARENTS', 'WEDDINGS', 'STYLE', 'TASTE', 'FIFTY', 'RELIGION', 'EDUCATION', 'COLLEGE'}
-for line in open(DATA / 'h_Noticias_PeakU/News_Category_Dataset_v2.json', encoding='utf8'):
+for line in open(DATA / 'v3/News_Category_Dataset_v3 copy.json', encoding='utf8'):
     d = json.loads(line)
     cat = d['category']
     if cat not in HUFF and cat not in CLEAN_NEG: continue
@@ -57,7 +57,7 @@ for line in open(DATA / 'h_Noticias_PeakU/News_Category_Dataset_v2.json', encodi
     if len(head) < 12: continue
     item = {'set': 'huff', 'gold': HUFF.get(cat, []), 'scope': ['crime', 'entertainment', 'politics', 'sport', 'business', 'technology', 'science'],
             'cat': cat, 'headline': head, 'description': clean(d['short_description'])[:300]}
-    rows['test' if d['date'] >= '2018-01-01' else 'train'].append(item)
+    rows['test' if '2018-01-01' <= d['date'] < '2018-06-01' else 'train'].append(item)
 
 for split, items in rows.items():
     with open(OUT / f'{split}.jsonl', 'w') as f:
