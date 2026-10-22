@@ -10,6 +10,10 @@ This branch improves article discovery, topic evidence and dynamic updates acros
 - Find and filter stories inside open shadow DOM web components (for example MSN), hiding the complete component.
 - Treat sites that declare standard news-publisher markup as news sites, even when their name never says "news".
 - Add NZ/UK/AU political vocabulary, with Labour Weekend and national park exceptions.
+- Recognise native ads (ad-network links, paid tracking, ad widgets, lone "Sponsored" labels) as Sponsored & Paid Content.
+- Reach closed shadow roots; scan busy front pages about 2.4× faster.
+- Broaden War & Conflict (with a learned war model), Death & Tragedy, Disaster and Celebrity & Gossip, and New Zealand sport names.
+- Credit the training datasets in `THIRD_PARTY_NOTICES`.
 - See `docs/validation-0.2.0/DEV3.md` for evidence, limits and the training-data licence decision.
 
 ## Changed

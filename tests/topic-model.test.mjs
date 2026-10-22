@@ -62,3 +62,36 @@ test('Westminster-system politics vocabulary, without Labour Weekend or national
   assert.ok(!(await flagged('Labour weekend traffic builds on State Highway 1')).includes('politics'));
   assert.ok(!(await flagged('Visitors flock to national park after storm clean-up')).includes('politics'));
 });
+
+test('war, tragedy, disaster and celebrity: broader vocabulary, learned war context, figurative exceptions', async () => {
+  for (const [headline, category] of [
+    ['Militants kill hostage in overnight raid', 'war'],
+    ['Car bomb kills 11 near government compound', 'war'],
+    ['Rebels seize border town as ceasefire collapses', 'war'],
+    ['Peacekeepers deployed after clashes displace thousands', 'war'],
+    ['Eight children stabbed to death as they sleep', 'tragedy'],
+    ['Commuter plane crashes, killing 54', 'tragedy'],
+    ['Musicians mourn DJ after his death at 28', 'tragedy'],
+    ['Strong quake hits island, aftershocks felt across region', 'disaster'],
+    ['Typhoon lashes coast as thousands evacuate', 'disaster'],
+    ['Reality star and her boyfriend split weeks before wedding', 'celebrity'],
+    ['Kardashian sisters reunite on the red carpet', 'celebrity'],
+  ]) assert.ok((await flagged(headline)).includes(category), `${headline} -> ${category}`);
+  for (const [headline, category] of [
+    ['A trade war could cost the party at the ballot box', 'war'],
+    ['Overdose deaths fall in 14 states', 'tragedy'],
+    ['What Ned Stark whispered during his Game of Thrones death', 'tragedy'],
+    ['Poll shows candidates locked in a dead heat', 'tragedy'],
+    ['Hurricanes name squad without injured captain', 'disaster'],
+  ]) assert.ok(!(await flagged(headline)).includes(category), `${headline} must not be ${category}`);
+});
+
+test('New Zealand sport names, with ambiguous club names needing sporting context', async () => {
+  for (const headline of ['Black Ferns name squad for Bledisloe decider', 'Crusaders beat Blues in Super Rugby thriller',
+    'Hurricanes sign Wellington hooker on two-year contract', 'Phoenix coach eyes A-League playoff spot']) {
+    assert.ok((await flagged(headline)).includes('sport'), headline);
+  }
+  for (const headline of ['Police chiefs meet over gang violence', 'Blues musician releases first album in a decade']) {
+    assert.ok(!(await flagged(headline)).includes('sport'), headline);
+  }
+});

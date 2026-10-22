@@ -14,6 +14,7 @@ export class RuleBasedClassifier implements StoryClassifier {
         alternatives: rule.terms.map(term => term.split('|').map(normalise)) })),
       sectionKeys: (category.sections ?? []).map(normalise),
       disclosureKeys: (category.headlineDisclosures ?? []).map(normalise),
+      supportKeys: (category.support?.cues ?? []).map(normalise),
     }));
   }
   async classify(story: Story): Promise<ClassificationResult> {
@@ -38,6 +39,14 @@ export class RuleBasedClassifier implements StoryClassifier {
       if (evidence && evidence.confidence > 0) {
         score += category.threshold;
         signals.push({ category: category.id, field: 'headline', term: `Topic model: ${evidence.phrases.join(', ')}`, contribution: category.threshold, kind: 'model' });
+      }
+      const support = category.support && learned.get(category.support.from);
+      if (category.support && support && support.confidence > (category.support.minConfidence ?? 0)) {
+        const cue = category.supportKeys.find(key => narrative.some(text => contains(text, key)));
+        if (cue) {
+          score += category.support.weight;
+          signals.push({ category: category.id, field: 'headline', term: `Topic model (${category.support.from}) + “${cue}”`, contribution: category.support.weight, kind: 'model' });
+        }
       }
       if (category.disclosureKeys.includes(disclosureKey)) {
         score += category.threshold;

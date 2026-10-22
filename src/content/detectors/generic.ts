@@ -196,7 +196,8 @@ function commercialDisclosure(card: HTMLElement, link: HTMLAnchorElement, pageUr
   }
   const lone = [...card.querySelectorAll<HTMLElement>('a, span, div, p, small, [data-native-label]')].find(value =>
     value.hasAttribute('data-native-label') || !value.children.length && DISCLOSURE.test(clean(value.textContent)));
-  return lone && ownedVisibleContent(lone, card, true) ? 'Sponsored' : undefined;
+  // Record the publisher's own wording ("Paid Content"), so hide/always-show phrases keep their meaning.
+  return lone && ownedVisibleContent(lone, card, true) ? clean(lone.textContent) || 'Sponsored' : undefined;
 }
 function candidateFor(seed: HTMLElement, pageUrl: string, extract: (element: HTMLElement) => DetectedStory<HTMLElement> | null, urlCache: Map<HTMLElement, Set<string>>, siblingCache: Map<HTMLElement, Map<string, number>>): HTMLElement | null {
   let parent: HTMLElement | null = seed.matches('a[href]') ? seed : seed.parentElement;

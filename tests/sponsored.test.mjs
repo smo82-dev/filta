@@ -38,7 +38,10 @@ test('sponsored content: shared extraction, safety, settings and dynamic filteri
       assert.deepEqual(byId.get('editorial').labels, ['Rugby', 'Analysis', 'Politics', 'Live', 'Breaking']);
       assert.equal(byId.get('editorial').section, 'Rugby');
       const preferences = { ...defaultPreferences(), configured: true, filteredCategories: ['sponsored'], blockedKeywords: ['sponsored', 'advertisement', 'paid content', 'partner content'] };
-      for (const id of ['clean', 'nested-ad', 'nested-related', 'hidden-labels', 'controls', 'incidental', 'long-label']) {
+      // Development 3: an element inside the card whose entire text is a disclosure ("Sponsored") is a
+      // label even without badge classes; live Stuff sponsored cards (22 Oct 2026) are marked exactly so.
+      assert.deepEqual(byId.get('incidental').labels, ['Sponsored']);
+      for (const id of ['clean', 'nested-ad', 'nested-related', 'hidden-labels', 'controls', 'long-label']) {
         const item = byId.get(id);
         assert.ok(item, id);
         assert.equal(evaluate(item, await classifier.classify(item), preferences).action, 'allow', id);
@@ -76,8 +79,8 @@ test('sponsored content: shared extraction, safety, settings and dynamic filteri
       assert.equal(await choice.isChecked(), false);
       await choice.check(); await settings.locator('#next').click(); await settings.locator('#next').click(); await settings.locator('#save').click();
       news = await harness.loadNews(undefined, '/sponsored');
-      for (const id of ['sponsored', 'paid', 'partner', 'presented', 'sponsored-by', 'aria-badge']) await hidden(news, id);
-      for (const id of ['clean', 'nested-ad', 'nested-related', 'hidden-labels', 'controls', 'incidental', 'long-label', 'editorial']) await visible(news, id);
+      for (const id of ['sponsored', 'paid', 'partner', 'presented', 'sponsored-by', 'aria-badge', 'incidental']) await hidden(news, id);
+      for (const id of ['clean', 'nested-ad', 'nested-related', 'hidden-labels', 'controls', 'long-label', 'editorial']) await visible(news, id);
       const replacement = news.locator('#sponsored + [data-news-filter-ui=card]');
       await replacement.getByText('Why was this hidden?', { exact: true }).click();
       assert.match(await replacement.locator('.box').textContent(), /Sponsored & Paid Content/);
