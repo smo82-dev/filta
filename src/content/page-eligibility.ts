@@ -25,5 +25,20 @@ export function eligiblePage(document: Document, pageUrl: string, preferences: P
   if (NEWS_PUBLISHERS.some(domain => domainMatches(url.hostname, domain))) return true;
   // Generic detection needs news context, rather than scanning shops or arbitrary web apps.
   const context = `${url.hostname} ${url.pathname} ${document.title} ${document.querySelector('meta[property="og:site_name"]')?.getAttribute('content') ?? ''}`;
-  return /(?:\bnews\b|\bnewsroom\b|\bnewspaper\b|daily\s+post|journal|bulletin)/i.test(context);
+  return /(?:\bnews\b|\bnewsroom\b|\bnewspaper\b|daily\s+post|journal|bulletin)/i.test(context) || publisherMarkup(document);
+}
+// Publishers declare themselves to news aggregators with standard markup. These
+// signals hold on sites whose name and title never say "news" (Politico, The Verge,
+// a regional paper), without opening FILTA up to shops or web apps.
+const NEWS_TYPES = /"@type"\s*:\s*(?:\[[^\]]*)?"(?:NewsMediaOrganization|NewsArticle|ReportageNewsArticle|AnalysisNewsArticle|OpinionNewsArticle|BackgroundNewsArticle|LiveBlogPosting)"/;
+const markupCache = new WeakMap<Document, { key: string; news: boolean }>();
+function publisherMarkup(document: Document): boolean {
+  const scripts = [...document.querySelectorAll('script[type="application/ld+json"]')].slice(0, 32);
+  const key = `${document.URL}|${scripts.length}`;
+  const cached = markupCache.get(document);
+  if (cached?.key === key) return cached.news;
+  const news = !!document.querySelector('meta[name="news_keywords" i], meta[name="googlebot-news" i], meta[name="syndication-source" i]') ||
+    scripts.some(script => NEWS_TYPES.test((script.textContent ?? '').slice(0, 250_000)));
+  markupCache.set(document, { key, news });
+  return news;
 }

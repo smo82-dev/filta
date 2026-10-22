@@ -47,7 +47,7 @@ export function topicEvidence(headline: string, description?: string): TopicEvid
       if (weight > 0) contributions[index]!.push([feature, value * weight]);
     }
   }
-  const evidence = classes.map((category, index) => ({ category, confidence: Math.round((scores[index]! - cut[index]!) * 100) / 100,
+  const evidence = classes.map((category, index) => ({ category, confidence: scores[index]! - cut[index]!,
     phrases: contributions[index]!.sort((a, b) => b[1] - a[1]).slice(0, 3).map(([phrase]) => phrase) }));
   // Part of the training data merges science and technology. When science is the
   // stronger reading (a telescope, a new species), do not also call it technology.

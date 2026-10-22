@@ -1,12 +1,8 @@
-# FILTA 0.2.0 development 2 handover
+# FILTA 0.2.0 development 3 handover
 
-- Continue `feature/filta-0.2-universal-detection`, existing draft PR #1. No merge, publication or new PR.
-- Owner-approved onboarding/settings and authentic artwork are preserved. Popup uses its own scoped stylesheet: 360 px wide, active height 392.375 px, restrained count, single-line/truncated hostname with full text/title, 44 px actions. Normal-state layout, error states, keyboard, axe, narrow width and 200% text tested.
-- Generic pipeline fixes: explicit delimited headline disclosures; owned-story links separated from taxonomy/bylines/secondary content; promotional and with-byline layout flags no longer suppress editorial cards; attribute-only card metadata; role/protection/visibility changes rescan. No publisher adapter or hardcoded headline added.
-- Exact Stuff cards were read from the owner's rendered open tab in Brave on 22 October. At baseline b41b5c2 both are detected with exact headlines, sponsored score 1 < 4, allowed. Current rules score 5; Collapse/Hide replay filters both, two neighbours stay visible. This is rendered-DOM capture + offline replay, not installation of the new build in the owner's browser.
-- Final `npm run check`: 65 core + 111 browser tests passing (176 including enclosing tests), strict TS/build/audit. Added 25-publisher saved-snippet renderer/restoration coverage, all 14 categories × five controlled layout families, exact Stuff and retained BBC regressions. 600-card scan ~157 ms in this environment. npm audit: zero vulnerabilities.
-- ZIP: `FILTA-0.2.0-dev2.zip`, version_name `0.2.0 development 2`; 15 entries match dist byte-for-byte. SHA-256 `493d509c0a8af9e5709b7e25261a502c1cc11ff04763eaac46e2c9f6af7cbeb3`.
-- Evidence, screenshots and installation: `docs/validation-0.2.0/DEV2.md`; raw results in `dev2/`, screenshot states in `popup-dev2/`. Older UX-AND-BBC.md is historical.
-- Remaining gates: native Chrome service-worker installation/toolbar/upgrade and updated-build live publisher test. Lightweight Chromium 153 times out awaiting native MV3 worker; connected browser disallows extension pages. Do not work around that restriction. Browser suites use a simulated WebExtension API.
-- Classification remains rule based. Unchanged 28-headline challenge: 19 TP, 0 FP, 6 FN, 3 TN; opaque-name/context misses remain. Controlled suites do not establish universal publisher recall or accuracy.
-- Reproduce: `npm ci`, install a compatible Playwright Chromium or set `CHROMIUM_PATH`, `npm run check`, `npm run package`. No new dependencies, permissions, preference schema, network calls or extension identity inputs.
+- Branch `claude/news-site-reliability`, based on PR #1 head `6bf8330`. Not merged; no publication.
+- Diagnosis, changes, benchmark and limits: `docs/validation-0.2.0/DEV3.md`; raw before/after in `dev3/topic-benchmark.json`.
+- Topic model: `src/core/topic-model.ts` + `src/core/rules/topic-model.txt`; retrain with `scripts/topic-model/` (prepare.py, train.py `--C 0.25 --floor 0.1 --quant 1 --min-count 4 --no-bbc`, score.py). Datasets are not committed.
+- Shadow DOM: `openShadowRoots`, `composedClosest`, `composedParent` and host promotion in `src/content/detectors/generic.ts`; the scanner observes shadow roots and rescans from the host.
+- Open decision: training-data licences before a store release (see DEV3.md).
+- Previous handover (development 2): `docs/validation-0.2.0/DEV2.md`.

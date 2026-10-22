@@ -18,6 +18,23 @@ export function metadataElement(element: HTMLElement): boolean {
   return METADATA.test(markers(element)) || element.matches('[data-label], [data-kicker], [data-topic], [data-category], [data-sponsored], [data-partner], a[rel~="tag"]') ||
     PROMOTIONAL_ARIA.test(clean(element.getAttribute('aria-label')));
 }
+// Discovery asks about the same ancestors thousands of times on a busy front page.
+// Within one scan, layout does not change, so each element's own style is read once.
+let visibility: Map<Element, boolean> | undefined;
+export function withStyleCache<T>(scan: () => T): T {
+  const outer = visibility;
+  visibility ??= new Map();
+  try { return scan(); } finally { if (!outer) visibility = undefined; }
+}
+function selfVisible(element: HTMLElement): boolean {
+  let visible = visibility?.get(element);
+  if (visible === undefined) {
+    const style = getComputedStyle(element);
+    visible = !(style.display === 'none' || style.visibility !== 'visible' || style.opacity === '0');
+    visibility?.set(element, visible);
+  }
+  return visible;
+}
 export function ownedVisibleContent(element: HTMLElement, card: HTMLElement, allowAdLabel = false, allowRelatedStory = false): boolean {
   for (let current: HTMLElement | null = element; current && current !== card; current = current.parentElement) {
     if (current.matches(EXCLUDED) || UNRELATED.test(markers(current)) &&
@@ -26,8 +43,7 @@ export function ownedVisibleContent(element: HTMLElement, card: HTMLElement, all
     if (current !== element && current.matches('article, li')) return false;
     if (AD_CONTAINER.test(markers(current)) && (current !== element || !allowAdLabel)) return false;
     if (current.hidden || current.getAttribute('aria-hidden') === 'true' || current.hasAttribute('inert')) return false;
-    const style = getComputedStyle(current);
-    if (style.display === 'none' || style.visibility !== 'visible' || style.opacity === '0') return false;
+    if (!selfVisible(current)) return false;
   }
   // Ignore our display:none on the complete card, so filtered cards can be rescanned.
   return !card.hidden && card.getAttribute('aria-hidden') !== 'true';

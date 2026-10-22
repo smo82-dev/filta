@@ -1,0 +1,399 @@
+{
+ "provenance": "Held-out public labelled headlines: AG News official test split (7,600), BBC News 2004-05 30% hash split (672, never used for training), HuffPost 2018 temporal hold-out (5,769; trained on 2012-2017). headline = headline only; card = headline + summary. recall = share of stories in the category that are flagged; wrong = share of in-scope stories from other labelled categories that are flagged. Datasets are single-label, so many \"wrong\" hits are genuinely multi-topic stories.",
+ "before": "6bf8330 rules only",
+ "after": "dev3 rules + topic model",
+ "results": {
+  "ag/card/business": {
+   "before": {
+    "recall": 10.5,
+    "wrong": 0.91,
+    "positives": 1900,
+    "negatives": 5700
+   },
+   "after": {
+    "recall": 74.5,
+    "wrong": 3.14,
+    "positives": 1900,
+    "negatives": 5700
+   }
+  },
+  "ag/card/sport": {
+   "before": {
+    "recall": 11.7,
+    "wrong": 0.39,
+    "positives": 1900,
+    "negatives": 5700
+   },
+   "after": {
+    "recall": 94.6,
+    "wrong": 1.25,
+    "positives": 1900,
+    "negatives": 5700
+   }
+  },
+  "ag/card/technology": {
+   "before": {
+    "recall": 8.5,
+    "wrong": 0.63,
+    "positives": 1900,
+    "negatives": 5700
+   },
+   "after": {
+    "recall": 75.5,
+    "wrong": 2.98,
+    "positives": 1900,
+    "negatives": 5700
+   }
+  },
+  "ag/headline/business": {
+   "before": {
+    "recall": 7.1,
+    "wrong": 0.6,
+    "positives": 1900,
+    "negatives": 5700
+   },
+   "after": {
+    "recall": 48.3,
+    "wrong": 1.75,
+    "positives": 1900,
+    "negatives": 5700
+   }
+  },
+  "ag/headline/sport": {
+   "before": {
+    "recall": 9.6,
+    "wrong": 0.39,
+    "positives": 1900,
+    "negatives": 5700
+   },
+   "after": {
+    "recall": 79.4,
+    "wrong": 1.6,
+    "positives": 1900,
+    "negatives": 5700
+   }
+  },
+  "ag/headline/technology": {
+   "before": {
+    "recall": 7.1,
+    "wrong": 0.63,
+    "positives": 1900,
+    "negatives": 5700
+   },
+   "after": {
+    "recall": 58.7,
+    "wrong": 2.68,
+    "positives": 1900,
+    "negatives": 5700
+   }
+  },
+  "bbc/card/business": {
+   "before": {
+    "recall": 11.5,
+    "wrong": 0.39,
+    "positives": 165,
+    "negatives": 507
+   },
+   "after": {
+    "recall": 61.2,
+    "wrong": 0.79,
+    "positives": 165,
+    "negatives": 507
+   }
+  },
+  "bbc/card/entertainment": {
+   "before": {
+    "recall": 25.7,
+    "wrong": 0.71,
+    "positives": 109,
+    "negatives": 563
+   },
+   "after": {
+    "recall": 72.5,
+    "wrong": 1.07,
+    "positives": 109,
+    "negatives": 563
+   }
+  },
+  "bbc/card/politics": {
+   "before": {
+    "recall": 7.8,
+    "wrong": 0.0,
+    "positives": 129,
+    "negatives": 543
+   },
+   "after": {
+    "recall": 31.0,
+    "wrong": 0.74,
+    "positives": 129,
+    "negatives": 543
+   }
+  },
+  "bbc/card/sport": {
+   "before": {
+    "recall": 4.0,
+    "wrong": 0.19,
+    "positives": 150,
+    "negatives": 522
+   },
+   "after": {
+    "recall": 94.0,
+    "wrong": 0.77,
+    "positives": 150,
+    "negatives": 522
+   }
+  },
+  "bbc/card/technology": {
+   "before": {
+    "recall": 7.6,
+    "wrong": 0.18,
+    "positives": 119,
+    "negatives": 553
+   },
+   "after": {
+    "recall": 79.0,
+    "wrong": 0.72,
+    "positives": 119,
+    "negatives": 553
+   }
+  },
+  "bbc/headline/business": {
+   "before": {
+    "recall": 5.5,
+    "wrong": 0.39,
+    "positives": 165,
+    "negatives": 507
+   },
+   "after": {
+    "recall": 35.8,
+    "wrong": 0.39,
+    "positives": 165,
+    "negatives": 507
+   }
+  },
+  "bbc/headline/entertainment": {
+   "before": {
+    "recall": 24.8,
+    "wrong": 0.53,
+    "positives": 109,
+    "negatives": 563
+   },
+   "after": {
+    "recall": 33.9,
+    "wrong": 0.71,
+    "positives": 109,
+    "negatives": 563
+   }
+  },
+  "bbc/headline/politics": {
+   "before": {
+    "recall": 7.8,
+    "wrong": 0.0,
+    "positives": 129,
+    "negatives": 543
+   },
+   "after": {
+    "recall": 17.1,
+    "wrong": 0.18,
+    "positives": 129,
+    "negatives": 543
+   }
+  },
+  "bbc/headline/sport": {
+   "before": {
+    "recall": 3.3,
+    "wrong": 0.19,
+    "positives": 150,
+    "negatives": 522
+   },
+   "after": {
+    "recall": 62.7,
+    "wrong": 2.49,
+    "positives": 150,
+    "negatives": 522
+   }
+  },
+  "bbc/headline/technology": {
+   "before": {
+    "recall": 7.6,
+    "wrong": 0.0,
+    "positives": 119,
+    "negatives": 553
+   },
+   "after": {
+    "recall": 58.8,
+    "wrong": 0.9,
+    "positives": 119,
+    "negatives": 553
+   }
+  },
+  "huff/card/business": {
+   "before": {
+    "recall": 3.5,
+    "wrong": 0.51,
+    "positives": 86,
+    "negatives": 5683
+   },
+   "after": {
+    "recall": 33.7,
+    "wrong": 1.18,
+    "positives": 86,
+    "negatives": 5683
+   }
+  },
+  "huff/card/crime": {
+   "before": {
+    "recall": 15.5,
+    "wrong": 1.07,
+    "positives": 174,
+    "negatives": 5595
+   },
+   "after": {
+    "recall": 73.0,
+    "wrong": 3.25,
+    "positives": 174,
+    "negatives": 5595
+   }
+  },
+  "huff/card/entertainment": {
+   "before": {
+    "recall": 8.2,
+    "wrong": 0.25,
+    "positives": 1720,
+    "negatives": 4049
+   },
+   "after": {
+    "recall": 64.7,
+    "wrong": 1.53,
+    "positives": 1720,
+    "negatives": 4049
+   }
+  },
+  "huff/card/politics": {
+   "before": {
+    "recall": 5.4,
+    "wrong": 0.63,
+    "positives": 3066,
+    "negatives": 2703
+   },
+   "after": {
+    "recall": 70.8,
+    "wrong": 2.85,
+    "positives": 3066,
+    "negatives": 2703
+   }
+  },
+  "huff/card/sport": {
+   "before": {
+    "recall": 34.1,
+    "wrong": 1.15,
+    "positives": 364,
+    "negatives": 5405
+   },
+   "after": {
+    "recall": 73.6,
+    "wrong": 1.83,
+    "positives": 364,
+    "negatives": 5405
+   }
+  },
+  "huff/card/technology": {
+   "before": {
+    "recall": 12.6,
+    "wrong": 0.58,
+    "positives": 95,
+    "negatives": 5674
+   },
+   "after": {
+    "recall": 52.6,
+    "wrong": 1.6,
+    "positives": 95,
+    "negatives": 5674
+   }
+  },
+  "huff/headline/business": {
+   "before": {
+    "recall": 3.5,
+    "wrong": 0.48,
+    "positives": 86,
+    "negatives": 5683
+   },
+   "after": {
+    "recall": 26.7,
+    "wrong": 0.97,
+    "positives": 86,
+    "negatives": 5683
+   }
+  },
+  "huff/headline/crime": {
+   "before": {
+    "recall": 13.2,
+    "wrong": 1.07,
+    "positives": 174,
+    "negatives": 5595
+   },
+   "after": {
+    "recall": 66.7,
+    "wrong": 2.81,
+    "positives": 174,
+    "negatives": 5595
+   }
+  },
+  "huff/headline/entertainment": {
+   "before": {
+    "recall": 7.0,
+    "wrong": 0.2,
+    "positives": 1720,
+    "negatives": 4049
+   },
+   "after": {
+    "recall": 57.0,
+    "wrong": 1.41,
+    "positives": 1720,
+    "negatives": 4049
+   }
+  },
+  "huff/headline/politics": {
+   "before": {
+    "recall": 4.3,
+    "wrong": 0.63,
+    "positives": 3066,
+    "negatives": 2703
+   },
+   "after": {
+    "recall": 59.6,
+    "wrong": 2.52,
+    "positives": 3066,
+    "negatives": 2703
+   }
+  },
+  "huff/headline/sport": {
+   "before": {
+    "recall": 34.1,
+    "wrong": 1.15,
+    "positives": 364,
+    "negatives": 5405
+   },
+   "after": {
+    "recall": 74.2,
+    "wrong": 2.28,
+    "positives": 364,
+    "negatives": 5405
+   }
+  },
+  "huff/headline/technology": {
+   "before": {
+    "recall": 12.6,
+    "wrong": 0.58,
+    "positives": 95,
+    "negatives": 5674
+   },
+   "after": {
+    "recall": 52.6,
+    "wrong": 1.52,
+    "positives": 95,
+    "negatives": 5674
+   }
+  }
+ }
+}

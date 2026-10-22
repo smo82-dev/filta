@@ -1,8 +1,38 @@
 import type { DetectedStory, StoryDetector } from '../../core/types';
 import { canonicalUrl, normalise } from '../../core/text';
-import { extractMetadata, markers, metadataElement, ownedVisibleContent } from './labels';
+import { extractMetadata, markers, metadataElement, ownedVisibleContent, withStyleCache } from './labels';
 import { structuredSections } from './structured';
-export type Root = Document | HTMLElement;
+export type Root = Document | HTMLElement | ShadowRoot;
+// Web-component feeds (MSN and others) render cards inside open shadow roots,
+// which querySelectorAll and closest() do not cross. These helpers walk the
+// composed tree so protection and discovery behave the same inside and out.
+export function composedParent(element: Element): HTMLElement | null {
+  if (element.parentElement) return element.parentElement;
+  const root = element.getRootNode();
+  return root instanceof ShadowRoot && root.host instanceof HTMLElement ? root.host : null;
+}
+export function composedClosest(element: Element, selector: string): Element | null {
+  for (let current: Element | null = element; current;) {
+    const hit = current.closest(selector);
+    if (hit) return hit;
+    const root = current.getRootNode();
+    current = root instanceof ShadowRoot ? root.host : null;
+  }
+  return null;
+}
+export function openShadowRoots(root: Root, limit = 4000): ShadowRoot[] {
+  const found: ShadowRoot[] = [];
+  const visit = (scope: Document | Element | ShadowRoot) => {
+    for (const element of scope.querySelectorAll('*')) {
+      const shadow = element.shadowRoot;
+      if (!shadow || found.length >= limit) continue;
+      found.push(shadow); visit(shadow);
+    }
+  };
+  if (root instanceof Element && root.shadowRoot) { found.push(root.shadowRoot); visit(root.shadowRoot); }
+  visit(root);
+  return found;
+}
 const PROTECTED = 'nav, footer, [role="navigation"], [role="banner"], [role="contentinfo"], [role="dialog"], [role="alert"], [role="menu"], form, [data-related], [data-recommendations], [data-news-filter-ui], [data-emergency], .article-body, .article__body, [itemprop="articleBody"]';
 export const CARD = 'article, li, [class*="story"], [class*="card"], [class*="teaser"], [class*="fc-item"], [data-testid*="card"], [data-testid*="story"], [data-testid*="article"], [data-type="article"], [itemtype*="NewsArticle"]';
 const HEADINGS = 'h2, h3, h4, h5, h6, [role="heading"], [itemprop="headline"], [data-testid*="headline"], [class*="headline"], [class*="heading"], [class*="title"]';
@@ -44,11 +74,13 @@ function storyLinks(element: HTMLElement, pageUrl: string): HTMLAnchorElement[] 
   });
 }
 export function protectedElement(element: HTMLElement): boolean {
-  if (element.closest(PROTECTED)) return true;
-  if (element.closest('[itemtype$="/Person"], [itemprop="author"]')) return true;
-  const header = element.closest('header');
+  if (composedClosest(element, PROTECTED)) return true;
+  if (composedClosest(element, '[itemtype$="/Person"], [itemprop="author"]')) return true;
+  const header = composedClosest(element, 'header');
   if (header && !header.closest(CARD)) return true;
-  for (let ancestor: HTMLElement | null = element; ancestor && ancestor !== document.body; ancestor = ancestor.parentElement) {
+  for (let ancestor: HTMLElement | null = element; ancestor && ancestor !== document.body; ancestor = composedParent(ancestor)) {
+    // Custom elements carry their role in the tag name (responsive-header, site-nav-menu).
+    if (ancestor.tagName.includes('-') && /(?:^|-)(header|footer|nav|navigation|menu|toolbar|banner|masthead|consent|cookie)(?:-|$)/i.test(ancestor.tagName)) return true;
     if (/(?:^|[-_\s])(cookie|consent|privacy|advert|advertisement|navigation|emergency|alert)(?:$|[-_\s])/i
       .test(markers(ancestor))) return true;
     if (/(?:^|[-_\s])(byline|toolbar|menu)(?:$|[-_\s])/i.test(markers(ancestor))) return true;
@@ -156,6 +188,15 @@ export class GenericDetector implements StoryDetector<HTMLElement, Root> {
   detect(root: Root, pageUrl: string): DetectedStory<HTMLElement>[] {
     this.diagnostics = { candidates: 0, detected: 0, rejected: {} };
     structuredSections(root.ownerDocument ?? root as Document, true);
+    const detected = withStyleCache(() => {
+      const cards = this.detectScope(root, pageUrl);
+      for (const shadow of openShadowRoots(root)) cards.push(...this.detectScope(shadow, pageUrl).map(card => promoteToHost(card, shadow, pageUrl)));
+      return deduplicate(cards);
+    });
+    this.diagnostics.detected = detected.length;
+    return detected;
+  }
+  private detectScope(root: Root, pageUrl: string): DetectedStory<HTMLElement>[] {
     const resultCache = new Map<HTMLElement, DetectedStory<HTMLElement> | null>();
     const urlCache = new Map<HTMLElement, Set<string>>();
     const siblingCache = new Map<HTMLElement, Map<string, number>>();
@@ -174,9 +215,17 @@ export class GenericDetector implements StoryDetector<HTMLElement, Root> {
       const candidate = candidateFor(seed, pageUrl, extract, urlCache, siblingCache);
       if (candidate) candidates.add(candidate);
     }
-    const detected = deduplicate([...candidates].map(extract)
-      .filter((value): value is DetectedStory<HTMLElement> => !!value));
-    this.diagnostics.detected = detected.length;
-    return detected;
+    return [...candidates].map(extract).filter((value): value is DetectedStory<HTMLElement> => !!value);
   }
+}
+// A component whose shadow root holds exactly one story is itself the card: hide
+// the host so the feed grid closes up, rather than leaving an empty tile behind.
+function promoteToHost(card: DetectedStory<HTMLElement>, shadow: ShadowRoot, pageUrl: string): DetectedStory<HTMLElement> {
+  const host = shadow.host;
+  if (!(host instanceof HTMLElement) || protectedElement(host) || ['BODY', 'HTML', 'MAIN'].includes(host.tagName)) return card;
+  const urls = new Set([...shadow.querySelectorAll<HTMLAnchorElement>('a[href]'), ...host.querySelectorAll<HTMLAnchorElement>('a[href]')]
+    .filter(link => headlineAnchor(link) || !!link.closest(HEADINGS) || !!link.querySelector(HEADINGS)).map(link => linkUrl(link, pageUrl)).filter(Boolean));
+  if (urls.size !== 1 || !urls.has(card.story.url ?? '')) return card;
+  if (openShadowRoots(shadow, 64).some(inner => inner.querySelector('a[href]'))) return card;
+  return { ...card, handle: host };
 }

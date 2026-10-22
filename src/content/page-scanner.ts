@@ -4,14 +4,17 @@ import { defaultPreferences } from '../core/preferences';
 import { domainMatches } from '../core/text';
 import type { Preferences, StoryClassifier, DetectedStory } from '../core/types';
 import type { Platform, PageStatus } from '../platform/contracts';
-import { GenericDetector, deduplicate, CARD, type Root } from './detectors/generic';
+import { GenericDetector, deduplicate, openShadowRoots, CARD } from './detectors/generic';
 import { SITE_ADAPTERS } from './detectors/sites';
+import { withStyleCache } from './detectors/labels';
 import { eligiblePage } from './page-eligibility';
 import { CardRenderer, StoryReview, type StoryRecord, type Feedback } from './presentation';
 export class PageScanner {
   private preferences: Preferences = defaultPreferences();
   private records = new Map<HTMLElement, StoryRecord>();
-  private pending = new Set<Root>();
+  private pending = new Set<Document | HTMLElement>();
+  private observedShadows = new WeakSet<ShadowRoot>();
+  private observerOptions: MutationObserverInit = {};
   private timer?: ReturnType<typeof setTimeout>;
   private draining = false;
   private pageUrl = location.href;
@@ -52,7 +55,8 @@ export class PageScanner {
       if (location.href !== this.pageUrl) { this.navigate(); return; }
       if (!this.active() || !eligiblePage(document, this.pageUrl, this.preferences)) return;
       for (const mutation of mutations) {
-        const target = mutation.target instanceof HTMLElement ? mutation.target : mutation.target.parentElement;
+        const observed = mutation.target;
+        const target = observed instanceof HTMLElement ? observed : observed instanceof ShadowRoot && observed.host instanceof HTMLElement ? observed.host : observed.parentElement;
         if (!target || target.closest('[data-news-filter-ui]')) continue;
         if (mutation.type === 'attributes' && mutation.attributeName === 'style' && this.records.has(target)) continue;
         if (target.closest('head, script[type="application/ld+json"]')) { this.schedule(document); continue; }
@@ -73,11 +77,12 @@ export class PageScanner {
         }
       }
     });
-    this.observer.observe(document.documentElement, {
+    this.observerOptions = {
       childList: true, subtree: true, characterData: true, attributes: true,
       attributeFilter: ['href', 'src', 'data-section', 'data-label', 'data-kicker', 'data-topic', 'data-category',
         'data-sponsored', 'data-partner', 'data-related', 'data-recommendations', 'data-emergency', 'itemprop', 'content', 'itemtype', 'data-testid', 'data-component', 'rel', 'role', 'aria-label', 'aria-hidden', 'hidden', 'inert', 'class', 'style'],
-    });
+    };
+    this.observer.observe(document.documentElement, this.observerOptions);
     window.addEventListener('popstate', this.navigate);
     const navigation = (window as Window & { navigation?: EventTarget }).navigation;
     const routeChanged = () => { if (location.href !== this.pageUrl) this.navigate(); };
@@ -118,7 +123,13 @@ export class PageScanner {
     if (!eligiblePage(document, this.pageUrl, this.preferences)) record.decision = { action: 'allow', reason: 'This site is not enabled for detection', categories: [], signals: [] };
     this.renderer.apply(record, this.preferences.debug && this.active());
   }
-  private schedule(root: Root) {
+  private schedule(input: Document | HTMLElement | Node) {
+    // Work inside a component's shadow root is rescanned from its host, so a card
+    // promoted to the host is re-found as the same complete boundary.
+    let root: Document | HTMLElement | undefined = input instanceof Document || input instanceof HTMLElement ? input : input.parentElement ?? undefined;
+    const shadow = input.getRootNode();
+    if (shadow instanceof ShadowRoot && shadow.host instanceof HTMLElement) root = shadow.host;
+    if (!root) return;
     if ([...this.pending].some(value => value === document || value instanceof HTMLElement && value.contains(root))) return;
     for (const value of this.pending) if (root === document || root instanceof HTMLElement && root.contains(value)) this.pending.delete(value);
     this.pending.add(root);
@@ -136,7 +147,7 @@ export class PageScanner {
         const generation = this.generation;
         const adapter = SITE_ADAPTERS.find(value => value.matches(location.hostname));
         let batch: DetectedStory<HTMLElement>[] = [];
-        for (const root of roots) batch.push(...(adapter?.detect(root, this.pageUrl) ?? []), ...this.generic.detect(root, this.pageUrl));
+        withStyleCache(() => { for (const root of roots) batch.push(...(adapter?.detect(root, this.pageUrl) ?? []), ...this.generic.detect(root, this.pageUrl)); });
         batch = deduplicate(batch);
         let processed = 0;
         for (const candidate of batch) {
@@ -165,6 +176,7 @@ export class PageScanner {
           }
         }
         if (changedRecords && this.review.isOpen()) this.review.open();
+        this.observeShadowRoots();
         this.report();
         if (this.preferences.debug) console.debug('[FILTA]', { candidates: batch.length, classified: processed, cached: batch.length - processed, ...this.status() });
       }
@@ -175,6 +187,13 @@ export class PageScanner {
     } finally {
       this.draining = false;
       if (this.pending.size) this.schedule(document);
+    }
+  }
+  private observeShadowRoots() {
+    if (!this.observer) return;
+    for (const shadow of openShadowRoots(document)) {
+      if (this.observedShadows.has(shadow)) continue;
+      this.observedShadows.add(shadow); this.observer.observe(shadow, this.observerOptions);
     }
   }
   private report() {

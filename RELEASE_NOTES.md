@@ -4,6 +4,14 @@ Take control of your news feed.
 
 This branch improves article discovery, topic evidence and dynamic updates across all fourteen existing categories. It remains a local-first Manifest V3 extension with the same permissions and preference schema. No topic is selected automatically.
 
+## Development 3
+
+- Add a local learned topic model for sport, business, technology, science, politics, entertainment and crime. On 14,041 held-out labelled headlines, stories caught in their topic rise from about 11% to 52% (headline only) and 68% (with summary). Explanations show the phrases used. Nothing leaves the browser.
+- Find and filter stories inside open shadow DOM web components (for example MSN), hiding the complete component.
+- Treat sites that declare standard news-publisher markup as news sites, even when their name never says "news".
+- Add NZ/UK/AU political vocabulary, with Labour Weekend and national park exceptions.
+- See `docs/validation-0.2.0/DEV3.md` for evidence, limits and the training-data licence decision.
+
 ## Changed
 
 - Find plain linked compact cards, accessible headings, overlay cards, repeated tiles and complete linked-card boundaries.
