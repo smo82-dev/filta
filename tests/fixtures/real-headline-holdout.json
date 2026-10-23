@@ -1,0 +1,344 @@
+{
+  "provenance": "Small publisher headline challenge sample, captured 20 October 2026 UTC. Hand-labelled binary category judgements use headline and supplied card context; other categories are unspecified. Investigation informed general grammar/context corrections, so this is not an independent accuracy estimate. No sponsored/science positive examples in this sample.",
+  "cases": [
+    {
+      "publisher": "bbc",
+      "category": "politics",
+      "expected": true,
+      "story": {
+        "headline": "Zelensky says US intelligence sharing 'works now' after talks with Trump envoy",
+        "description": "Ukraine had accused the US of withholding key intelligence - a claim rejected as \"scandalous\" by Washington.",
+        "url": "https://www.bbc.com/news/articles/cq5ynkx3xy11o",
+        "imageUrl": "https://static.files.bbci.co.uk/bbcdotcom/web/20261014-124122-9e48a3510a-web-3.24.0-4/grey-placeholder.png",
+        "labels": [
+          "Europe"
+        ],
+        "sourceDomain": "www.bbc.com"
+      }
+    },
+    {
+      "publisher": "bbc",
+      "category": "politics",
+      "expected": true,
+      "story": {
+        "headline": "Alberta's decisive decision to stay in Canada gives Carney backing to take on Trump",
+        "description": "The overwhelming vote by Alberta to stay in Canada gives Mark Carney political capital to focus on remaking the country's economy, writes the BBC's Lyse Doucet.",
+        "url": "https://www.bbc.com/news/articles/cr62ylj832vxo",
+        "imageUrl": "https://static.files.bbci.co.uk/bbcdotcom/web/20261014-124122-9e48a3510a-web-3.24.0-4/grey-placeholder.png",
+        "labels": [
+          "US & Canada"
+        ],
+        "sourceDomain": "www.bbc.com"
+      }
+    },
+    {
+      "publisher": "bbc",
+      "category": "tragedy",
+      "expected": true,
+      "story": {
+        "headline": "As Kim Jong Un appears in photos, why do rumours of his death keep coming back?",
+        "url": "https://www.bbc.com/news/articles/cmvg6qv1jdydo",
+        "sourceDomain": "www.bbc.com"
+      }
+    },
+    {
+      "publisher": "bbc",
+      "category": "entertainment",
+      "expected": true,
+      "story": {
+        "headline": "Christina Applegate says she was wrongly diagnosed with MS",
+        "url": "https://www.bbc.com/news/articles/cqlyel3wnxmxo",
+        "sourceDomain": "www.bbc.com"
+      }
+    },
+    {
+      "publisher": "bbc",
+      "category": "crime",
+      "expected": true,
+      "story": {
+        "headline": "Two re-arrested on suspicion of assisting Iranian intelligence after RAF Fairford incident",
+        "url": "https://www.bbc.com/news/articles/cqm26z110vzko",
+        "sourceDomain": "www.bbc.com"
+      }
+    },
+    {
+      "publisher": "fox-news",
+      "category": "celebrity",
+      "expected": true,
+      "story": {
+        "headline": "Princess Kate revives Princess Diana's iconic tiara for glamorous royal banquet",
+        "url": "https://www.foxnews.com/entertainment/kate-middleton-brings-back-princess-diana-famous-tiara-glamorous-night-prince-william",
+        "imageUrl": "https://a57.foxnews.com/static.foxnews.com/foxnews.com/content/uploads/2026/10/343/193/Kate-Middleton-October-2026-Banquet-Prince-William.jpg?tl=1&ve=1",
+        "section": "'OLD FAITHFUL'",
+        "labels": [
+          "'OLD FAITHFUL'"
+        ],
+        "sourceDomain": "www.foxnews.com"
+      }
+    },
+    {
+      "publisher": "fox-news",
+      "category": "entertainment",
+      "expected": true,
+      "story": {
+        "headline": "Former Disney star accused of draining elderly couple's $2.1M retirement savings",
+        "url": "https://www.foxnews.com/entertainment/former-disney-star-erik-von-detten-sued-elder-abuse-after-couple-poured-2-1m-retirement-savings-gold",
+        "imageUrl": "https://static.foxnews.com/static/orion/img/clear-16x9.gif",
+        "sourceDomain": "www.foxnews.com"
+      }
+    },
+    {
+      "publisher": "fox-news",
+      "category": "sport",
+      "expected": true,
+      "story": {
+        "headline": "NFL star out for the season after brutal knee injury as Commanders season spirals",
+        "url": "https://www.foxnews.com/outkick-sports/commanders-star-wide-receiver-terry-mclaurin-out-season-patellar-tendon-injury-coach-says",
+        "imageUrl": "https://static.foxnews.com/static/orion/img/clear-16x9.gif",
+        "sourceDomain": "www.foxnews.com"
+      }
+    },
+    {
+      "publisher": "fox-news",
+      "category": "crime",
+      "expected": true,
+      "story": {
+        "headline": "Madison Brooks rape suspect's attorney faces new trouble over her own legal mistake",
+        "url": "https://www.foxnews.com/us/madison-brooks-rape-suspects-attorney-held-contempt-using-her-name-ban-pink-courtroom",
+        "imageUrl": "https://static.foxnews.com/static/orion/img/clear-16x9.gif",
+        "sourceDomain": "www.foxnews.com"
+      }
+    },
+    {
+      "publisher": "fox-news",
+      "category": "business",
+      "expected": true,
+      "story": {
+        "headline": "Amazon ramps up holiday hiring with more than 300,000 jobs across US",
+        "url": "https://www.foxbusiness.com/retail/amazon-hire-more-than-300000-us-workers-holiday-shopping-rush",
+        "imageUrl": "https://static.foxnews.com/static/orion/img/clear-16x9.gif",
+        "sourceDomain": "www.foxnews.com"
+      }
+    },
+    {
+      "publisher": "fox-news",
+      "category": "sexual",
+      "expected": true,
+      "story": {
+        "headline": "Vacation spot slapped with US travel warning over crime, sexual assaults and kidnappings",
+        "url": "https://www.foxnews.com/travel/vacation-spot-slapped-us-travel-warning-over-crime-sexual-assaults-kidnappings",
+        "imageUrl": "https://static.foxnews.com/static/orion/img/clear-16x9.gif",
+        "sourceDomain": "www.foxnews.com"
+      }
+    },
+    {
+      "publisher": "cnn",
+      "category": "politics",
+      "expected": true,
+      "story": {
+        "headline": "Fears of a post-midterms Trump rampage spur \u2018brutal\u2019 internal jockeying",
+        "url": "https://edition.cnn.com/2026/10/20/politics/trump-white-house-midterms-blame",
+        "imageUrl": "https://media.cnn.com/api/v1/images/stellar/prod/gettyimages-2301186201.jpg?c=16x9&q=h_720,w_1280,c_fill",
+        "section": "politics",
+        "sourceDomain": "edition.cnn.com"
+      }
+    },
+    {
+      "publisher": "rnz",
+      "category": "entertainment",
+      "expected": true,
+      "story": {
+        "headline": "Lily Allen cancels her only New Zealand show",
+        "url": "https://www.rnz.co.nz/life/music/lily-allen-cancels-her-only-new-zealand-show",
+        "imageUrl": "https://media.rnztools.nz/rnz/image/upload/s--7_Wup0T2--/t_kt-crop-16x10/w_250/f_auto/q_auto:eco/4JJUFRC_GettyImages_2290612658_jpg",
+        "labels": [
+          "Concerts"
+        ],
+        "sourceDomain": "www.rnz.co.nz"
+      }
+    },
+    {
+      "publisher": "rnz",
+      "category": "technology",
+      "expected": true,
+      "story": {
+        "headline": "Facebook could soon cost your small business $900 a month",
+        "url": "https://www.rnz.co.nz/news/business/2048804/explainer-why-facebook-is-going-to-start-charging-many-new-zealand-small-businesses",
+        "imageUrl": "https://media.rnztools.nz/rnz/image/upload/s--EfbX3xyx--/t_kt-crop-16x10/w_250/f_auto/q_auto:eco/4JGGLC6_AFP__20260929__C9QC8D2__v1__HighRes__776570600_jpg",
+        "labels": [
+          "Explainer"
+        ],
+        "sourceDomain": "www.rnz.co.nz"
+      }
+    },
+    {
+      "publisher": "rnz",
+      "category": "celebrity",
+      "expected": true,
+      "story": {
+        "headline": "Leading MS advocate Christina Applegate says she doesn\u2019t have the disease after all",
+        "url": "https://www.rnz.co.nz/life/people/celebrity/christina-applegate-a-leading-ms-advocate-says-doctors-found-she-doesn-t-have-the-disease-after-all",
+        "imageUrl": "https://media.rnztools.nz/rnz/image/upload/s--LdkP4iPb--/t_kt-crop-16x10/w_250/f_auto/q_auto:eco/4KP0IY1_000_33A66MC_jpg",
+        "labels": [
+          "Celebrity"
+        ],
+        "sourceDomain": "www.rnz.co.nz"
+      }
+    },
+    {
+      "publisher": "rnz",
+      "category": "politics",
+      "expected": true,
+      "story": {
+        "headline": "Poll: T\u0101maki Makaurau race neck and neck",
+        "url": "https://www.rnz.co.nz/news/politics_election-2026/2050443/poll-tamaki-makaurau-race-neck-and-neck-ahead-of-crucial-candidate-debate",
+        "imageUrl": "https://media.rnztools.nz/rnz/image/upload/s--UfmkKu_T--/t_kt-crop-16x10/w_250/f_auto/q_auto:eco/4JGVEJ6_election_2026_ma_ori_Ta_maki_Makaurau_jpg",
+        "labels": [
+          "Election 2026"
+        ],
+        "sourceDomain": "www.rnz.co.nz"
+      }
+    },
+    {
+      "publisher": "rnz",
+      "category": "disaster",
+      "expected": true,
+      "story": {
+        "headline": "Magnitude 6.3 earthquake strikes northwest of Vanuatu",
+        "url": "https://www.rnz.co.nz/news/pacific/2041045/magnitude-6-point-3-earthquake-strikes-northwest-of-vanuatu",
+        "imageUrl": "https://media.rnztools.nz/rnz/image/upload/s--ZrJZxVtd--/t_kt-crop-16x10/w_250/f_auto/q_auto:eco/4JGGDPL_quakea_jpg",
+        "sourceDomain": "www.rnz.co.nz"
+      }
+    },
+    {
+      "publisher": "the-guardian",
+      "category": "opinion",
+      "expected": true,
+      "story": {
+        "headline": "Why are French police so violent? Their job is to protect the state, not the people",
+        "url": "https://www.theguardian.com/world/2026/oct/20/france-culture-violent-policing-protests-riots",
+        "imageUrl": "https://i.guim.co.uk/img/media/3a6e69d81fa3dc5db348979f183b53e1159e8b4d/940_842_3673_2938/master/3673.jpg?width=120&dpr=1&s=none&crop=5%3A4",
+        "section": "Analysis",
+        "sourceDomain": "www.theguardian.com"
+      }
+    },
+    {
+      "publisher": "the-guardian",
+      "category": "entertainment",
+      "expected": true,
+      "story": {
+        "headline": "\u2018Oh God, I can\u2019t bear it\u2019: Judi Dench says Cats film was \u2018a waste of goodwill and talent\u2019",
+        "url": "https://www.theguardian.com/film/2026/oct/20/judi-dench-cats-film-was-a-waste-of-goodwill-and-talent",
+        "imageUrl": "https://i.guim.co.uk/img/media/4fd511b9ad4acdeee42a4de7d5af3159b2e82425/824_119_1127_902/master/1127.jpg?width=120&dpr=1&s=none&crop=5%3A4",
+        "section": "Film",
+        "sourceDomain": "www.theguardian.com"
+      }
+    },
+    {
+      "publisher": "the-guardian",
+      "category": "technology",
+      "expected": true,
+      "story": {
+        "headline": "The dangers of letting tech billionaires shape our world",
+        "url": "https://www.theguardian.com/global/2026/oct/19/musk-ukraine-ai-music",
+        "imageUrl": "https://i.guim.co.uk/img/media/9df3eaa715484d3f560e4dea76d7dda82597ac00/188_0_4077_3262/master/4077.jpg?width=120&dpr=1&s=none&crop=5%3A4",
+        "section": "TechScape",
+        "sourceDomain": "www.theguardian.com"
+      }
+    },
+    {
+      "publisher": "the-guardian",
+      "category": "disaster",
+      "expected": false,
+      "story": {
+        "headline": "UK government failures led to Covid spreading \u2018like wildfire\u2019 in care homes, inquiry finds",
+        "url": "https://www.theguardian.com/uk-news/2026/oct/20/uk-government-failures-led-to-covid-spreading-like-wildfire-in-care-homes-inquiry-finds",
+        "sourceDomain": "www.theguardian.com"
+      }
+    },
+    {
+      "publisher": "7news",
+      "category": "sport",
+      "expected": true,
+      "story": {
+        "headline": "Victory extends Australia\u2019s Rose Bowl reign to 26 years",
+        "description": "3 min read",
+        "url": "https://7news.com.au/sport/cricket/victory-in-second-t20-extends-australias-rose-bowl-reign-over-new-zealand-to-26-years--c-23050795",
+        "imageUrl": "https://images.7news.com.au/publication/C-23050795/0dc835b1b2201491531546ac86f0533ffcfeea50-16x9-x0y0w1280h720.jpg?imwidth=740&impolicy=sevennews_v2",
+        "sourceDomain": "7news.com.au"
+      }
+    },
+    {
+      "publisher": "7news",
+      "category": "crime",
+      "expected": true,
+      "story": {
+        "headline": "Manhunt for knifeman on the loose after gym stabbing",
+        "description": "Live",
+        "url": "https://7news.com.au/news/7news-live-updates-manhunt-for-knifeman-on-the-loose-after-stabbing-attack-outside-adelaide-anytime-fitness-c-23050503",
+        "imageUrl": "https://images.7news.com.au/publication/C-23050503/fc4b3f3d295b95b794d8dac2f29371edfe1b6d9d-16x9-x0y0w1280h720.jpg?imwidth=740&impolicy=sevennews_v2",
+        "labels": [
+          "Live"
+        ],
+        "sourceDomain": "7news.com.au"
+      }
+    },
+    {
+      "publisher": "nz-herald",
+      "category": "business",
+      "expected": true,
+      "story": {
+        "headline": "Founders of South Island's biggest property development firm split, divide $800m empire",
+        "url": "https://www.nzherald.co.nz/nz/wolfbrook-split-steve-brooks-and-james-cooney-to-go-in-separate-directions/premium/ZKAUKONLV5CHNODZ4YFFHPZR4I",
+        "imageUrl": "https://www.nzherald.co.nz/pf/resources/images/placeholders/placeholder_p.png?d=1073",
+        "sourceDomain": "www.nzherald.co.nz"
+      }
+    },
+    {
+      "publisher": "nz-herald",
+      "category": "politics",
+      "expected": true,
+      "story": {
+        "headline": "Will National's policy on the right to silence in child murder cases work?",
+        "description": "The Bottom Line: We stress-test a key election promise and ask what it would mean for NZ.",
+        "url": "https://www.nzherald.co.nz/nz/politics/child-murder-and-the-right-to-silence-will-nationals-plan-work-the-bottom-line-checks-it-out/premium/I42PWA5ALBBLDFOXCJ6EHP3PMU",
+        "imageUrl": "https://www.nzherald.co.nz/pf/resources/images/placeholders/placeholder_p.png?d=1073",
+        "sourceDomain": "www.nzherald.co.nz"
+      }
+    },
+    {
+      "publisher": "nz-herald",
+      "category": "sport",
+      "expected": false,
+      "story": {
+        "headline": "Labour weekend scorcher: Chch set for 27C as sporting events attract thousands",
+        "url": "https://www.nzherald.co.nz/nz/christchurch/canterbury-weather-temperatures-to-reach-27c-over-long-weekend/IZAB45KEQBDUBMU2LTBD4W3NIU",
+        "sourceDomain": "www.nzherald.co.nz"
+      }
+    },
+    {
+      "publisher": "1news",
+      "category": "disaster",
+      "expected": true,
+      "story": {
+        "headline": "'We'll be essentially homeless': Wellington flood victims fear what's next",
+        "url": "https://www.1news.co.nz/2026/10/18/well-be-essentially-homeless-wellington-flood-victims-fear-whats-next",
+        "sourceDomain": "www.1news.co.nz"
+      }
+    },
+    {
+      "publisher": "rnz",
+      "category": "war",
+      "expected": false,
+      "story": {
+        "headline": "'Could never have imagined': Behind the design of a new Christchurch cathedral",
+        "url": "https://www.rnz.co.nz/life/culture/a-different-responsibility-designing-the-new-christchurch-cathedral",
+        "imageUrl": "https://media.rnztools.nz/rnz/image/upload/s--Y6A8_rTo--/t_kt-crop-16x10/w_250/f_auto/q_auto:eco/4JGH1ND_10594_05_Aerial_Morning_png",
+        "labels": [
+          "Architecture"
+        ],
+        "sourceDomain": "www.rnz.co.nz"
+      }
+    }
+  ]
+}

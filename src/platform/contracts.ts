@@ -2,6 +2,8 @@ import type { Preferences, PreferencePatch } from '../core/types';
 export interface Tab { id?: number; url?: string }
 export interface PageStatus {
   domain: string; detected: number; filtered: number; active: boolean; eligible: boolean; configured: boolean;
+  diagnostics?: { discovery: { candidates: number; detected: number; rejected: Record<string, number> };
+    noTopicEvidence: number; selectedTopicMatches: number; decisions: { allow: number; collapse: number; hide: number } };
 }
 export type Message =
   | { kind: 'GET_PREFS' }
@@ -34,4 +36,6 @@ export interface Platform {
   permissions: PermissionAdapter;
   installed(listener: (reason: string) => void): void;
   badge(tabId: number, count: number): Promise<void>;
+  /** Extension-only access to an element's shadow root, including closed ones (content scripts). */
+  shadowRoot?(element: Element): ShadowRoot | null;
 }

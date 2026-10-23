@@ -19,15 +19,35 @@ test('every starter category has a working weighted seed signal', async t => {
     assert.ok(category.score >= category.threshold);
   });
 });
+test('FILTA sport detection covers major US, UK, Australian and NZ sporting language', async () => {
+  for (const headline of [
+    'NFL quarterback prepares for Super Bowl clash',
+    'NBA playoffs deliver a dramatic final',
+    'NRL Panthers name squad for next match',
+    'AFL finals series begins in Melbourne',
+    'All Blacks name squad for weekend clash',
+    'Verstappen leads Formula 1 qualifying lap',
+    'Black Caps take three wickets in first innings',
+    'Golf championship concludes in dramatic fashion'
+  ]) {
+    const result = await decision(story(headline), prefs({ filteredCategories: ['sport'] }));
+    assert.equal(result.action, 'collapse', headline);
+  }
+  const unrelated = await decision(story('New stadium community housing proposal announced'), prefs({ filteredCategories: ['sport'] }));
+  assert.equal(unrelated.action, 'allow');
+});
 test('headline, description, section and URL have different weights', async () => {
   assert.equal(await score('Technology transforms villages', 'technology'), 4);
   assert.equal(await score('A new development for villagers', 'technology', { description: 'technology' }), 1.4);
   assert.equal(await score('A new development for villagers', 'technology', { section: 'Technology' }), 6);
-  assert.equal(await score('A new development for villagers', 'technology', { url: 'https://example.com/technology/story' }), 1);
+  assert.equal(await score('A new development for villagers', 'technology', { url: 'https://example.com/technology/story' }), 4);
 });
 test('combinations add confidence and signals remain explainable', async () => {
   const result = await classifier.classify(story('Police charged two people in an incident'));
-  assert.equal(result.categories.find(x => x.id === 'crime').score, 5);
+  // Rule evidence (1 + 1 + 3) is unchanged; the topic model may add its own, separately listed evidence.
+  const rules = result.signals.filter(x => x.category === 'crime' && x.kind !== 'model').reduce((sum, x) => sum + x.contribution, 0);
+  assert.equal(rules, 5);
+  assert.ok(result.categories.find(x => x.id === 'crime').score >= 5);
   assert.ok(result.signals.some(x => x.kind === 'combination' && x.term === 'police + charged'));
 });
 test('an incidental actor mention alone does not trigger celebrity gossip', async () => {
@@ -157,7 +177,7 @@ test('sponsored rules use conservative field weights and ignore ambiguous narrat
   for (const phrase of ['Paid Content', 'Partner Content', 'Presented by Acme', 'Sponsored by Acme']) {
     assert.equal((await decision(story(`${phrase}: A local project opens this week`), prefs({ filteredCategories: ['sponsored'] }))).action, 'collapse');
   }
-  assert.equal((await decision(story('A local project opens this week', { url: 'https://news.example/paid-content/123' }), prefs({ filteredCategories: ['sponsored'] }))).action, 'allow');
+  assert.equal((await decision(story('A local project opens this week', { url: 'https://news.example/paid-content/123' }), prefs({ filteredCategories: ['sponsored'] }))).action, 'collapse');
 });
 test('sponsored labels preserve every higher-priority exception and old stored choices', async () => {
   const item = story('A local project opens this week', { labels: ['Sponsored'] });

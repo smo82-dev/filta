@@ -1,0 +1,132 @@
+{
+  "provenance": "Hand-labelled English challenge examples, synthetic, four regions; binary labels apply only to the named category. Not a publisher accuracy estimate.",
+  "samples": 140,
+  "categories": {
+    "celebrity": {
+      "tp": 6,
+      "fp": 0,
+      "tn": 4,
+      "fn": 0,
+      "misses": [],
+      "precision": 1,
+      "recall": 1
+    },
+    "crime": {
+      "tp": 6,
+      "fp": 0,
+      "tn": 4,
+      "fn": 0,
+      "misses": [],
+      "precision": 1,
+      "recall": 1
+    },
+    "tragedy": {
+      "tp": 6,
+      "fp": 0,
+      "tn": 4,
+      "fn": 0,
+      "misses": [],
+      "precision": 1,
+      "recall": 1
+    },
+    "sexual": {
+      "tp": 6,
+      "fp": 0,
+      "tn": 4,
+      "fn": 0,
+      "misses": [],
+      "precision": 1,
+      "recall": 1
+    },
+    "war": {
+      "tp": 6,
+      "fp": 0,
+      "tn": 4,
+      "fn": 0,
+      "misses": [],
+      "precision": 1,
+      "recall": 1
+    },
+    "disaster": {
+      "tp": 6,
+      "fp": 0,
+      "tn": 4,
+      "fn": 0,
+      "misses": [],
+      "precision": 1,
+      "recall": 1
+    },
+    "politics": {
+      "tp": 6,
+      "fp": 0,
+      "tn": 4,
+      "fn": 0,
+      "misses": [],
+      "precision": 1,
+      "recall": 1
+    },
+    "sport": {
+      "tp": 6,
+      "fp": 0,
+      "tn": 4,
+      "fn": 0,
+      "misses": [],
+      "precision": 1,
+      "recall": 1
+    },
+    "entertainment": {
+      "tp": 6,
+      "fp": 0,
+      "tn": 4,
+      "fn": 0,
+      "misses": [],
+      "precision": 1,
+      "recall": 1
+    },
+    "opinion": {
+      "tp": 6,
+      "fp": 0,
+      "tn": 4,
+      "fn": 0,
+      "misses": [],
+      "precision": 1,
+      "recall": 1
+    },
+    "business": {
+      "tp": 6,
+      "fp": 0,
+      "tn": 4,
+      "fn": 0,
+      "misses": [],
+      "precision": 1,
+      "recall": 1
+    },
+    "technology": {
+      "tp": 6,
+      "fp": 0,
+      "tn": 4,
+      "fn": 0,
+      "misses": [],
+      "precision": 1,
+      "recall": 1
+    },
+    "science": {
+      "tp": 6,
+      "fp": 0,
+      "tn": 4,
+      "fn": 0,
+      "misses": [],
+      "precision": 1,
+      "recall": 1
+    },
+    "sponsored": {
+      "tp": 6,
+      "fp": 0,
+      "tn": 4,
+      "fn": 0,
+      "misses": [],
+      "precision": 1,
+      "recall": 1
+    }
+  }
+}

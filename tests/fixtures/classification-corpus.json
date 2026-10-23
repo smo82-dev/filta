@@ -1,0 +1,1417 @@
+{
+  "provenance": "Hand-labelled English challenge examples, synthetic, four regions; binary labels apply only to the named category. Not a publisher accuracy estimate.",
+  "cases": [
+    {
+      "id": "celebrity-headline-0",
+      "category": "celebrity",
+      "expected": true,
+      "story": {
+        "headline": "Actor announces engagement after surprise wedding plans",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/celebrity-0"
+      }
+    },
+    {
+      "id": "celebrity-headline-1",
+      "category": "celebrity",
+      "expected": true,
+      "story": {
+        "headline": "Singer confirms divorce after months of speculation",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/celebrity-1"
+      }
+    },
+    {
+      "id": "celebrity-headline-2",
+      "category": "celebrity",
+      "expected": true,
+      "story": {
+        "headline": "Film star discusses dating rumours in new interview",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/celebrity-2"
+      }
+    },
+    {
+      "id": "celebrity-headline-3",
+      "category": "celebrity",
+      "expected": true,
+      "story": {
+        "headline": "Royal family shares photographs of private celebration",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/celebrity-3"
+      }
+    },
+    {
+      "id": "celebrity-metadata",
+      "category": "celebrity",
+      "expected": true,
+      "story": {
+        "headline": "An unexpected development draws local attention",
+        "section": "Showbiz",
+        "sourceDomain": "news.example"
+      }
+    },
+    {
+      "id": "celebrity-taxonomy",
+      "category": "celebrity",
+      "expected": true,
+      "story": {
+        "headline": "The latest developments from across the region",
+        "url": "https://news.example/showbiz/new-developments",
+        "sourceDomain": "news.example"
+      }
+    },
+    {
+      "id": "celebrity-negative-0",
+      "category": "celebrity",
+      "expected": false,
+      "story": {
+        "headline": "Actor funds a village clean water project",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/0"
+      }
+    },
+    {
+      "id": "celebrity-negative-1",
+      "category": "celebrity",
+      "expected": false,
+      "story": {
+        "headline": "Star charts help travellers navigate at night",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/1"
+      }
+    },
+    {
+      "id": "celebrity-negative-2",
+      "category": "celebrity",
+      "expected": false,
+      "story": {
+        "headline": "Scientific research charity announces a new grant",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/2"
+      }
+    },
+    {
+      "id": "celebrity-negative-3",
+      "category": "celebrity",
+      "expected": false,
+      "story": {
+        "headline": "Neighbours start a community garden",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/3"
+      }
+    },
+    {
+      "id": "crime-headline-0",
+      "category": "crime",
+      "expected": true,
+      "story": {
+        "headline": "Suspects held in custody after overnight search",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/crime-0"
+      }
+    },
+    {
+      "id": "crime-headline-1",
+      "category": "crime",
+      "expected": true,
+      "story": {
+        "headline": "Jury finds defendant guilty as court delivers verdict",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/crime-1"
+      }
+    },
+    {
+      "id": "crime-headline-2",
+      "category": "crime",
+      "expected": true,
+      "story": {
+        "headline": "Police arrest follows string of burglaries",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/crime-2"
+      }
+    },
+    {
+      "id": "crime-headline-3",
+      "category": "crime",
+      "expected": true,
+      "story": {
+        "headline": "Two charged as police investigate central city incident",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/crime-3"
+      }
+    },
+    {
+      "id": "crime-metadata",
+      "category": "crime",
+      "expected": true,
+      "story": {
+        "headline": "An unexpected development draws local attention",
+        "section": "Courts",
+        "sourceDomain": "news.example"
+      }
+    },
+    {
+      "id": "crime-taxonomy",
+      "category": "crime",
+      "expected": true,
+      "story": {
+        "headline": "The latest developments from across the region",
+        "url": "https://news.example/courts/new-developments",
+        "sourceDomain": "news.example"
+      }
+    },
+    {
+      "id": "crime-negative-0",
+      "category": "crime",
+      "expected": false,
+      "story": {
+        "headline": "Crime prevention classes begin at local school",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/0"
+      }
+    },
+    {
+      "id": "crime-negative-1",
+      "category": "crime",
+      "expected": false,
+      "story": {
+        "headline": "Fraud prevention software helps older residents",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/1"
+      }
+    },
+    {
+      "id": "crime-negative-2",
+      "category": "crime",
+      "expected": false,
+      "story": {
+        "headline": "Court resurfacing improves the public tennis facility",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/2"
+      }
+    },
+    {
+      "id": "crime-negative-3",
+      "category": "crime",
+      "expected": false,
+      "story": {
+        "headline": "Police volunteer at a village clean up",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/3"
+      }
+    },
+    {
+      "id": "tragedy-headline-0",
+      "category": "tragedy",
+      "expected": true,
+      "story": {
+        "headline": "Driver dies following late night collision",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/tragedy-0"
+      }
+    },
+    {
+      "id": "tragedy-headline-1",
+      "category": "tragedy",
+      "expected": true,
+      "story": {
+        "headline": "Three killed as bus leaves the mountain road",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/tragedy-1"
+      }
+    },
+    {
+      "id": "tragedy-headline-2",
+      "category": "tragedy",
+      "expected": true,
+      "story": {
+        "headline": "Families attend funeral for victims of the crash",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/tragedy-2"
+      }
+    },
+    {
+      "id": "tragedy-headline-3",
+      "category": "tragedy",
+      "expected": true,
+      "story": {
+        "headline": "New report confirms fatalities after bridge collapse",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/tragedy-3"
+      }
+    },
+    {
+      "id": "tragedy-metadata",
+      "category": "tragedy",
+      "expected": true,
+      "story": {
+        "headline": "An unexpected development draws local attention",
+        "section": "Obituaries",
+        "sourceDomain": "news.example"
+      }
+    },
+    {
+      "id": "tragedy-taxonomy",
+      "category": "tragedy",
+      "expected": true,
+      "story": {
+        "headline": "The latest developments from across the region",
+        "url": "https://news.example/obituaries/new-developments",
+        "sourceDomain": "news.example"
+      }
+    },
+    {
+      "id": "tragedy-negative-0",
+      "category": "tragedy",
+      "expected": false,
+      "story": {
+        "headline": "New technology could prevent road deaths",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/0"
+      }
+    },
+    {
+      "id": "tragedy-negative-1",
+      "category": "tragedy",
+      "expected": false,
+      "story": {
+        "headline": "Road safety project aims to save lives",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/1"
+      }
+    },
+    {
+      "id": "tragedy-negative-2",
+      "category": "tragedy",
+      "expected": false,
+      "story": {
+        "headline": "Death rate falls after new treatment programme",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/2"
+      }
+    },
+    {
+      "id": "tragedy-negative-3",
+      "category": "tragedy",
+      "expected": false,
+      "story": {
+        "headline": "Neighbours celebrate a new community hall",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/3"
+      }
+    },
+    {
+      "id": "sexual-headline-0",
+      "category": "sexual",
+      "expected": true,
+      "story": {
+        "headline": "Platform removes sexually explicit material from public pages",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/sexual-0"
+      }
+    },
+    {
+      "id": "sexual-headline-1",
+      "category": "sexual",
+      "expected": true,
+      "story": {
+        "headline": "Inquiry examines access to adult content online",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/sexual-1"
+      }
+    },
+    {
+      "id": "sexual-headline-2",
+      "category": "sexual",
+      "expected": true,
+      "story": {
+        "headline": "Explicit images shared without consent investigated",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/sexual-2"
+      }
+    },
+    {
+      "id": "sexual-headline-3",
+      "category": "sexual",
+      "expected": true,
+      "story": {
+        "headline": "Pornography website faces new age restrictions",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/sexual-3"
+      }
+    },
+    {
+      "id": "sexual-metadata",
+      "category": "sexual",
+      "expected": true,
+      "story": {
+        "headline": "An unexpected development draws local attention",
+        "section": "Adult Content",
+        "sourceDomain": "news.example"
+      }
+    },
+    {
+      "id": "sexual-taxonomy",
+      "category": "sexual",
+      "expected": true,
+      "story": {
+        "headline": "The latest developments from across the region",
+        "url": "https://news.example/adult-content/new-developments",
+        "sourceDomain": "news.example"
+      }
+    },
+    {
+      "id": "sexual-negative-0",
+      "category": "sexual",
+      "expected": false,
+      "story": {
+        "headline": "Sexual health education offered at local clinic",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/0"
+      }
+    },
+    {
+      "id": "sexual-negative-1",
+      "category": "sexual",
+      "expected": false,
+      "story": {
+        "headline": "Sexual health research receives new funding",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/1"
+      }
+    },
+    {
+      "id": "sexual-negative-2",
+      "category": "sexual",
+      "expected": false,
+      "story": {
+        "headline": "Study examines hormone changes in young adults",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/2"
+      }
+    },
+    {
+      "id": "sexual-negative-3",
+      "category": "sexual",
+      "expected": false,
+      "story": {
+        "headline": "Artists display portraits at the community gallery",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/3"
+      }
+    },
+    {
+      "id": "war-headline-0",
+      "category": "war",
+      "expected": true,
+      "story": {
+        "headline": "Forces begin offensive after days of shelling",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/war-0"
+      }
+    },
+    {
+      "id": "war-headline-1",
+      "category": "war",
+      "expected": true,
+      "story": {
+        "headline": "Air strikes hit military positions overnight",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/war-1"
+      }
+    },
+    {
+      "id": "war-headline-2",
+      "category": "war",
+      "expected": true,
+      "story": {
+        "headline": "Ceasefire talks continue as troops regroup",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/war-2"
+      }
+    },
+    {
+      "id": "war-headline-3",
+      "category": "war",
+      "expected": true,
+      "story": {
+        "headline": "Armed conflict forces residents across the border",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/war-3"
+      }
+    },
+    {
+      "id": "war-metadata",
+      "category": "war",
+      "expected": true,
+      "story": {
+        "headline": "An unexpected development draws local attention",
+        "section": "Defence",
+        "sourceDomain": "news.example"
+      }
+    },
+    {
+      "id": "war-taxonomy",
+      "category": "war",
+      "expected": true,
+      "story": {
+        "headline": "The latest developments from across the region",
+        "url": "https://news.example/defence/new-developments",
+        "sourceDomain": "news.example"
+      }
+    },
+    {
+      "id": "war-negative-0",
+      "category": "war",
+      "expected": false,
+      "story": {
+        "headline": "Price war lowers grocery costs",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/0"
+      }
+    },
+    {
+      "id": "war-negative-1",
+      "category": "war",
+      "expected": false,
+      "story": {
+        "headline": "War on waste brings neighbours together",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/1"
+      }
+    },
+    {
+      "id": "war-negative-2",
+      "category": "war",
+      "expected": false,
+      "story": {
+        "headline": "Star Wars film attracts cinema audiences",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/2"
+      }
+    },
+    {
+      "id": "war-negative-3",
+      "category": "war",
+      "expected": false,
+      "story": {
+        "headline": "Trade war raises prices for local importers",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/3"
+      }
+    },
+    {
+      "id": "disaster-headline-0",
+      "category": "disaster",
+      "expected": true,
+      "story": {
+        "headline": "Hurricane damage leaves coastal villages isolated",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/disaster-0"
+      }
+    },
+    {
+      "id": "disaster-headline-1",
+      "category": "disaster",
+      "expected": true,
+      "story": {
+        "headline": "Wildfires spread as strong winds return",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/disaster-1"
+      }
+    },
+    {
+      "id": "disaster-headline-2",
+      "category": "disaster",
+      "expected": true,
+      "story": {
+        "headline": "Earthquakes shake the region overnight",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/disaster-2"
+      }
+    },
+    {
+      "id": "disaster-headline-3",
+      "category": "disaster",
+      "expected": true,
+      "story": {
+        "headline": "Flood destroys homes as residents flee rising water",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/disaster-3"
+      }
+    },
+    {
+      "id": "disaster-metadata",
+      "category": "disaster",
+      "expected": true,
+      "story": {
+        "headline": "An unexpected development draws local attention",
+        "section": "Disasters",
+        "sourceDomain": "news.example"
+      }
+    },
+    {
+      "id": "disaster-taxonomy",
+      "category": "disaster",
+      "expected": true,
+      "story": {
+        "headline": "The latest developments from across the region",
+        "url": "https://news.example/disasters/new-developments",
+        "sourceDomain": "news.example"
+      }
+    },
+    {
+      "id": "disaster-negative-0",
+      "category": "disaster",
+      "expected": false,
+      "story": {
+        "headline": "Disaster preparedness workshop teaches first aid",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/0"
+      }
+    },
+    {
+      "id": "disaster-negative-1",
+      "category": "disaster",
+      "expected": false,
+      "story": {
+        "headline": "New earthquake resistant homes open for families",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/1"
+      }
+    },
+    {
+      "id": "disaster-negative-2",
+      "category": "disaster",
+      "expected": false,
+      "story": {
+        "headline": "Cyclone resistant roof designs tested locally",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/2"
+      }
+    },
+    {
+      "id": "disaster-negative-3",
+      "category": "disaster",
+      "expected": false,
+      "story": {
+        "headline": "Local festival brings neighbours into the town square",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/3"
+      }
+    },
+    {
+      "id": "politics-headline-0",
+      "category": "politics",
+      "expected": true,
+      "story": {
+        "headline": "Senator votes against bill after lengthy debate",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/politics-0"
+      }
+    },
+    {
+      "id": "politics-headline-1",
+      "category": "politics",
+      "expected": true,
+      "story": {
+        "headline": "Cabinet discusses major reform before final vote",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/politics-1"
+      }
+    },
+    {
+      "id": "politics-headline-2",
+      "category": "politics",
+      "expected": true,
+      "story": {
+        "headline": "Prime minister announces changes ahead of election",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/politics-2"
+      }
+    },
+    {
+      "id": "politics-headline-3",
+      "category": "politics",
+      "expected": true,
+      "story": {
+        "headline": "Parliament approves spending after opposition challenge",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/politics-3"
+      }
+    },
+    {
+      "id": "politics-metadata",
+      "category": "politics",
+      "expected": true,
+      "story": {
+        "headline": "An unexpected development draws local attention",
+        "section": "Government",
+        "sourceDomain": "news.example"
+      }
+    },
+    {
+      "id": "politics-taxonomy",
+      "category": "politics",
+      "expected": true,
+      "story": {
+        "headline": "The latest developments from across the region",
+        "url": "https://news.example/government/new-developments",
+        "sourceDomain": "news.example"
+      }
+    },
+    {
+      "id": "politics-negative-0",
+      "category": "politics",
+      "expected": false,
+      "story": {
+        "headline": "Company president outlines new warehouse plans",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/0"
+      }
+    },
+    {
+      "id": "politics-negative-1",
+      "category": "politics",
+      "expected": false,
+      "story": {
+        "headline": "Club president welcomes families to open day",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/1"
+      }
+    },
+    {
+      "id": "politics-negative-2",
+      "category": "politics",
+      "expected": false,
+      "story": {
+        "headline": "Student election chooses school council representatives",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/2"
+      }
+    },
+    {
+      "id": "politics-negative-3",
+      "category": "politics",
+      "expected": false,
+      "story": {
+        "headline": "Minister promoted after committee reshuffle",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/3"
+      }
+    },
+    {
+      "id": "sport-headline-0",
+      "category": "sport",
+      "expected": true,
+      "story": {
+        "headline": "Goalkeeper completes hat trick in dramatic season finale",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/sport-0"
+      }
+    },
+    {
+      "id": "sport-headline-1",
+      "category": "sport",
+      "expected": true,
+      "story": {
+        "headline": "All Blacks announce squad ahead of weekend clash",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/sport-1"
+      }
+    },
+    {
+      "id": "sport-headline-2",
+      "category": "sport",
+      "expected": true,
+      "story": {
+        "headline": "NRL final brings thousands of fans into the stadium",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/sport-2"
+      }
+    },
+    {
+      "id": "sport-headline-3",
+      "category": "sport",
+      "expected": true,
+      "story": {
+        "headline": "Coach names squad before international tournament",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/sport-3"
+      }
+    },
+    {
+      "id": "sport-metadata",
+      "category": "sport",
+      "expected": true,
+      "story": {
+        "headline": "An unexpected development draws local attention",
+        "section": "Netball",
+        "sourceDomain": "news.example"
+      }
+    },
+    {
+      "id": "sport-taxonomy",
+      "category": "sport",
+      "expected": true,
+      "story": {
+        "headline": "The latest developments from across the region",
+        "url": "https://news.example/netball/new-developments",
+        "sourceDomain": "news.example"
+      }
+    },
+    {
+      "id": "sport-negative-0",
+      "category": "sport",
+      "expected": false,
+      "story": {
+        "headline": "New stadium community housing proposal announced",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/0"
+      }
+    },
+    {
+      "id": "sport-negative-1",
+      "category": "sport",
+      "expected": false,
+      "story": {
+        "headline": "Local coach service adds a new village bus stop",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/1"
+      }
+    },
+    {
+      "id": "sport-negative-2",
+      "category": "sport",
+      "expected": false,
+      "story": {
+        "headline": "City league of residents debates water supply plans",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/2"
+      }
+    },
+    {
+      "id": "sport-negative-3",
+      "category": "sport",
+      "expected": false,
+      "story": {
+        "headline": "Factory celebrates victory over rising energy costs",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/3"
+      }
+    },
+    {
+      "id": "entertainment-headline-0",
+      "category": "entertainment",
+      "expected": true,
+      "story": {
+        "headline": "Streaming series introduces new cast for final season",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/entertainment-0"
+      }
+    },
+    {
+      "id": "entertainment-headline-1",
+      "category": "entertainment",
+      "expected": true,
+      "story": {
+        "headline": "New album arrives ahead of the summer tour",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/entertainment-1"
+      }
+    },
+    {
+      "id": "entertainment-headline-2",
+      "category": "entertainment",
+      "expected": true,
+      "story": {
+        "headline": "Cinema opens with a programme of local stories",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/entertainment-2"
+      }
+    },
+    {
+      "id": "entertainment-headline-3",
+      "category": "entertainment",
+      "expected": true,
+      "story": {
+        "headline": "Box office records fall as new release draws crowds",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/entertainment-3"
+      }
+    },
+    {
+      "id": "entertainment-metadata",
+      "category": "entertainment",
+      "expected": true,
+      "story": {
+        "headline": "An unexpected development draws local attention",
+        "section": "Culture",
+        "sourceDomain": "news.example"
+      }
+    },
+    {
+      "id": "entertainment-taxonomy",
+      "category": "entertainment",
+      "expected": true,
+      "story": {
+        "headline": "The latest developments from across the region",
+        "url": "https://news.example/culture/new-developments",
+        "sourceDomain": "news.example"
+      }
+    },
+    {
+      "id": "entertainment-negative-0",
+      "category": "entertainment",
+      "expected": false,
+      "story": {
+        "headline": "Plastic film improves greenhouse production",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/0"
+      }
+    },
+    {
+      "id": "entertainment-negative-1",
+      "category": "entertainment",
+      "expected": false,
+      "story": {
+        "headline": "Window film keeps village homes cooler",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/1"
+      }
+    },
+    {
+      "id": "entertainment-negative-2",
+      "category": "entertainment",
+      "expected": false,
+      "story": {
+        "headline": "Film coating protects the solar panel surface",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/2"
+      }
+    },
+    {
+      "id": "entertainment-negative-3",
+      "category": "entertainment",
+      "expected": false,
+      "story": {
+        "headline": "Community group opens a walking trail",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/3"
+      }
+    },
+    {
+      "id": "opinion-headline-0",
+      "category": "opinion",
+      "expected": true,
+      "story": {
+        "headline": "Opinion: Our community deserves a better transport plan",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/opinion-0"
+      }
+    },
+    {
+      "id": "opinion-headline-1",
+      "category": "opinion",
+      "expected": true,
+      "story": {
+        "headline": "Editorial: Why the public deserves clear answers",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/opinion-1"
+      }
+    },
+    {
+      "id": "opinion-headline-2",
+      "category": "opinion",
+      "expected": true,
+      "story": {
+        "headline": "Commentary: A new direction for our growing town",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/opinion-2"
+      }
+    },
+    {
+      "id": "opinion-headline-3",
+      "category": "opinion",
+      "expected": true,
+      "story": {
+        "headline": "Op-ed: The case for stronger local involvement",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/opinion-3"
+      }
+    },
+    {
+      "id": "opinion-metadata",
+      "category": "opinion",
+      "expected": true,
+      "story": {
+        "headline": "An unexpected development draws local attention",
+        "section": "Analysis",
+        "sourceDomain": "news.example"
+      }
+    },
+    {
+      "id": "opinion-taxonomy",
+      "category": "opinion",
+      "expected": true,
+      "story": {
+        "headline": "The latest developments from across the region",
+        "url": "https://news.example/analysis/new-developments",
+        "sourceDomain": "news.example"
+      }
+    },
+    {
+      "id": "opinion-negative-0",
+      "category": "opinion",
+      "expected": false,
+      "story": {
+        "headline": "Opinion poll suggests a close election",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/0"
+      }
+    },
+    {
+      "id": "opinion-negative-1",
+      "category": "opinion",
+      "expected": false,
+      "story": {
+        "headline": "Doctors recommend a second opinion before treatment",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/1"
+      }
+    },
+    {
+      "id": "opinion-negative-2",
+      "category": "opinion",
+      "expected": false,
+      "story": {
+        "headline": "New rules improve access to a medical opinion",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/2"
+      }
+    },
+    {
+      "id": "opinion-negative-3",
+      "category": "opinion",
+      "expected": false,
+      "story": {
+        "headline": "Survey measures public trust in local services",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/3"
+      }
+    },
+    {
+      "id": "business-headline-0",
+      "category": "business",
+      "expected": true,
+      "story": {
+        "headline": "Banks review lending rates after central bank decision",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/business-0"
+      }
+    },
+    {
+      "id": "business-headline-1",
+      "category": "business",
+      "expected": true,
+      "story": {
+        "headline": "Firm reports record earnings as shares climb",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/business-1"
+      }
+    },
+    {
+      "id": "business-headline-2",
+      "category": "business",
+      "expected": true,
+      "story": {
+        "headline": "Stocks rise after fresh economic figures released",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/business-2"
+      }
+    },
+    {
+      "id": "business-headline-3",
+      "category": "business",
+      "expected": true,
+      "story": {
+        "headline": "Company investment boosts profit at local operation",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/business-3"
+      }
+    },
+    {
+      "id": "business-metadata",
+      "category": "business",
+      "expected": true,
+      "story": {
+        "headline": "An unexpected development draws local attention",
+        "section": "Markets",
+        "sourceDomain": "news.example"
+      }
+    },
+    {
+      "id": "business-taxonomy",
+      "category": "business",
+      "expected": true,
+      "story": {
+        "headline": "The latest developments from across the region",
+        "url": "https://news.example/markets/new-developments",
+        "sourceDomain": "news.example"
+      }
+    },
+    {
+      "id": "business-negative-0",
+      "category": "business",
+      "expected": false,
+      "story": {
+        "headline": "Business as usual for volunteers after hall closure",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/0"
+      }
+    },
+    {
+      "id": "business-negative-1",
+      "category": "business",
+      "expected": false,
+      "story": {
+        "headline": "Local walkers enjoy the river bank after repairs",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/1"
+      }
+    },
+    {
+      "id": "business-negative-2",
+      "category": "business",
+      "expected": false,
+      "story": {
+        "headline": "Families invest their time in a neighbourhood project",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/2"
+      }
+    },
+    {
+      "id": "business-negative-3",
+      "category": "business",
+      "expected": false,
+      "story": {
+        "headline": "School opens a new reading room",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/3"
+      }
+    },
+    {
+      "id": "technology-headline-0",
+      "category": "technology",
+      "expected": true,
+      "story": {
+        "headline": "AI chips power a new generation of chatbot models",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/technology-0"
+      }
+    },
+    {
+      "id": "technology-headline-1",
+      "category": "technology",
+      "expected": true,
+      "story": {
+        "headline": "New app update adds easier voice controls",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/technology-1"
+      }
+    },
+    {
+      "id": "technology-headline-2",
+      "category": "technology",
+      "expected": true,
+      "story": {
+        "headline": "Data breach exposes customer records at provider",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/technology-2"
+      }
+    },
+    {
+      "id": "technology-headline-3",
+      "category": "technology",
+      "expected": true,
+      "story": {
+        "headline": "Broadband connection reaches remote island homes",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/technology-3"
+      }
+    },
+    {
+      "id": "technology-metadata",
+      "category": "technology",
+      "expected": true,
+      "story": {
+        "headline": "An unexpected development draws local attention",
+        "section": "Tech",
+        "sourceDomain": "news.example"
+      }
+    },
+    {
+      "id": "technology-taxonomy",
+      "category": "technology",
+      "expected": true,
+      "story": {
+        "headline": "The latest developments from across the region",
+        "url": "https://news.example/tech/new-developments",
+        "sourceDomain": "news.example"
+      }
+    },
+    {
+      "id": "technology-negative-0",
+      "category": "technology",
+      "expected": false,
+      "story": {
+        "headline": "Artist studies a model village built by children",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/0"
+      }
+    },
+    {
+      "id": "technology-negative-1",
+      "category": "technology",
+      "expected": false,
+      "story": {
+        "headline": "Farmers discuss chips made from local crops",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/1"
+      }
+    },
+    {
+      "id": "technology-negative-2",
+      "category": "technology",
+      "expected": false,
+      "story": {
+        "headline": "Community celebrates its harvest festival",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/2"
+      }
+    },
+    {
+      "id": "technology-negative-3",
+      "category": "technology",
+      "expected": false,
+      "story": {
+        "headline": "Researchers build a telescope for a school project",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/3"
+      }
+    },
+    {
+      "id": "science-headline-0",
+      "category": "science",
+      "expected": true,
+      "story": {
+        "headline": "Researchers share findings from a new experiment",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/science-0"
+      }
+    },
+    {
+      "id": "science-headline-1",
+      "category": "science",
+      "expected": true,
+      "story": {
+        "headline": "NASA mission prepares to study a distant planet",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/science-1"
+      }
+    },
+    {
+      "id": "science-headline-2",
+      "category": "science",
+      "expected": true,
+      "story": {
+        "headline": "Scientific team presents results of its latest work",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/science-2"
+      }
+    },
+    {
+      "id": "science-headline-3",
+      "category": "science",
+      "expected": true,
+      "story": {
+        "headline": "New study reports a discovery beneath the sea",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/science-3"
+      }
+    },
+    {
+      "id": "science-metadata",
+      "category": "science",
+      "expected": true,
+      "story": {
+        "headline": "An unexpected development draws local attention",
+        "section": "Space",
+        "sourceDomain": "news.example"
+      }
+    },
+    {
+      "id": "science-taxonomy",
+      "category": "science",
+      "expected": true,
+      "story": {
+        "headline": "The latest developments from across the region",
+        "url": "https://news.example/space/new-developments",
+        "sourceDomain": "news.example"
+      }
+    },
+    {
+      "id": "science-negative-0",
+      "category": "science",
+      "expected": false,
+      "story": {
+        "headline": "Market research reveals changing shopping habits",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/0"
+      }
+    },
+    {
+      "id": "science-negative-1",
+      "category": "science",
+      "expected": false,
+      "story": {
+        "headline": "Bible study group meets at the community centre",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/1"
+      }
+    },
+    {
+      "id": "science-negative-2",
+      "category": "science",
+      "expected": false,
+      "story": {
+        "headline": "Study room opens in the village library",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/2"
+      }
+    },
+    {
+      "id": "science-negative-3",
+      "category": "science",
+      "expected": false,
+      "story": {
+        "headline": "Explorers enjoy a journey along the coastal walkway",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/3"
+      }
+    },
+    {
+      "id": "sponsored-headline-0",
+      "category": "sponsored",
+      "expected": true,
+      "story": {
+        "headline": "A practical guide to warmer local homes",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/sponsored-0",
+        "labels": [
+          "Sponsored"
+        ]
+      }
+    },
+    {
+      "id": "sponsored-headline-1",
+      "category": "sponsored",
+      "expected": true,
+      "story": {
+        "headline": "A new approach to household gardening",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/sponsored-1",
+        "labels": [
+          "Paid Content"
+        ]
+      }
+    },
+    {
+      "id": "sponsored-headline-2",
+      "category": "sponsored",
+      "expected": true,
+      "story": {
+        "headline": "Community transport choices for the coming year",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/sponsored-2",
+        "labels": [
+          "Partner Content"
+        ]
+      }
+    },
+    {
+      "id": "sponsored-headline-3",
+      "category": "sponsored",
+      "expected": true,
+      "story": {
+        "headline": "A guide to planning your next local journey",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/sponsored-3",
+        "labels": [
+          "Presented by Acme"
+        ]
+      }
+    },
+    {
+      "id": "sponsored-metadata",
+      "category": "sponsored",
+      "expected": true,
+      "story": {
+        "headline": "An unexpected development draws local attention",
+        "section": "Branded Content",
+        "sourceDomain": "news.example"
+      }
+    },
+    {
+      "id": "sponsored-taxonomy",
+      "category": "sponsored",
+      "expected": true,
+      "story": {
+        "headline": "The latest developments from across the region",
+        "url": "https://news.example/branded-content/new-developments",
+        "sourceDomain": "news.example"
+      }
+    },
+    {
+      "id": "sponsored-negative-0",
+      "category": "sponsored",
+      "expected": false,
+      "story": {
+        "headline": "Minister promoted after committee reshuffle",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/0"
+      }
+    },
+    {
+      "id": "sponsored-negative-1",
+      "category": "sponsored",
+      "expected": false,
+      "story": {
+        "headline": "Club sponsored its local junior players",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/1"
+      }
+    },
+    {
+      "id": "sponsored-negative-2",
+      "category": "sponsored",
+      "expected": false,
+      "story": {
+        "headline": "New advertisement rules discussed in parliament",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/2"
+      }
+    },
+    {
+      "id": "sponsored-negative-3",
+      "category": "sponsored",
+      "expected": false,
+      "story": {
+        "headline": "Community group launches a neighbourhood garden",
+        "sourceDomain": "news.example",
+        "url": "https://news.example/report/3"
+      }
+    }
+  ]
+}

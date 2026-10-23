@@ -1,12 +1,22 @@
-# Filta — local-first News Filter MVP
+# FILTA
+
+*Take control of your news feed.*
+
+## 0.2.0 owner test branch
+
+PR #1 contains the universal detection and classification reliability work. This is an **unpublished test build**, ready for independent review and owner testing, with release gates still open. See [release notes](RELEASE_NOTES.md), [validation](VALIDATION.md), [publisher compatibility](docs/validation-0.2.0/COMPATIBILITY.md) and [handover](HANDOVER.md).
+
+Build the installable ZIP with `npm ci` then `npm run package`. No account, server or runtime dependency is needed. The owner’s original artwork is preserved in `branding/` and packaged without alteration. Store signing inputs remain private and are not included. See [completed UI and BBC regression evidence](docs/validation-0.2.0/UX-AND-BBC.md).
+
+## Product
 
 A working Manifest V3 extension that detects individual news cards, classifies them using transparent local rules, and allows, collapses or hides them according to your choices. No topics are selected by default. Collapse is the initial mode.
 
 The release ZIP contains the built extension; the source ZIP contains this project, tests and a `dist/` folder. No account, backend, AI API, key or subscription is needed. The extension has no runtime dependencies.
 
-## Downloads — version 0.1.1
+## Stable archived downloads — version 0.1.1
 
-The extension currently appears in the browser as **News Filter**.
+The archived 0.1.1 packages use the historical **News Filter** name. This branch uses **FILTA**; the published Chrome Store release has not been changed.
 
 | Download | Use |
 | --- | --- |
@@ -25,10 +35,10 @@ The source code lives at the repository root. The GitHub **Code → Download ZIP
 
 1. Extract `news-filter-0.1.1.zip` into a permanent folder. `manifest.json` should be directly inside that folder.
 2. Open `chrome://extensions`, enable **Developer mode**, select **Load unpacked**, and choose that folder.
-3. Open **Settings** from the extension. Choose topics or custom phrases, keep **Collapse** for initial testing, and select **Start filtering**. The settings tab also opens on first installation.
+3. Open **Manage FILTA** from the extension. Complete the three-step setup: choose topics, choose Collapse or Hide, then review and select **Start filtering**. The settings tab also opens on first installation.
 4. Open or refresh a BBC, The Guardian or RNZ news listing. Some uncertain cards will deliberately remain visible.
 5. A matching card becomes a small replacement with **Show story** and **Why was this hidden?**. Expand the explanation for **Don’t hide stories like this** and add a phrase you want to always see.
-6. The popup provides the current page count, **View filtered stories**, the Collapse/Hide switch, global enable, settings and per-site pause/resume.
+6. The popup provides site status, the current page count, **View filtered stories**, per-site pause/resume and **Manage FILTA**. Change mode, phrases, global enable and advanced controls in the settings hub.
 
 Existing tabs opened before installation need a refresh to receive the content script. After an extension reload, refresh website tabs too. Chrome's protected pages and extension stores cannot be modified.
 
@@ -88,11 +98,11 @@ The pipeline is **detect → extract → classify → evaluate preferences → r
 
 The generic detector looks for semantic articles, linked headings, named story/card containers and compact repeated structures. Candidates must contain a single identifiable story URL and a plausible headline. Containers with multiple story URLs, article bodies, H1 reading views, long text, forms or protected controls are rejected. Navigation, page headers, footer controls, consent/privacy/advertising containers and recognised emergency elements are protected.
 
-BBC, The Guardian and RNZ have isolated adapters, with generic fallback. The Guardian adapter also recognises current fronts with a sibling overlay link and an unlinked `.card-headline`. Compound cards containing several different stories are deliberately skipped; sub-story cards may still be processed individually.
+BBC, The Guardian and RNZ have isolated adapters, with generic fallback. The Guardian adapter also recognises current fronts with a sibling overlay link and an unlinked `.card-headline`. Compound cards containing several different stories are deliberately skipped; complete sub-story cards are processed individually. Deduplication keeps the outer single-story boundary while retaining exact-story metadata supplied by an adapter inside that boundary.
 
-On other sites, detection requires news context in the domain, path, title or site metadata. Use **Detect news cards on this site** in the popup, or add a domain in advanced settings, to opt another site in. These conservative checks reduce activity on unrelated sites, but are heuristics rather than a perfect news-site classifier.
+On other sites, detection requires news context in the domain, path, title or site metadata. Use **Enable news detection here** in the popup, or add a domain in Website Controls, to opt another site in. These conservative checks reduce activity on unrelated sites, but are heuristics rather than a perfect news-site classifier.
 
-Dynamic additions are batched for 140 ms and scanned within changed subtrees. Unchanged Story fingerprints reuse cached classification. Headline and link changes in reused cards trigger reevaluation. Disconnected records are pruned; cards that become reading content are restored. The scanner yields between groups of 20 classifications. Preference edits and navigation may trigger a full discovery pass. Mutation observation ignores the extension's UI and its own display changes. Browser history navigation and DOM changes on routes are handled; a route change with no DOM mutation is outside the MVP's detection strategy.
+Dynamic additions are batched for 140 ms and scanned within changed subtrees. Unchanged Story fingerprints reuse cached classification. Headline and link changes in reused cards trigger reevaluation. Disconnected records are pruned; cards that become reading content are restored. The scanner yields between groups of 20 classifications. Preference edits and navigation may trigger a full discovery pass. Mutation observation ignores the extension's UI and its own display changes. Browser history navigation, DOM changes and Chromium Navigation API current-entry changes are handled, including a route change with no DOM mutation. Navigation listeners are removed when the scanner stops.
 
 Cards keep their original elements and inline display values/priorities. Replacements use Shadow DOM to isolate controls. Unexpected scanner errors restore filtered cards. Sites with fixed-height wrappers, unusual grids or compound cards may retain gaps; the extension does not rearrange entire page sections to fix them.
 
@@ -100,9 +110,11 @@ Cards keep their original elements and inline display values/priorities. Replace
 
 There are 14 seed categories: Celebrity & Gossip, Crime, Death & Tragedy, Sexual Content, War & Conflict, Disaster, Politics, Sport, Entertainment, Opinion, Business, Technology, Science and **Sponsored & Paid Content**.
 
-Term weights are multiplied by field weights: headline **1**, description **0.35**, URL path **0.25**, section **1.5**, labels **1.5** (Sponsored & Paid Content labels **2**). Current thresholds are **4**. Each term counts once per field. Duplicate labels and labels already exposed as the section do not add duplicate evidence. Phrases never match across separate labels. Headline combinations add confidence, and contextual phrases subtract scores. Scores cannot go below zero. For example, “New technology could prevent road deaths” receives a technology signal and a tragedy exception. An incidental actor mention alone is below the celebrity threshold.
+Term weights are multiplied by field weights: headline **1**, description **0.35**, URL path **0.25**, section **1.5**, labels **1.5** (Sponsored & Paid Content labels **2**). Current thresholds are **4**. Each term counts once per field. Explicit category aliases in a section, label, or complete parent URL path segment provide threshold-level taxonomy evidence; an incidental final slug or query string does not. Context exceptions still reduce the resulting score. Headline combinations support bounded alternative word forms. Duplicate labels and labels already exposed as the section do not add duplicate evidence. Phrases never match across separate labels. Headline combinations add confidence, and contextual phrases subtract scores. Scores cannot go below zero. For example, “New technology could prevent road deaths” receives a technology signal and a tragedy exception. An incidental actor mention alone is below the celebrity threshold.
 
-This is intentionally limited English rule matching, not natural-language understanding. Scores describe rule evidence, not calibrated probabilities. Current rules do not infer every name, euphemism, inflection, non-English term or subtle context. You can inspect contributions and correct mismatches.
+A small **local topic model** adds learned evidence for sport, business, technology, science, politics, entertainment, crime and war, so ordinary headlines that name no topic keyword are recognised ("Cabrera Leads Red Sox Past Blue Jays 5-4"). It reads only the headline and summary already on the page; nothing is fetched or sent. A confident prediction counts as one decisive term and is shown in explanations with the phrases behind it; exceptions, always-show and pause still win. Training and evaluation are documented in `docs/validation-0.2.0/DEV3.md`; data credits are in `THIRD_PARTY_NOTICES.md`.
+
+FILTA is English-only: it has been checked on English-language news sites in New Zealand, Australia, the US, the UK, Ireland, Canada, India, Singapore, South Africa, Fiji and Al Jazeera. This remains limited English matching, not full natural-language understanding. Scores describe rule evidence, not calibrated probabilities. Current rules do not infer every name, euphemism, inflection, non-English term or subtle context. You can inspect contributions and correct mismatches.
 
 To add or tune rules, edit `categories.ts`: add weighted terms, combinations, negative contexts or a threshold, then add a test. For a new category, also extend `CATEGORY_IDS` in `types.ts`; settings renders the definitions automatically. No categories become selected automatically.
 
@@ -157,11 +169,11 @@ npm run audit:crx
 
 The CRX script retains a development signing key in `.signing/news-filter-development.pem` and reuses it for subsequent local packages. Keep the same key when updating an existing CRX installation so its extension identity and preferences are retained. The supplied release's signing key is a separate file, excluded from the source and extension ZIPs; restore it at that path before producing an update to the supplied CRX. The package audit checks permissions, referenced MV3 files, core portability, API isolation, remote assets, network APIs and executable-code restrictions. The CRX audit verifies the developer signature and embedded archive.
 
-Enable **Debug mode** in advanced settings to outline detected cards. Story review can show extracted headlines, detector, category scores, matched signals and final decisions. Counts/cache activity are logged to the page console. Debug mode is off by default.
+Enable **Debug mode** in advanced settings to outline detected cards. Debug status also distinguishes rejected discovery candidates, stories lacking topic evidence, selected-topic matches and final action counts; these stay in memory. An eligible page with zero detected stories shows a short message in the normal popup. Story review can show extracted headlines, detector, category scores, matched signals and final decisions. Counts/cache activity are logged to the page console. Debug mode is off by default.
 
 ## Validation and remaining manual checks
 
-See `VALIDATION.md` for the exact release checks and their limits. 60 core tests and 26 Chromium DOM/UI workflow checks pass. TypeScript, production build and package audits pass. Static homepage HTML from BBC and The Guardian was also inspected without running website scripts; RNZ could not be fetched in this environment.
+See `VALIDATION.md` for current 0.2.0 checks and their limits. The following historical 0.1.1 notes describe the earlier release, not the current compatibility programme. TypeScript, production build and package audits pass. Static homepage HTML from BBC and The Guardian was also inspected without running website scripts; RNZ could not be fetched in this environment.
 
 The original native Chrome profile attempt was blocked by the execution environment; current validation results and any remaining native checks are recorded in `VALIDATION.md`. Native Chrome/Edge unpacked installation, Android Lemur CRX installation and real live-site layout/interaction checks remain manual. No Firefox, Safari, iPhone or iPad implementation is included.
 

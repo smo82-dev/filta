@@ -1,0 +1,236 @@
+[
+  {
+    "region": "US",
+    "publisher": "Yahoo News",
+    "url": "https://news.yahoo.com/",
+    "slug": "yahoo-news"
+  },
+  {
+    "region": "US",
+    "publisher": "CNN",
+    "url": "https://www.cnn.com/",
+    "slug": "cnn"
+  },
+  {
+    "region": "US",
+    "publisher": "Fox News",
+    "url": "https://www.foxnews.com/",
+    "slug": "fox-news"
+  },
+  {
+    "region": "US",
+    "publisher": "New York Times",
+    "url": "https://www.nytimes.com/",
+    "slug": "new-york-times"
+  },
+  {
+    "region": "US",
+    "publisher": "NBC",
+    "url": "https://www.nbcnews.com/",
+    "slug": "nbc"
+  },
+  {
+    "region": "US",
+    "publisher": "CBS",
+    "url": "https://www.cbsnews.com/",
+    "slug": "cbs"
+  },
+  {
+    "region": "US",
+    "publisher": "ABC News",
+    "url": "https://abcnews.go.com/",
+    "slug": "abc-news"
+  },
+  {
+    "region": "US",
+    "publisher": "USA Today",
+    "url": "https://www.usatoday.com/",
+    "slug": "usa-today"
+  },
+  {
+    "region": "US",
+    "publisher": "AP News",
+    "url": "https://apnews.com/",
+    "slug": "ap-news"
+  },
+  {
+    "region": "US",
+    "publisher": "Reuters",
+    "url": "https://www.reuters.com/",
+    "slug": "reuters"
+  },
+  {
+    "region": "US",
+    "publisher": "Washington Post",
+    "url": "https://www.washingtonpost.com/",
+    "slug": "washington-post"
+  },
+  {
+    "region": "US",
+    "publisher": "MSN",
+    "url": "https://www.msn.com/en-us/news",
+    "slug": "msn"
+  },
+  {
+    "region": "UK",
+    "publisher": "BBC",
+    "url": "https://www.bbc.com/news",
+    "slug": "bbc"
+  },
+  {
+    "region": "UK",
+    "publisher": "The Guardian",
+    "url": "https://www.theguardian.com/international",
+    "slug": "the-guardian"
+  },
+  {
+    "region": "UK",
+    "publisher": "Sky News",
+    "url": "https://news.sky.com/",
+    "slug": "sky-news"
+  },
+  {
+    "region": "UK",
+    "publisher": "Daily Mail",
+    "url": "https://www.dailymail.co.uk/",
+    "slug": "daily-mail"
+  },
+  {
+    "region": "UK",
+    "publisher": "Telegraph",
+    "url": "https://www.telegraph.co.uk/",
+    "slug": "telegraph"
+  },
+  {
+    "region": "UK",
+    "publisher": "Independent",
+    "url": "https://www.independent.co.uk/",
+    "slug": "independent"
+  },
+  {
+    "region": "UK",
+    "publisher": "The Times",
+    "url": "https://www.thetimes.com/",
+    "slug": "the-times"
+  },
+  {
+    "region": "UK",
+    "publisher": "Mirror",
+    "url": "https://www.mirror.co.uk/",
+    "slug": "mirror"
+  },
+  {
+    "region": "UK",
+    "publisher": "The Sun",
+    "url": "https://www.thesun.co.uk/",
+    "slug": "the-sun"
+  },
+  {
+    "region": "UK",
+    "publisher": "Financial Times",
+    "url": "https://www.ft.com/",
+    "slug": "financial-times"
+  },
+  {
+    "region": "AU",
+    "publisher": "ABC Australia",
+    "url": "https://www.abc.net.au/news",
+    "slug": "abc-australia"
+  },
+  {
+    "region": "AU",
+    "publisher": "news.com.au",
+    "url": "https://www.news.com.au/",
+    "slug": "news-com-au"
+  },
+  {
+    "region": "AU",
+    "publisher": "9News",
+    "url": "https://www.9news.com.au/",
+    "slug": "9news"
+  },
+  {
+    "region": "AU",
+    "publisher": "Sydney Morning Herald",
+    "url": "https://www.smh.com.au/",
+    "slug": "sydney-morning-herald"
+  },
+  {
+    "region": "AU",
+    "publisher": "The Age",
+    "url": "https://www.theage.com.au/",
+    "slug": "the-age"
+  },
+  {
+    "region": "AU",
+    "publisher": "SBS",
+    "url": "https://www.sbs.com.au/news/",
+    "slug": "sbs"
+  },
+  {
+    "region": "AU",
+    "publisher": "7NEWS",
+    "url": "https://7news.com.au/",
+    "slug": "7news"
+  },
+  {
+    "region": "AU",
+    "publisher": "The Australian",
+    "url": "https://www.theaustralian.com.au/",
+    "slug": "the-australian"
+  },
+  {
+    "region": "NZ",
+    "publisher": "RNZ",
+    "url": "https://www.rnz.co.nz/news",
+    "slug": "rnz"
+  },
+  {
+    "region": "NZ",
+    "publisher": "Stuff",
+    "url": "https://www.stuff.co.nz/",
+    "slug": "stuff"
+  },
+  {
+    "region": "NZ",
+    "publisher": "NZ Herald",
+    "url": "https://www.nzherald.co.nz/",
+    "slug": "nz-herald"
+  },
+  {
+    "region": "NZ",
+    "publisher": "1News",
+    "url": "https://www.1news.co.nz/",
+    "slug": "1news"
+  },
+  {
+    "region": "NZ",
+    "publisher": "Otago Daily Times",
+    "url": "https://www.odt.co.nz/",
+    "slug": "otago-daily-times"
+  },
+  {
+    "region": "NZ",
+    "publisher": "The Press",
+    "url": "https://www.thepress.co.nz/",
+    "slug": "the-press"
+  },
+  {
+    "region": "NZ",
+    "publisher": "The Post",
+    "url": "https://www.thepost.co.nz/",
+    "slug": "the-post"
+  },
+  {
+    "region": "NZ",
+    "publisher": "Newsroom",
+    "url": "https://newsroom.co.nz/",
+    "slug": "newsroom"
+  },
+  {
+    "region": "NZ",
+    "publisher": "The Spinoff",
+    "url": "https://thespinoff.co.nz/",
+    "slug": "the-spinoff"
+  }
+]

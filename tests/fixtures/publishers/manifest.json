@@ -1,0 +1,502 @@
+[
+  {
+    "publisher": "Yahoo News",
+    "region": "US",
+    "url": "https://www.yahoo.com/news/",
+    "requestedUrl": "https://news.yahoo.com/",
+    "capturedAt": "2026-10-20T23:03:18.633454+00:00",
+    "kind": "saved-response-snippets",
+    "scaffolding": "Neutral repeated wrappers preserve isolated-card context; full original page layout is not reproduced",
+    "file": "yahoo-news.html",
+    "expectedUrls": [
+      "https://www.yahoo.com/news/politics/articles/trump-says-u-pay-fraud-193428668.html",
+      "https://www.yahoo.com/news/politics/articles/vance-declines-netanyahu-endorsement-trump-003643438.html",
+      "https://www.yahoo.com/news/politics/articles/supreme-court-agrees-review-reconstruction-134351685.html"
+    ],
+    "samples": [
+      "Trump hands YouTuber $10,000 as he launches fraud whistleblower reward program",
+      "Vance breaks with Trump on Netanyahu endorsement ahead of Israeli election",
+      "Supreme Court agrees to review a Reconstruction-era ban on distilling spirits in private homes"
+    ]
+  },
+  {
+    "publisher": "CNN",
+    "region": "US",
+    "url": "https://edition.cnn.com/",
+    "requestedUrl": "https://www.cnn.com/",
+    "capturedAt": "2026-10-20T23:03:18.637250+00:00",
+    "kind": "saved-response-snippets",
+    "scaffolding": "Neutral repeated wrappers preserve isolated-card context; full original page layout is not reproduced",
+    "file": "cnn.html",
+    "expectedUrls": [
+      "https://edition.cnn.com/2026/10/20/travel/canadian-visitors-united-states-hiding-trips",
+      "https://edition.cnn.com/2026/10/19/travel/video/ancient-myra-turkey-santa-spc-digvid",
+      "https://edition.cnn.com/2026/10/20/politics/video/kansas-surprise-battleground-roger-marshall-adam-hamilton-midterms-cmm-vrtc"
+    ],
+    "samples": [
+      "Elbows up, phones down: Some Canadians who travel to the US are keeping it off social media",
+      "How an ancient city in Turkey became part of the Santa story",
+      "Why Kansas emerged as a surprise battleground in the midterms"
+    ]
+  },
+  {
+    "publisher": "Fox News",
+    "region": "US",
+    "url": "https://www.foxnews.com/",
+    "requestedUrl": "https://www.foxnews.com/",
+    "capturedAt": "2026-10-20T23:03:18.640434+00:00",
+    "kind": "saved-response-snippets",
+    "scaffolding": "Neutral repeated wrappers preserve isolated-card context; full original page layout is not reproduced",
+    "file": "fox-news.html",
+    "expectedUrls": [
+      "https://www.foxnews.com/media/disabled-canadian-man-says-hospital-repeatedly-offered-assisted-death-fought-care-stay-alive",
+      "https://www.foxnews.com/outkick-sports/commanders-star-wide-receiver-terry-mclaurin-out-season-patellar-tendon-injury-coach-says",
+      "https://www.foxbusiness.com/economy/american-dream-now-costs-5-3m-homeownership-college-costs-surge"
+    ],
+    "samples": [
+      "Canadian says hospital kept raising assisted death while he begged to go home",
+      "Commanders star wide receiver Terry McLaurin out for season with patellar tendon injury, coach says",
+      "The American dream now costs $5.3M as homeownership, college costs surge"
+    ]
+  },
+  {
+    "publisher": "NBC",
+    "region": "US",
+    "url": "https://www.nbcnews.com/",
+    "requestedUrl": "https://www.nbcnews.com/",
+    "capturedAt": "2026-10-20T23:03:18.657437+00:00",
+    "kind": "saved-response-snippets",
+    "scaffolding": "Neutral repeated wrappers preserve isolated-card context; full original page layout is not reproduced",
+    "file": "nbc.html",
+    "expectedUrls": [
+      "https://www.nbcnews.com/politics/2026-elections/early-vote",
+      "https://www.nbcnews.com/world/united-kingdom/2-men-rearrested-uk-suspicion-assisting-iran-suspected-plot-us-run-air-rcna604650",
+      "https://www.nbcnews.com/politics/trump-administration/live-blog/trump-midterm-rally-north-carolina-2026-election-congress-live-updates-rcna604465"
+    ],
+    "samples": [
+      "Track early vote tallies in key battleground states",
+      "2 men rearrested in U.K. on suspicion of assisting Iran over suspected plot at a U.S.-run air base",
+      "LIVETrump says U.S. has 'gotten nothing back' from billions in aid to Ukraine"
+    ]
+  },
+  {
+    "publisher": "CBS",
+    "region": "US",
+    "url": "https://www.cbsnews.com/",
+    "requestedUrl": "https://www.cbsnews.com/",
+    "capturedAt": "2026-10-20T23:03:18.660338+00:00",
+    "kind": "saved-response-snippets",
+    "scaffolding": "Neutral repeated wrappers preserve isolated-card context; full original page layout is not reproduced",
+    "file": "cbs.html",
+    "expectedUrls": [
+      "https://www.cbsnews.com/news/cornell-jane-doe-letter-university-president",
+      "https://www.cbsnews.com/news/how-to-talk-to-your-parents-about-end-of-life-planning",
+      "https://www.cbsnews.com/news/hegseth-visits-israel-elections-iran-war-netanyahu"
+    ],
+    "samples": [
+      "Cornell responds to Jane Doe letter saying she felt disbelieved",
+      "How to talk to your parents about end-of-life planning",
+      "Hegseth meets Netanyahu ahead of elections, possible Iran war restart"
+    ]
+  },
+  {
+    "publisher": "ABC News",
+    "region": "US",
+    "url": "https://abcnews.com/",
+    "requestedUrl": "https://abcnews.go.com/",
+    "capturedAt": "2026-10-20T23:03:18.664345+00:00",
+    "kind": "saved-response-snippets",
+    "scaffolding": "Neutral repeated wrappers preserve isolated-card context; full original page layout is not reproduced",
+    "file": "abc-news.html",
+    "expectedUrls": [
+      "https://abcnews.com/Politics/abdul-el-sayed-trumps-attacks-faith-meant-distract/story",
+      "https://abcnews.com/International",
+      "https://abcnews.com/video/137190090"
+    ],
+    "samples": [
+      "El-Sayed says Trump's attacks on his faith are to distract from pain he's causing",
+      "Blind student, guide dog enjoy adventures in Scotland",
+      "Doctor speaks out about losing mom to breast cancer"
+    ]
+  },
+  {
+    "publisher": "AP News",
+    "region": "US",
+    "url": "https://apnews.com/",
+    "requestedUrl": "https://apnews.com/",
+    "capturedAt": "2026-10-20T23:03:22.393915+00:00",
+    "kind": "saved-response-snippets",
+    "scaffolding": "Neutral repeated wrappers preserve isolated-card context; full original page layout is not reproduced",
+    "file": "ap-news.html",
+    "expectedUrls": [
+      "https://apnews.com/hub/ap-top-25-womens-college-basketball-poll",
+      "https://apnews.com/photo-gallery/top-photos-day-ap-s-photojournalists-50bdeb7122b44019aa851c16fe07463f",
+      "https://apnews.com/article/berlin-philharmonic-kirill-petrenko-e86da7a8371d74ced6b22f76a400acce"
+    ],
+    "samples": [
+      "Top 25 basketball preseason poll",
+      "The top photos of the day by AP’s photojournalists",
+      "Berlin Philharmonic planning to vacate Philharmonie for renovation from 2032-40"
+    ]
+  },
+  {
+    "publisher": "Washington Post",
+    "region": "US",
+    "url": "https://www.washingtonpost.com/",
+    "requestedUrl": "https://www.washingtonpost.com/",
+    "capturedAt": "2026-10-20T23:03:22.651382+00:00",
+    "kind": "saved-response-snippets",
+    "scaffolding": "Neutral repeated wrappers preserve isolated-card context; full original page layout is not reproduced",
+    "file": "washington-post.html",
+    "expectedUrls": [
+      "https://www.washingtonpost.com/world/2026/10/20/us-restores-intelligence-sharing-with-ukraine-zelensky-says",
+      "https://www.washingtonpost.com/ripple/2026/10/16/can-social-media-bans-protect-young-peoples-mental-health-early-research-suggests-that-bans-arent-the-answer",
+      "https://www.washingtonpost.com/wellness/2026/10/20/how-i-got-through-cancer-38-what-it-taught-me"
+    ],
+    "samples": [
+      "U.S. restores intelligence sharing with Ukraine, Zelensky says",
+      "Can social media bans protect young people’s mental health?",
+      "How I got through cancer at 38 — and what it taught me"
+    ]
+  },
+  {
+    "publisher": "BBC",
+    "region": "UK",
+    "url": "https://www.bbc.com/news",
+    "requestedUrl": "https://www.bbc.com/news",
+    "capturedAt": "2026-10-20T23:03:22.980879+00:00",
+    "kind": "saved-response-snippets",
+    "scaffolding": "Neutral repeated wrappers preserve isolated-card context; full original page layout is not reproduced",
+    "file": "bbc.html",
+    "expectedUrls": [
+      "https://www.bbc.com/news/articles/cq5ynkx3xy11o",
+      "https://www.bbc.com/news/articles/c6ev30xwy8v2o",
+      "https://www.bbc.com/sport/cricket/articles/c962ylv3l334o"
+    ],
+    "samples": [
+      "Zelensky says US intelligence sharing 'works now' after talks with Trump envoy",
+      "'I started ketamine at 14 and needed nappies at 22' - the rise of young people going to rehab",
+      "Sloppy England start winter with Pakistan defeat"
+    ]
+  },
+  {
+    "publisher": "The Guardian",
+    "region": "UK",
+    "url": "https://www.theguardian.com/international",
+    "requestedUrl": "https://www.theguardian.com/international",
+    "capturedAt": "2026-10-20T23:03:25.828105+00:00",
+    "kind": "saved-response-snippets",
+    "scaffolding": "Neutral repeated wrappers preserve isolated-card context; full original page layout is not reproduced",
+    "file": "the-guardian.html",
+    "expectedUrls": [
+      "https://www.theguardian.com/world/2026/oct/20/us-has-resumed-sharing-intelligence-with-ukraine-about-russian-strikes-says-zelenskyy",
+      "https://www.theguardian.com/football/2026/oct/20/erik-ten-hag-accuses-cristiano-ronaldo-of-letting-down-manchester-united",
+      "https://www.theguardian.com/lifeandstyle/2026/oct/19/the-one-change-that-worked-i-deleted-instagram-and-embraced-the-joys-of-a-truly-private-life"
+    ],
+    "samples": [
+      "US has resumed sharing intelligence with Ukraine about Russian strikes, says Zelenskyy",
+      "Carrick insists United board still back him after Ten Hag points to ‘toxic culture’",
+      "I deleted Instagram – and embraced the joys of a truly private life"
+    ]
+  },
+  {
+    "publisher": "Sky News",
+    "region": "UK",
+    "url": "https://news.sky.com/",
+    "requestedUrl": "https://news.sky.com/",
+    "capturedAt": "2026-10-20T23:03:25.959362+00:00",
+    "kind": "saved-response-snippets",
+    "scaffolding": "Neutral repeated wrappers preserve isolated-card context; full original page layout is not reproduced",
+    "file": "sky-news.html",
+    "expectedUrls": [
+      "https://news.sky.com/story/two-men-re-arrested-in-raf-fairford-investigation-13596084",
+      "https://news.sky.com/video/morning-call-trump-doesnt-have-a-strategy-on-ukraine-13601273",
+      "https://news.sky.com/puzzles/make-tracks"
+    ],
+    "samples": [
+      "Two men re-arrested on suspicion of assisting Iran after RAF Fairford incident",
+      "'Trump doesn't have a strategy'",
+      "Join the tracks and complete the journey"
+    ]
+  },
+  {
+    "publisher": "Independent",
+    "region": "UK",
+    "url": "https://www.independent.co.uk/",
+    "requestedUrl": "https://www.independent.co.uk/",
+    "capturedAt": "2026-10-20T23:03:27.001098+00:00",
+    "kind": "saved-response-snippets",
+    "scaffolding": "Neutral repeated wrappers preserve isolated-card context; full original page layout is not reproduced",
+    "file": "independent.html",
+    "expectedUrls": [
+      "https://www.independent.co.uk/news/world/americas/us-politics/trump-the-independent-reporter-oval-office-andrew-feinberg-b3070310.html",
+      "https://www.independent.co.uk/sport/snooker/mark-allen-interview-snooker-b3070180.html",
+      "https://www.independent.co.uk/bulletin/sport/psg-vs-fc-barcelona-uefa-champions-league-b3070324.html"
+    ],
+    "samples": [
+      "Trump lost control and ordered me to be ‘quiet’ in the Oval Office. Then it got personal",
+      "‘I’m in a bad place’: Mark Allen consoled in heart-breaking interview",
+      "PSG cement status as Champions League favourites with Barcelona win"
+    ]
+  },
+  {
+    "publisher": "The Sun",
+    "region": "UK",
+    "url": "https://www.thesun.co.uk/",
+    "requestedUrl": "https://www.thesun.co.uk/",
+    "capturedAt": "2026-10-20T23:03:30.372404+00:00",
+    "kind": "saved-response-snippets",
+    "scaffolding": "Neutral repeated wrappers preserve isolated-card context; full original page layout is not reproduced",
+    "file": "the-sun.html",
+    "expectedUrls": [
+      "https://www.thesun.co.uk/news/40750916/man-charged-murder-woman-stabbed-stadium",
+      "https://www.thesun.co.uk/tvandshowbiz/40737437/pregnant-samie-elishi-ex-talks-love-island-all-stars",
+      "https://www.thesun.co.uk/fabulous/40335576/mum-jailed-son-something-hundreds-kids-do"
+    ],
+    "samples": [
+      "Man, 26, charged with murder after woman, 26, 'stabbed to death in street'",
+      "Pregnant Samie Elishi’s ex in talks for Love Island All Stars",
+      "I'm on child-abuse registry for letting son, 5, do something 100s of kids do"
+    ]
+  },
+  {
+    "publisher": "ABC Australia",
+    "region": "AU",
+    "url": "https://www.abc.net.au/",
+    "requestedUrl": "https://www.abc.net.au/news",
+    "capturedAt": "2026-10-20T23:03:30.667825+00:00",
+    "kind": "saved-response-snippets",
+    "scaffolding": "Neutral repeated wrappers preserve isolated-card context; full original page layout is not reproduced",
+    "file": "abc-australia.html",
+    "expectedUrls": [
+      "https://www.abc.net.au/news/2026-10-21/federal-mp-afp-threat-assessments-lacking/107287500",
+      "https://www.abc.net.au/news/2026-10-20/main-group-fx-boss-with-possible-links-to-terrorism/107159102",
+      "https://www.abc.net.au/news/2026-10-21/afl-sets-date-and-time-of-state-of-origin-2027/107290970"
+    ],
+    "samples": [
+      "Federal MPs say some protection measures 'tokenistic' or absent entirely",
+      "Alleged investment scam leaves Australians missing millions",
+      "AFL sets date and time of AFL Origin between WA and SA"
+    ]
+  },
+  {
+    "publisher": "9News",
+    "region": "AU",
+    "url": "https://www.nine.com.au/#redirect=9news",
+    "requestedUrl": "https://www.9news.com.au/",
+    "capturedAt": "2026-10-20T23:03:31.224875+00:00",
+    "kind": "saved-response-snippets",
+    "scaffolding": "Neutral repeated wrappers preserve isolated-card context; full original page layout is not reproduced",
+    "file": "9news.html",
+    "expectedUrls": [
+      "https://www.nine.com.au/australia-news/vic/helen-haines-man-accused-of-attack-brendan-nugent-20261020-p61703.html",
+      "https://www.nine.com.au/australia-news/nt/child-protection-failures-revealed-in-review-after-death-of-kumanjayi-little-baby-20261020-p6175h.html",
+      "https://www.nine.com.au/lifestyle/money/independent-supermarkets-vs-coles-woolworths-grocery-prices-20261020-p6161f.html"
+    ],
+    "samples": [
+      "Inside the 'recluse' life of accused Haines attacker",
+      "Child protection failures revealed after death of Kumanjayi Little Baby",
+      "Can independent supermarkets actually lower our grocery bills?"
+    ]
+  },
+  {
+    "publisher": "SBS",
+    "region": "AU",
+    "url": "https://www.sbs.com.au/news",
+    "requestedUrl": "https://www.sbs.com.au/news/",
+    "capturedAt": "2026-10-20T23:03:32.933717+00:00",
+    "kind": "saved-response-snippets",
+    "scaffolding": "Neutral repeated wrappers preserve isolated-card context; full original page layout is not reproduced",
+    "file": "sbs.html",
+    "expectedUrls": [
+      "https://www.sbs.com.au/news/live-blog/helen-haines-brendan-nugent-court-live-updates/l2zx6dhdm",
+      "https://www.sbs.com.au/news/article/helen-haines-injured-outside-wangaratta-office/8jahoxo1k",
+      "https://www.sbs.com.au/news/insight/article/i-spent-years-chasing-more-then-i-asked-myself-one-question/92glbpp4x"
+    ],
+    "samples": [
+      "Follow live: Helen Haines attack spurs security scrutiny; AFP not ruling out sovereign citizen link",
+      "PM says suspect in custody after MP Helen Haines allegedly 'attacked' outside office",
+      "I bought a luxury car to prove I'd made it. It did the opposite"
+    ]
+  },
+  {
+    "publisher": "7NEWS",
+    "region": "AU",
+    "url": "https://7news.com.au/",
+    "requestedUrl": "https://7news.com.au/",
+    "capturedAt": "2026-10-20T23:03:33.745775+00:00",
+    "kind": "saved-response-snippets",
+    "scaffolding": "Neutral repeated wrappers preserve isolated-card context; full original page layout is not reproduced",
+    "file": "7news.html",
+    "expectedUrls": [
+      "https://7news.com.au/news/is-australia-heading-down-the-us-and-uks-path-of-political-violence-c-23044116",
+      "https://7news.com.au/news/crime/boys-left-bloodied-with-broken-bones-after-being-hunted-by-ute-full-of-teens-in-ferntree-gully-melbourne-c-23043928",
+      "https://7news.com.au/entertainment/nicole-kidman-makes-surprise-appearance-at-victorias-secret-fashion-show-c-23045088"
+    ],
+    "samples": [
+      "Is Australia heading down the US and UK’s path of political violence?",
+      "‘Horrific’: Young boys on scooter hunted down by teen thugs in ute",
+      "Nicole Kidman blushes over racy moment at Victoria’s Secret show"
+    ]
+  },
+  {
+    "publisher": "RNZ",
+    "region": "NZ",
+    "url": "https://www.rnz.co.nz/",
+    "requestedUrl": "https://www.rnz.co.nz/news",
+    "capturedAt": "2026-10-20T23:03:34.485551+00:00",
+    "kind": "saved-response-snippets",
+    "scaffolding": "Neutral repeated wrappers preserve isolated-card context; full original page layout is not reproduced",
+    "file": "rnz.html",
+    "expectedUrls": [
+      "https://www.rnz.co.nz/news/politics_election-2026/2045741/election-2026-live-te-pati-maori-s-debbie-ngarewa-packer-s-mother-dies",
+      "https://www.rnz.co.nz/life/culture/a-different-responsibility-designing-the-new-christchurch-cathedral",
+      "https://www.rnz.co.nz/news/science-and-technology/2030542/rare-moa-egg-set-to-return-to-nz-after-selling-at-us-auction"
+    ],
+    "samples": [
+      "Election 2026: Debbie Ngarewa-Packer's mother dies",
+      "'Could never have imagined': Behind the design of a new Christchurch cathedral",
+      "Rare moa egg set to return to NZ after selling at US auction"
+    ]
+  },
+  {
+    "publisher": "NZ Herald",
+    "region": "NZ",
+    "url": "https://www.nzherald.co.nz/",
+    "requestedUrl": "https://www.nzherald.co.nz/",
+    "capturedAt": "2026-10-20T23:03:36.026049+00:00",
+    "kind": "saved-response-snippets",
+    "scaffolding": "Neutral repeated wrappers preserve isolated-card context; full original page layout is not reproduced",
+    "file": "nz-herald.html",
+    "expectedUrls": [
+      "https://www.nzherald.co.nz/sport/cycling/cycling-kiaan-watts-reveals-online-abuse-after-punching-rival-who-spat-in-his-face/Q3DV2SI2VBCOPGMRMZ5FYV3PDY",
+      "https://www.nzherald.co.nz/world/brands-entourage-did-nothing-while-he-mauled-me-accuser-tells-court/FPH6ZAYN55DTTNAFAIJBF53S2A",
+      "https://www.oneroof.co.nz/news/50388"
+    ],
+    "samples": [
+      "'I saw red': Kiwi cyclist reveals disgusting moment that led to punching rival mid-race",
+      "Brand’s entourage ‘did nothing while he mauled me’, accuser tells court",
+      "'Over the moon': Tiny Wellington boatshed sells for $200k-plus after 10-year wait"
+    ]
+  },
+  {
+    "publisher": "1News",
+    "region": "NZ",
+    "url": "https://www.1news.co.nz/",
+    "requestedUrl": "https://www.1news.co.nz/",
+    "capturedAt": "2026-10-20T23:03:36.643112+00:00",
+    "kind": "saved-response-snippets",
+    "scaffolding": "Neutral repeated wrappers preserve isolated-card context; full original page layout is not reproduced",
+    "file": "1news.html",
+    "expectedUrls": [
+      "https://www.1news.co.nz/2026/10/21/rfks-granddaughter-dies-aged-42-after-years-of-health-struggles",
+      "https://www.1news.co.nz/2026/10/18/northland-woman-pleads-guilty-after-dog-kills-four-kiwi",
+      "https://www.1news.co.nz/2026/10/21/name-suppression-lapses-for-two-accused-in-major-prison-corruption-case"
+    ],
+    "samples": [
+      "RFK's granddaughter dies aged 42 after years of health struggles",
+      "Northland woman pleads guilty after dog kills four kiwi",
+      "Two accused in major prison corruption case can now be named"
+    ]
+  },
+  {
+    "publisher": "Otago Daily Times",
+    "region": "NZ",
+    "url": "https://www.odt.co.nz/",
+    "requestedUrl": "https://www.odt.co.nz/",
+    "capturedAt": "2026-10-20T23:03:36.720470+00:00",
+    "kind": "saved-response-snippets",
+    "scaffolding": "Neutral repeated wrappers preserve isolated-card context; full original page layout is not reproduced",
+    "file": "otago-daily-times.html",
+    "expectedUrls": [
+      "https://www.odt.co.nz/news/dunedin/people-have-asked-me-if-ive-done-it-friend-hits-back-at-rumours-over-dunedin-death-f7az198g",
+      "https://www.odt.co.nz/news/dunedin/student-vote-critical-in-dunedin-egpfwjad",
+      "https://www.odt.co.nz/business/labour-day-whats-open-whats-not-and-when-you-have-to-pay-a-surcharge-oq0jf0y3"
+    ],
+    "samples": [
+      "‘People have asked me if I’ve done it’: Friend hits back at rumours over Dunedin death",
+      "Student vote critical in Dunedin",
+      "Labour Day: What's open, what's not and when you have to pay a surcharge"
+    ]
+  },
+  {
+    "publisher": "The Press",
+    "region": "NZ",
+    "url": "https://www.thepress.co.nz/",
+    "requestedUrl": "https://www.thepress.co.nz/",
+    "capturedAt": "2026-10-20T23:03:37.255510+00:00",
+    "kind": "saved-response-snippets",
+    "scaffolding": "Neutral repeated wrappers preserve isolated-card context; full original page layout is not reproduced",
+    "file": "the-press.html",
+    "expectedUrls": [
+      "https://www.thepress.co.nz/nz-news/361102643/police-defend-officer-filmed-pepper-spraying-sitting-man-close-range",
+      "https://www.thepress.co.nz/sport/361100926/all-blacks-crocked-xv-what-some-test-teams-would-give-lineup",
+      "https://www.thepress.co.nz/nz-news/361102644/southland-firm-waipounamu-contracting-owes-99m-following-directors-death"
+    ],
+    "samples": [
+      "Police defend officer filmed pepper spraying sitting man at close range",
+      "The All Blacks Crocked XV: What some test teams would give for a lineup like this",
+      "Southland firm Waipounamu Contracting owes $9.9m following director's death"
+    ]
+  },
+  {
+    "publisher": "The Post",
+    "region": "NZ",
+    "url": "https://www.thepost.co.nz/",
+    "requestedUrl": "https://www.thepost.co.nz/",
+    "capturedAt": "2026-10-20T23:03:37.370079+00:00",
+    "kind": "saved-response-snippets",
+    "scaffolding": "Neutral repeated wrappers preserve isolated-card context; full original page layout is not reproduced",
+    "file": "the-post.html",
+    "expectedUrls": [
+      "https://www.thepost.co.nz/nz-news/361102671/former-kainga-ora-official-among-four-charged-over-4m-alleged-bribes",
+      "https://www.thepost.co.nz/home-property/361085098/lockdowns-prompt-family-overhaul-their-1920s-christchurch-home",
+      "https://www.thepost.co.nz/culture/361096639/can-new-festival-turn-whanganuis-unique-design-status-national-drawcard"
+    ],
+    "samples": [
+      "Former Kāinga Ora official among four charged over $4m in alleged bribes",
+      "Lockdowns prompt family to overhaul their 1920s Christchurch home",
+      "Can a new festival turn Whanganui’s unique design status into a national drawcard?"
+    ]
+  },
+  {
+    "publisher": "Newsroom",
+    "region": "NZ",
+    "url": "https://newsroom.co.nz/",
+    "requestedUrl": "https://newsroom.co.nz/",
+    "capturedAt": "2026-10-20T23:03:39.040389+00:00",
+    "kind": "saved-response-snippets",
+    "scaffolding": "Neutral repeated wrappers preserve isolated-card context; full original page layout is not reproduced",
+    "file": "newsroom.html",
+    "expectedUrls": [
+      "https://newsroom.co.nz/2026/10/20/leaders-debate-season-2-of-the-chris-vs-chris-show-ends-with-a-bang",
+      "https://newsroom.co.nz/2026/10/21/telco-veterans-warn-one-and-2degrees-network-joint-venture-is-a-slippery-slope",
+      "https://newsroom.co.nz/2026/10/17/star-american-back-to-help-phoenix-rise-one-more-step"
+    ],
+    "samples": [
+      "Leaders’ debate: Season 2 of the Chris vs Chris show ends with a bang",
+      "Telco veterans warn One and 2degrees network joint venture is ‘a slippery slope’",
+      "Star American back to help Phoenix rise one more step"
+    ]
+  },
+  {
+    "publisher": "The Spinoff",
+    "region": "NZ",
+    "url": "https://thespinoff.co.nz/",
+    "requestedUrl": "https://thespinoff.co.nz/",
+    "capturedAt": "2026-10-20T23:03:39.463598+00:00",
+    "kind": "saved-response-snippets",
+    "scaffolding": "Neutral repeated wrappers preserve isolated-card context; full original page layout is not reproduced",
+    "file": "the-spinoff.html",
+    "expectedUrls": [
+      "https://thespinoff.co.nz/politics/21-10-2026/an-undecided-voter-who-is-considering-switching-from-national-to-nz-first",
+      "https://thespinoff.co.nz/politics/20-10-2026/whats-your-local-where-and-what-candidates-like-to-eat-in-their-electorate",
+      "https://thespinoff.co.nz/sport/15-10-2026/rugby-league-world-cup-2026-why-ill-be-watching-every-kiwis-game-for-my-dad"
+    ],
+    "samples": [
+      "A ‘political nerd’ who is considering switching from National to NZ First",
+      "What’s your local? Where (and what) election candidates like to eat in their electorate",
+      "Rugby League World Cup 2026: Why I’ll be watching every Kiwis game for my dad"
+    ]
+  }
+]

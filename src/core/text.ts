@@ -11,7 +11,7 @@ export function storyFields(story: Story): Record<Field, string[]> {
   try { url = decodeURIComponent(new URL(url).pathname); } catch { /* malformed URLs stay plain text */ }
   // Keep labels separate so phrases cannot be fabricated across badge boundaries.
   // A label already exposed as the section must not double its existing score.
-  const labels = [...new Set(story.labels ?? [])].filter(label => normalise(label) !== normalise(story.section ?? ''));
+  const labels = [...new Map((story.labels ?? []).map(label => [normalise(label), label])).values()].filter(label => normalise(label) !== normalise(story.section ?? ''));
   return { headline: [story.headline], description: [story.description ?? ''], section: [story.section ?? ''], url: [url], label: labels };
 }
 export function canonicalUrl(value: string): string {

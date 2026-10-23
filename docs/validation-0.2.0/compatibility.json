@@ -1,0 +1,1532 @@
+{
+  "scope": "HTTP response inspection for 39 publishers, unsigned browser attempts and development-time production pipeline with an in-memory platform adapter. Card counts are not labelled whole-page recall; publisher pages and development code changed during validation. Native MV3 execution is a separate unverified check.",
+  "publishers": [
+    {
+      "region": "US",
+      "publisher": "Yahoo News",
+      "url": "https://news.yahoo.com/",
+      "slug": "yahoo-news",
+      "attemptedAt": "2026-10-20T23:03:18.633454+00:00",
+      "status": 200,
+      "finalUrl": "https://www.yahoo.com/news/",
+      "bytes": 700706,
+      "title": "Yahoo News: Latest and Breaking News, Headlines, Live Updates, and More",
+      "headings": 34,
+      "anchors": 71,
+      "detected": 33,
+      "scanMs": 79,
+      "live": {
+        "checkedAt": "2026-10-20T23:12:33.747Z",
+        "status": 200,
+        "finalUrl": "https://www.yahoo.com/news/",
+        "title": "Yahoo News: Latest and Breaking News, Headlines, Live Updates, and More",
+        "initialDetected": 63,
+        "headings": 70,
+        "byCategory": {
+          "celebrity": 0,
+          "crime": 1,
+          "tragedy": 0,
+          "sexual": 0,
+          "war": 1,
+          "disaster": 0,
+          "politics": 26,
+          "sport": 1,
+          "entertainment": 0,
+          "opinion": 1,
+          "business": 6,
+          "technology": 3,
+          "science": 1,
+          "sponsored": 0
+        },
+        "hide": {
+          "domain": "www.yahoo.com",
+          "detected": 60,
+          "filtered": 51,
+          "active": true,
+          "eligible": true,
+          "configured": true
+        },
+        "renderMismatches": 0,
+        "collapse": {
+          "domain": "www.yahoo.com",
+          "detected": 63,
+          "filtered": 51,
+          "active": true,
+          "eligible": true,
+          "configured": true
+        },
+        "afterScroll": {
+          "domain": "www.yahoo.com",
+          "detected": 63,
+          "filtered": 51,
+          "active": true,
+          "eligible": true,
+          "configured": true
+        },
+        "pause": {
+          "domain": "www.yahoo.com",
+          "detected": 63,
+          "filtered": 0,
+          "active": false,
+          "eligible": true,
+          "configured": true
+        }
+      }
+    },
+    {
+      "region": "US",
+      "publisher": "CNN",
+      "url": "https://www.cnn.com/",
+      "slug": "cnn",
+      "attemptedAt": "2026-10-20T23:03:18.637250+00:00",
+      "status": 200,
+      "finalUrl": "https://edition.cnn.com/",
+      "bytes": 5975101,
+      "title": "Breaking News, Latest News and Videos | CNN",
+      "headings": 20,
+      "anchors": 495,
+      "detected": 48,
+      "scanMs": 189,
+      "live": {
+        "checkedAt": "2026-10-20T23:12:33.770Z",
+        "status": 200,
+        "finalUrl": "https://edition.cnn.com/",
+        "title": "",
+        "initialDetected": 0,
+        "headings": 0
+      }
+    },
+    {
+      "region": "US",
+      "publisher": "Fox News",
+      "url": "https://www.foxnews.com/",
+      "slug": "fox-news",
+      "attemptedAt": "2026-10-20T23:03:18.640434+00:00",
+      "status": 200,
+      "finalUrl": "https://www.foxnews.com/",
+      "bytes": 802532,
+      "title": "Fox News - Breaking News Updates | Latest News Headlines | Photos & News Videos",
+      "headings": 272,
+      "anchors": 925,
+      "detected": 194,
+      "scanMs": 574,
+      "live": {
+        "checkedAt": "2026-10-20T23:12:33.805Z",
+        "status": 200,
+        "finalUrl": "https://www.foxnews.com/",
+        "title": "Fox News - Breaking News Updates | Latest News Headlines | Photos & News Videos",
+        "initialDetected": 195,
+        "headings": 272,
+        "byCategory": {
+          "celebrity": 0,
+          "crime": 2,
+          "tragedy": 0,
+          "sexual": 0,
+          "war": 0,
+          "disaster": 0,
+          "politics": 7,
+          "sport": 10,
+          "entertainment": 5,
+          "opinion": 3,
+          "business": 1,
+          "technology": 0,
+          "science": 0,
+          "sponsored": 0
+        },
+        "hide": {
+          "domain": "www.foxnews.com",
+          "detected": 60,
+          "filtered": 34,
+          "active": true,
+          "eligible": true,
+          "configured": true
+        },
+        "renderMismatches": 0,
+        "collapse": {
+          "domain": "www.foxnews.com",
+          "detected": 120,
+          "filtered": 66,
+          "active": true,
+          "eligible": true,
+          "configured": true
+        },
+        "afterScroll": {
+          "domain": "www.foxnews.com",
+          "detected": 232,
+          "filtered": 104,
+          "active": true,
+          "eligible": true,
+          "configured": true
+        },
+        "pause": {
+          "domain": "www.foxnews.com",
+          "detected": 232,
+          "filtered": 0,
+          "active": false,
+          "eligible": true,
+          "configured": true
+        }
+      }
+    },
+    {
+      "region": "US",
+      "publisher": "New York Times",
+      "url": "https://www.nytimes.com/",
+      "slug": "new-york-times",
+      "attemptedAt": "2026-10-20T23:03:18.649678+00:00",
+      "status": 200,
+      "finalUrl": "https://www.nytimes.com/",
+      "bytes": 195,
+      "title": "Site Unavailable",
+      "headings": 0,
+      "anchors": 0,
+      "detected": 0,
+      "scanMs": 2,
+      "live": {
+        "checkedAt": "2026-10-20T23:12:54.377Z",
+        "status": 200,
+        "finalUrl": "https://www.nytimes.com/",
+        "title": "Site Unavailable",
+        "initialDetected": 0,
+        "headings": 0
+      }
+    },
+    {
+      "region": "US",
+      "publisher": "NBC",
+      "url": "https://www.nbcnews.com/",
+      "slug": "nbc",
+      "attemptedAt": "2026-10-20T23:03:18.657437+00:00",
+      "status": 200,
+      "finalUrl": "https://www.nbcnews.com/",
+      "bytes": 1337860,
+      "title": "NBC News - Breaking Headlines and Video Reports on World, U.S. and Local Angles | NBC News",
+      "headings": 104,
+      "anchors": 372,
+      "detected": 96,
+      "scanMs": 438,
+      "live": {
+        "checkedAt": "2026-10-20T23:12:56.754Z",
+        "error": "page.goto: Timeout 20000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://www.nbcnews.com/\", waiting until \"domcontentloaded\"\u001b[22m\n"
+      }
+    },
+    {
+      "region": "US",
+      "publisher": "CBS",
+      "url": "https://www.cbsnews.com/",
+      "slug": "cbs",
+      "attemptedAt": "2026-10-20T23:03:18.660338+00:00",
+      "status": 200,
+      "finalUrl": "https://www.cbsnews.com/",
+      "bytes": 685864,
+      "title": "CBS News | Breaking News, Top Stories & Exclusive Coverage",
+      "headings": 58,
+      "anchors": 182,
+      "detected": 53,
+      "scanMs": 59,
+      "live": {
+        "checkedAt": "2026-10-20T23:13:17.383Z",
+        "error": "page.goto: Timeout 20000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://www.cbsnews.com/\", waiting until \"domcontentloaded\"\u001b[22m\n"
+      }
+    },
+    {
+      "region": "US",
+      "publisher": "ABC News",
+      "url": "https://abcnews.go.com/",
+      "slug": "abc-news",
+      "attemptedAt": "2026-10-20T23:03:18.664345+00:00",
+      "status": 200,
+      "finalUrl": "https://abcnews.com/",
+      "bytes": 806897,
+      "title": "ABC News - Breaking News, Latest News and Videos",
+      "headings": 177,
+      "anchors": 318,
+      "detected": 142,
+      "scanMs": 384,
+      "live": {
+        "checkedAt": "2026-10-20T23:13:17.919Z",
+        "error": "page.goto: Timeout 20000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://abcnews.go.com/\", waiting until \"domcontentloaded\"\u001b[22m\n"
+      }
+    },
+    {
+      "region": "US",
+      "publisher": "USA Today",
+      "url": "https://www.usatoday.com/",
+      "slug": "usa-today",
+      "attemptedAt": "2026-10-20T23:03:18.665330+00:00",
+      "error": "HTTP Error 402: Payment Required",
+      "live": {
+        "checkedAt": "2026-10-20T23:13:31.886Z",
+        "status": 402,
+        "finalUrl": "https://www.usatoday.com/",
+        "error": "Access response 402; stopped"
+      }
+    },
+    {
+      "region": "US",
+      "publisher": "AP News",
+      "url": "https://apnews.com/",
+      "slug": "ap-news",
+      "attemptedAt": "2026-10-20T23:03:22.393915+00:00",
+      "status": 200,
+      "finalUrl": "https://apnews.com/",
+      "bytes": 2412895,
+      "title": "Associated Press News: Breaking News, Latest Headlines and Videos | AP News",
+      "headings": 181,
+      "anchors": 1691,
+      "detected": 141,
+      "scanMs": 747,
+      "live": {
+        "checkedAt": "2026-10-20T23:14:11.678Z",
+        "error": "page.goto: Timeout 20000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://apnews.com/\", waiting until \"domcontentloaded\"\u001b[22m\n"
+      }
+    },
+    {
+      "region": "US",
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/",
+      "slug": "reuters",
+      "attemptedAt": "2026-10-20T23:03:22.454158+00:00",
+      "error": "HTTP Error 401: Unauthorized",
+      "live": {
+        "checkedAt": "2026-10-20T23:13:47.852Z",
+        "error": "page.goto: Timeout 20000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://www.reuters.com/\", waiting until \"domcontentloaded\"\u001b[22m\n"
+      }
+    },
+    {
+      "region": "US",
+      "publisher": "Washington Post",
+      "url": "https://www.washingtonpost.com/",
+      "slug": "washington-post",
+      "attemptedAt": "2026-10-20T23:03:22.651382+00:00",
+      "status": 200,
+      "finalUrl": "https://www.washingtonpost.com/",
+      "bytes": 3923027,
+      "title": "The Washington Post - Breaking news and latest headlines, U.S. news, world news, and video",
+      "headings": 120,
+      "anchors": 389,
+      "detected": 104,
+      "scanMs": 133,
+      "live": {
+        "checkedAt": "2026-10-20T23:15:00.910Z",
+        "status": 200,
+        "finalUrl": "https://www.washingtonpost.com/",
+        "title": "The Washington Post - Breaking news and latest headlines, U.S. news, world news, and video",
+        "initialDetected": 104,
+        "headings": 124,
+        "byCategory": {
+          "celebrity": 0,
+          "crime": 1,
+          "tragedy": 1,
+          "sexual": 0,
+          "war": 0,
+          "disaster": 0,
+          "politics": 9,
+          "sport": 1,
+          "entertainment": 0,
+          "opinion": 6,
+          "business": 0,
+          "technology": 1,
+          "science": 0,
+          "sponsored": 0
+        },
+        "hide": {
+          "domain": "www.washingtonpost.com",
+          "detected": 60,
+          "filtered": 33,
+          "active": true,
+          "eligible": true,
+          "configured": true
+        },
+        "renderMismatches": 0,
+        "collapse": {
+          "domain": "www.washingtonpost.com",
+          "detected": 104,
+          "filtered": 47,
+          "active": true,
+          "eligible": true,
+          "configured": true
+        },
+        "afterScroll": {
+          "domain": "www.washingtonpost.com",
+          "detected": 104,
+          "filtered": 47,
+          "active": true,
+          "eligible": true,
+          "configured": true
+        },
+        "pause": {
+          "domain": "www.washingtonpost.com",
+          "detected": 104,
+          "filtered": 0,
+          "active": false,
+          "eligible": true,
+          "configured": true
+        }
+      }
+    },
+    {
+      "region": "US",
+      "publisher": "MSN",
+      "url": "https://www.msn.com/en-us/news",
+      "slug": "msn",
+      "attemptedAt": "2026-10-20T23:03:22.705037+00:00",
+      "status": 200,
+      "finalUrl": "https://www.msn.com/en-us/news",
+      "bytes": 36339,
+      "title": "MSN",
+      "headings": 0,
+      "anchors": 0,
+      "detected": 0,
+      "scanMs": 1,
+      "live": {
+        "checkedAt": "2026-10-20T23:17:42.769Z",
+        "status": 200,
+        "finalUrl": "https://www.msn.com/en-us/news",
+        "title": "MSN | Personalized News, Top Headlines, Live Updates and more",
+        "initialDetected": 0,
+        "headings": 0
+      }
+    },
+    {
+      "region": "UK",
+      "publisher": "BBC",
+      "url": "https://www.bbc.com/news",
+      "slug": "bbc",
+      "attemptedAt": "2026-10-20T23:03:22.980879+00:00",
+      "status": 200,
+      "finalUrl": "https://www.bbc.com/news",
+      "bytes": 383270,
+      "title": "BBC News - Breaking news, video and the latest top stories from the U.S. and around the world",
+      "headings": 56,
+      "anchors": 164,
+      "detected": 49,
+      "scanMs": 147,
+      "live": {
+        "checkedAt": "2026-10-20T23:15:01.199Z",
+        "status": 200,
+        "finalUrl": "https://www.bbc.com/news",
+        "title": "BBC News - Breaking news, video and the latest top stories from the U.S. and around the world",
+        "initialDetected": 49,
+        "headings": 56,
+        "byCategory": {
+          "celebrity": 0,
+          "crime": 2,
+          "tragedy": 0,
+          "sexual": 0,
+          "war": 0,
+          "disaster": 0,
+          "politics": 1,
+          "sport": 8,
+          "entertainment": 1,
+          "opinion": 0,
+          "business": 4,
+          "technology": 2,
+          "science": 0,
+          "sponsored": 0
+        },
+        "hide": {
+          "domain": "www.bbc.com",
+          "detected": 49,
+          "filtered": 17,
+          "active": true,
+          "eligible": true,
+          "configured": true
+        },
+        "renderMismatches": 0,
+        "collapse": {
+          "domain": "www.bbc.com",
+          "detected": 49,
+          "filtered": 17,
+          "active": true,
+          "eligible": true,
+          "configured": true
+        },
+        "afterScroll": {
+          "domain": "www.bbc.com",
+          "detected": 49,
+          "filtered": 17,
+          "active": true,
+          "eligible": true,
+          "configured": true
+        },
+        "pause": {
+          "domain": "www.bbc.com",
+          "detected": 49,
+          "filtered": 0,
+          "active": false,
+          "eligible": true,
+          "configured": true
+        }
+      }
+    },
+    {
+      "region": "UK",
+      "publisher": "The Guardian",
+      "url": "https://www.theguardian.com/international",
+      "slug": "the-guardian",
+      "attemptedAt": "2026-10-20T23:03:25.828105+00:00",
+      "status": 200,
+      "finalUrl": "https://www.theguardian.com/international",
+      "bytes": 1473472,
+      "title": "Latest news, sport and opinion from the Guardian",
+      "headings": 202,
+      "anchors": 347,
+      "detected": 150,
+      "scanMs": 162,
+      "live": {
+        "checkedAt": "2026-10-20T23:17:42.714Z",
+        "status": 200,
+        "finalUrl": "https://www.theguardian.com/international",
+        "title": "Latest news, sport and opinion from the Guardian",
+        "initialDetected": 149,
+        "headings": 202,
+        "byCategory": {
+          "celebrity": 0,
+          "crime": 1,
+          "tragedy": 0,
+          "sexual": 0,
+          "war": 0,
+          "disaster": 0,
+          "politics": 3,
+          "sport": 1,
+          "entertainment": 3,
+          "opinion": 0,
+          "business": 0,
+          "technology": 0,
+          "science": 1,
+          "sponsored": 0
+        },
+        "hide": {
+          "domain": "www.theguardian.com",
+          "detected": 80,
+          "filtered": 35,
+          "active": true,
+          "eligible": true,
+          "configured": true
+        },
+        "renderMismatches": 0,
+        "collapse": {
+          "domain": "www.theguardian.com",
+          "detected": 140,
+          "filtered": 47,
+          "active": true,
+          "eligible": true,
+          "configured": true
+        },
+        "afterScroll": {
+          "domain": "www.theguardian.com",
+          "detected": 149,
+          "filtered": 49,
+          "active": true,
+          "eligible": true,
+          "configured": true
+        },
+        "pause": {
+          "domain": "www.theguardian.com",
+          "detected": 149,
+          "filtered": 0,
+          "active": false,
+          "eligible": true,
+          "configured": true
+        }
+      }
+    },
+    {
+      "region": "UK",
+      "publisher": "Sky News",
+      "url": "https://news.sky.com/",
+      "slug": "sky-news",
+      "attemptedAt": "2026-10-20T23:03:25.959362+00:00",
+      "status": 200,
+      "finalUrl": "https://news.sky.com/",
+      "bytes": 533221,
+      "title": "The Latest News from the UK and Around the World | Sky News",
+      "headings": 23,
+      "anchors": 239,
+      "detected": 134,
+      "scanMs": 345,
+      "live": {
+        "checkedAt": "2026-10-20T23:17:42.770Z",
+        "status": 200,
+        "finalUrl": "https://news.sky.com/",
+        "title": "The Latest News from the UK and Around the World | Sky News",
+        "initialDetected": 131,
+        "headings": 23,
+        "byCategory": {
+          "celebrity": 0,
+          "crime": 5,
+          "tragedy": 1,
+          "sexual": 0,
+          "war": 0,
+          "disaster": 0,
+          "politics": 3,
+          "sport": 0,
+          "entertainment": 0,
+          "opinion": 0,
+          "business": 2,
+          "technology": 0,
+          "science": 1,
+          "sponsored": 0
+        },
+        "hide": {
+          "domain": "news.sky.com",
+          "detected": 80,
+          "filtered": 17,
+          "active": true,
+          "eligible": true,
+          "configured": true
+        },
+        "renderMismatches": 0,
+        "collapse": {
+          "domain": "news.sky.com",
+          "detected": 131,
+          "filtered": 34,
+          "active": true,
+          "eligible": true,
+          "configured": true
+        },
+        "afterScroll": {
+          "domain": "news.sky.com",
+          "detected": 131,
+          "filtered": 34,
+          "active": true,
+          "eligible": true,
+          "configured": true
+        },
+        "pause": {
+          "domain": "news.sky.com",
+          "detected": 131,
+          "filtered": 0,
+          "active": false,
+          "eligible": true,
+          "configured": true
+        }
+      }
+    },
+    {
+      "region": "UK",
+      "publisher": "Daily Mail",
+      "url": "https://www.dailymail.co.uk/",
+      "slug": "daily-mail",
+      "attemptedAt": "2026-10-20T23:03:26.267546+00:00",
+      "error": "HTTP Error 403: Forbidden",
+      "live": {
+        "checkedAt": "2026-10-20T23:17:42.785Z",
+        "status": 403,
+        "finalUrl": "https://www.dailymail.co.uk/",
+        "error": "Access response 403; stopped"
+      }
+    },
+    {
+      "region": "UK",
+      "publisher": "Telegraph",
+      "url": "https://www.telegraph.co.uk/",
+      "slug": "telegraph",
+      "attemptedAt": "2026-10-20T23:03:26.892657+00:00",
+      "error": "HTTP Error 402: Payment Required",
+      "live": {
+        "checkedAt": "2026-10-20T23:17:51.561Z",
+        "status": 402,
+        "finalUrl": "https://www.telegraph.co.uk/",
+        "error": "Access response 402; stopped"
+      }
+    },
+    {
+      "region": "UK",
+      "publisher": "Independent",
+      "url": "https://www.independent.co.uk/",
+      "slug": "independent",
+      "attemptedAt": "2026-10-20T23:03:27.001098+00:00",
+      "status": 200,
+      "finalUrl": "https://www.independent.co.uk/",
+      "bytes": 339966,
+      "title": "News | The Independent | Today's headlines and latest breaking news",
+      "headings": 108,
+      "anchors": 331,
+      "detected": 109,
+      "scanMs": 224,
+      "live": {
+        "checkedAt": "2026-10-20T23:17:56.378Z",
+        "status": 200,
+        "finalUrl": "https://www.independent.co.uk/",
+        "title": "News | The Independent | Today's headlines and latest breaking news",
+        "initialDetected": 109,
+        "headings": 108,
+        "byCategory": {
+          "celebrity": 0,
+          "crime": 4,
+          "tragedy": 0,
+          "sexual": 0,
+          "war": 0,
+          "disaster": 0,
+          "politics": 6,
+          "sport": 9,
+          "entertainment": 5,
+          "opinion": 0,
+          "business": 0,
+          "technology": 0,
+          "science": 1,
+          "sponsored": 0
+        },
+        "hide": {
+          "domain": "www.independent.co.uk",
+          "detected": 60,
+          "filtered": 32,
+          "active": true,
+          "eligible": true,
+          "configured": true
+        },
+        "renderMismatches": 0,
+        "collapse": {
+          "domain": "www.independent.co.uk",
+          "detected": 109,
+          "filtered": 45,
+          "active": true,
+          "eligible": true,
+          "configured": true
+        },
+        "afterScroll": {
+          "domain": "www.independent.co.uk",
+          "detected": 109,
+          "filtered": 45,
+          "active": true,
+          "eligible": true,
+          "configured": true
+        },
+        "pause": {
+          "domain": "www.independent.co.uk",
+          "detected": 109,
+          "filtered": 0,
+          "active": false,
+          "eligible": true,
+          "configured": true
+        }
+      }
+    },
+    {
+      "region": "UK",
+      "publisher": "The Times",
+      "url": "https://www.thetimes.com/",
+      "slug": "the-times",
+      "attemptedAt": "2026-10-20T23:03:27.656563+00:00",
+      "status": 200,
+      "finalUrl": "https://www.thetimes.com/",
+      "bytes": 1334,
+      "title": "Verifying Device",
+      "headings": 0,
+      "anchors": 0,
+      "detected": 0,
+      "scanMs": 2,
+      "live": {
+        "checkedAt": "2026-10-20T23:17:59.389Z",
+        "status": 200,
+        "finalUrl": "https://www.thetimes.com/",
+        "error": "page.addScriptTag: Target page, context or browser has been closed"
+      }
+    },
+    {
+      "region": "UK",
+      "publisher": "Mirror",
+      "url": "https://www.mirror.co.uk/",
+      "slug": "mirror",
+      "attemptedAt": "2026-10-20T23:03:28.219100+00:00",
+      "status": 200,
+      "finalUrl": "https://www.mirror.co.uk/",
+      "bytes": 195,
+      "title": "Site Unavailable",
+      "headings": 0,
+      "anchors": 0,
+      "detected": 0,
+      "scanMs": 3,
+      "live": {
+        "checkedAt": "2026-10-20T23:18:02.121Z",
+        "status": 200,
+        "finalUrl": "https://www.mirror.co.uk/",
+        "title": "Site Unavailable",
+        "initialDetected": 0,
+        "headings": 0,
+        "error": "page.content: Target page, context or browser has been closed"
+      }
+    },
+    {
+      "region": "UK",
+      "publisher": "The Sun",
+      "url": "https://www.thesun.co.uk/",
+      "slug": "the-sun",
+      "attemptedAt": "2026-10-20T23:03:30.372404+00:00",
+      "status": 200,
+      "finalUrl": "https://www.thesun.co.uk/",
+      "bytes": 1519055,
+      "title": "News, sport, celebrities and gossip | The Sun",
+      "headings": 137,
+      "anchors": 526,
+      "detected": 132,
+      "scanMs": 242,
+      "live": {
+        "checkedAt": "2026-10-20T23:18:15.263Z",
+        "status": 200,
+        "finalUrl": "https://www.thesun.co.uk/",
+        "error": "page.addScriptTag: Target page, context or browser has been closed"
+      }
+    },
+    {
+      "region": "UK",
+      "publisher": "Financial Times",
+      "url": "https://www.ft.com/",
+      "slug": "financial-times",
+      "attemptedAt": "2026-10-20T23:03:30.557832+00:00",
+      "error": "HTTP Error 403: Forbidden",
+      "live": {
+        "checkedAt": "2026-10-20T23:18:22.586Z",
+        "status": 403,
+        "finalUrl": "https://www.ft.com/?__cf_chl_rt_tk=x0pGpBeehvmonhk2gJ_nEwb4NwhQJOkJrR0u6Ykv0Yw-1792538310-1.0.1.1-48SiffGwYUUeXjRR3AvuRm6A2C40uExJl8_T957bUp8",
+        "error": "Access response 403; stopped"
+      }
+    },
+    {
+      "region": "AU",
+      "publisher": "ABC Australia",
+      "url": "https://www.abc.net.au/news",
+      "slug": "abc-australia",
+      "attemptedAt": "2026-10-20T23:03:30.667825+00:00",
+      "status": 200,
+      "finalUrl": "https://www.abc.net.au/",
+      "bytes": 845587,
+      "title": "ABC News & Headlines \u2013 Australian Broadcasting Corporation",
+      "headings": 147,
+      "anchors": 400,
+      "detected": 62,
+      "scanMs": 614,
+      "live": {
+        "checkedAt": "2026-10-20T23:18:30.594Z",
+        "error": "page.goto: Timeout 20000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://www.abc.net.au/news\", waiting until \"domcontentloaded\"\u001b[22m\n"
+      }
+    },
+    {
+      "region": "AU",
+      "publisher": "news.com.au",
+      "url": "https://www.news.com.au/",
+      "slug": "news-com-au",
+      "attemptedAt": "2026-10-20T23:03:30.959272+00:00",
+      "error": "HTTP Error 403: Forbidden",
+      "live": null
+    },
+    {
+      "region": "AU",
+      "publisher": "9News",
+      "url": "https://www.9news.com.au/",
+      "slug": "9news",
+      "attemptedAt": "2026-10-20T23:03:31.224875+00:00",
+      "status": 200,
+      "finalUrl": "https://www.nine.com.au/#redirect=9news",
+      "bytes": 1395645,
+      "title": "nine.com.au -- the new ninemsn - News, Sport, TV, Entertainment, Lifestyle | Latest Breaking News Headlines from Australia and the world",
+      "headings": 106,
+      "anchors": 408,
+      "detected": 74,
+      "scanMs": 63,
+      "live": {
+        "checkedAt": "2026-10-20T23:18:48.075Z",
+        "status": 200,
+        "finalUrl": "https://www.nine.com.au/#redirect=9news",
+        "title": "nine.com.au -- the new ninemsn - News, Sport, TV, Entertainment, Lifestyle | Latest Breaking News Headlines from Australia and the world",
+        "initialDetected": 74,
+        "headings": 106,
+        "byCategory": {
+          "celebrity": 4,
+          "crime": 0,
+          "tragedy": 1,
+          "sexual": 0,
+          "war": 0,
+          "disaster": 0,
+          "politics": 0,
+          "sport": 5,
+          "entertainment": 3,
+          "opinion": 0,
+          "business": 2,
+          "technology": 0,
+          "science": 0,
+          "sponsored": 0
+        },
+        "hide": {
+          "domain": "www.nine.com.au",
+          "detected": 60,
+          "filtered": 18,
+          "active": true,
+          "eligible": true,
+          "configured": true
+        },
+        "renderMismatches": 0,
+        "collapse": {
+          "domain": "www.nine.com.au",
+          "detected": 74,
+          "filtered": 22,
+          "active": true,
+          "eligible": true,
+          "configured": true
+        },
+        "afterScroll": {
+          "domain": "www.nine.com.au",
+          "detected": 74,
+          "filtered": 22,
+          "active": true,
+          "eligible": true,
+          "configured": true
+        },
+        "pause": {
+          "domain": "www.nine.com.au",
+          "detected": 74,
+          "filtered": 0,
+          "active": false,
+          "eligible": true,
+          "configured": true
+        }
+      }
+    },
+    {
+      "region": "AU",
+      "publisher": "Sydney Morning Herald",
+      "url": "https://www.smh.com.au/",
+      "slug": "sydney-morning-herald",
+      "attemptedAt": "2026-10-20T23:03:31.383711+00:00",
+      "status": 200,
+      "finalUrl": "https://www.smh.com.au/",
+      "bytes": 195,
+      "title": "Site Unavailable",
+      "headings": 0,
+      "anchors": 0,
+      "detected": 0,
+      "scanMs": 1,
+      "live": {
+        "checkedAt": "2026-10-20T23:18:48.260Z",
+        "status": 200,
+        "finalUrl": "https://www.smh.com.au/",
+        "title": "Site Unavailable",
+        "initialDetected": 0,
+        "headings": 0
+      }
+    },
+    {
+      "region": "AU",
+      "publisher": "The Age",
+      "url": "https://www.theage.com.au/",
+      "slug": "the-age",
+      "attemptedAt": "2026-10-20T23:03:31.510491+00:00",
+      "status": 200,
+      "finalUrl": "https://www.theage.com.au/",
+      "bytes": 195,
+      "title": "Site Unavailable",
+      "headings": 0,
+      "anchors": 0,
+      "detected": 0,
+      "scanMs": 1,
+      "live": {
+        "checkedAt": "2026-10-20T23:18:50.777Z",
+        "status": 200,
+        "finalUrl": "https://www.theage.com.au/",
+        "title": "Site Unavailable",
+        "initialDetected": 0,
+        "headings": 0
+      }
+    },
+    {
+      "region": "AU",
+      "publisher": "SBS",
+      "url": "https://www.sbs.com.au/news/",
+      "slug": "sbs",
+      "attemptedAt": "2026-10-20T23:03:32.933717+00:00",
+      "status": 200,
+      "finalUrl": "https://www.sbs.com.au/news",
+      "bytes": 1706144,
+      "title": "Latest News & Headlines from Australia and the World | SBS News",
+      "headings": 60,
+      "anchors": 292,
+      "detected": 63,
+      "scanMs": 171,
+      "live": {
+        "checkedAt": "2026-10-20T23:19:00.416Z",
+        "status": 200,
+        "finalUrl": "https://www.sbs.com.au/news",
+        "title": "Latest News & Headlines from Australia and the World | SBS News",
+        "initialDetected": 56,
+        "headings": 60,
+        "byCategory": {
+          "celebrity": 0,
+          "crime": 4,
+          "tragedy": 0,
+          "sexual": 0,
+          "war": 1,
+          "disaster": 0,
+          "politics": 4,
+          "sport": 0,
+          "entertainment": 0,
+          "opinion": 0,
+          "business": 0,
+          "technology": 1,
+          "science": 0,
+          "sponsored": 0
+        },
+        "hide": {
+          "domain": "www.sbs.com.au",
+          "detected": 56,
+          "filtered": 12,
+          "active": true,
+          "eligible": true,
+          "configured": true
+        },
+        "renderMismatches": 0,
+        "collapse": {
+          "domain": "www.sbs.com.au",
+          "detected": 56,
+          "filtered": 12,
+          "active": true,
+          "eligible": true,
+          "configured": true
+        },
+        "afterScroll": {
+          "domain": "www.sbs.com.au",
+          "detected": 56,
+          "filtered": 12,
+          "active": true,
+          "eligible": true,
+          "configured": true
+        },
+        "pause": {
+          "domain": "www.sbs.com.au",
+          "detected": 56,
+          "filtered": 0,
+          "active": false,
+          "eligible": true,
+          "configured": true
+        }
+      }
+    },
+    {
+      "region": "AU",
+      "publisher": "7NEWS",
+      "url": "https://7news.com.au/",
+      "slug": "7news",
+      "attemptedAt": "2026-10-20T23:03:33.745775+00:00",
+      "status": 200,
+      "finalUrl": "https://7news.com.au/",
+      "bytes": 871941,
+      "title": "7NEWS Australia: Latest news, sport, video, entertainment and lifestyle from Australia and the world",
+      "headings": 73,
+      "anchors": 202,
+      "detected": 28,
+      "scanMs": 113,
+      "live": {
+        "checkedAt": "2026-10-20T23:19:06.311Z",
+        "error": "page.goto: Timeout 20000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://7news.com.au/\", waiting until \"domcontentloaded\"\u001b[22m\n"
+      }
+    },
+    {
+      "region": "AU",
+      "publisher": "The Australian",
+      "url": "https://www.theaustralian.com.au/",
+      "slug": "the-australian",
+      "attemptedAt": "2026-10-20T23:03:33.968760+00:00",
+      "error": "HTTP Error 403: Forbidden",
+      "live": {
+        "checkedAt": "2026-10-20T23:19:12.347Z",
+        "status": 403,
+        "finalUrl": "https://www.theaustralian.com.au/",
+        "error": "Access response 403; stopped"
+      }
+    },
+    {
+      "region": "NZ",
+      "publisher": "RNZ",
+      "url": "https://www.rnz.co.nz/news",
+      "slug": "rnz",
+      "attemptedAt": "2026-10-20T23:03:34.485551+00:00",
+      "status": 200,
+      "finalUrl": "https://www.rnz.co.nz/",
+      "bytes": 1438336,
+      "title": "RNZ | New Zealand news, culture, radio, podcasts and more",
+      "headings": 170,
+      "anchors": 283,
+      "detected": 135,
+      "scanMs": 272,
+      "live": {
+        "checkedAt": "2026-10-20T23:19:20.948Z",
+        "status": 200,
+        "finalUrl": "https://www.rnz.co.nz/",
+        "title": "RNZ | New Zealand news, culture, radio, podcasts and more",
+        "initialDetected": 133,
+        "headings": 169,
+        "byCategory": {
+          "celebrity": 2,
+          "crime": 5,
+          "tragedy": 6,
+          "sexual": 0,
+          "war": 0,
+          "disaster": 0,
+          "politics": 16,
+          "sport": 10,
+          "entertainment": 10,
+          "opinion": 0,
+          "business": 12,
+          "technology": 2,
+          "science": 0,
+          "sponsored": 0
+        },
+        "hide": {
+          "domain": "www.rnz.co.nz",
+          "detected": 120,
+          "filtered": 61,
+          "active": true,
+          "eligible": true,
+          "configured": true
+        },
+        "renderMismatches": 0,
+        "collapse": {
+          "domain": "www.rnz.co.nz",
+          "detected": 133,
+          "filtered": 61,
+          "active": true,
+          "eligible": true,
+          "configured": true
+        },
+        "afterScroll": {
+          "domain": "www.rnz.co.nz",
+          "detected": 133,
+          "filtered": 61,
+          "active": true,
+          "eligible": true,
+          "configured": true
+        },
+        "pause": {
+          "domain": "www.rnz.co.nz",
+          "detected": 133,
+          "filtered": 0,
+          "active": false,
+          "eligible": true,
+          "configured": true
+        }
+      }
+    },
+    {
+      "region": "NZ",
+      "publisher": "Stuff",
+      "url": "https://www.stuff.co.nz/",
+      "slug": "stuff",
+      "attemptedAt": "2026-10-20T23:03:35.541845+00:00",
+      "status": 200,
+      "finalUrl": "https://www.stuff.co.nz/",
+      "bytes": 65756,
+      "title": "Stuff: Latest breaking news | New Zealand",
+      "headings": 0,
+      "anchors": 0,
+      "detected": 0,
+      "scanMs": 1,
+      "live": {
+        "checkedAt": "2026-10-20T23:19:25.697Z",
+        "status": 200,
+        "finalUrl": "https://www.stuff.co.nz/",
+        "title": "Stuff: Latest breaking news | New Zealand",
+        "initialDetected": 0,
+        "headings": 17
+      }
+    },
+    {
+      "region": "NZ",
+      "publisher": "NZ Herald",
+      "url": "https://www.nzherald.co.nz/",
+      "slug": "nz-herald",
+      "attemptedAt": "2026-10-20T23:03:36.026049+00:00",
+      "status": 200,
+      "finalUrl": "https://www.nzherald.co.nz/",
+      "bytes": 2003516,
+      "title": "NZ Herald: Breaking & Latest New Zealand News - NZ Herald",
+      "headings": 94,
+      "anchors": 761,
+      "detected": 82,
+      "scanMs": 253,
+      "live": {
+        "checkedAt": "2026-10-20T23:19:26.423Z",
+        "error": "page.goto: Timeout 20000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://www.nzherald.co.nz/\", waiting until \"domcontentloaded\"\u001b[22m\n"
+      }
+    },
+    {
+      "region": "NZ",
+      "publisher": "1News",
+      "url": "https://www.1news.co.nz/",
+      "slug": "1news",
+      "attemptedAt": "2026-10-20T23:03:36.643112+00:00",
+      "status": 200,
+      "finalUrl": "https://www.1news.co.nz/",
+      "bytes": 2494558,
+      "title": "1News",
+      "headings": 256,
+      "anchors": 1428,
+      "detected": 243,
+      "scanMs": 586,
+      "live": {
+        "checkedAt": "2026-10-20T23:19:28.713Z",
+        "status": 200,
+        "finalUrl": "https://www.1news.co.nz/",
+        "title": "1News",
+        "initialDetected": 161,
+        "headings": 271,
+        "byCategory": {
+          "celebrity": 2,
+          "crime": 3,
+          "tragedy": 6,
+          "sexual": 0,
+          "war": 0,
+          "disaster": 0,
+          "politics": 0,
+          "sport": 0,
+          "entertainment": 0,
+          "opinion": 0,
+          "business": 0,
+          "technology": 0,
+          "science": 0,
+          "sponsored": 0
+        },
+        "hide": {
+          "domain": "www.1news.co.nz",
+          "detected": 60,
+          "filtered": 11,
+          "active": true,
+          "eligible": true,
+          "configured": true
+        },
+        "renderMismatches": 0,
+        "collapse": {
+          "domain": "www.1news.co.nz",
+          "detected": 120,
+          "filtered": 19,
+          "active": true,
+          "eligible": true,
+          "configured": true
+        },
+        "afterScroll": {
+          "domain": "www.1news.co.nz",
+          "detected": 161,
+          "filtered": 26,
+          "active": true,
+          "eligible": true,
+          "configured": true
+        },
+        "pause": {
+          "domain": "www.1news.co.nz",
+          "detected": 161,
+          "filtered": 0,
+          "active": false,
+          "eligible": true,
+          "configured": true
+        }
+      }
+    },
+    {
+      "region": "NZ",
+      "publisher": "Otago Daily Times",
+      "url": "https://www.odt.co.nz/",
+      "slug": "otago-daily-times",
+      "attemptedAt": "2026-10-20T23:03:36.720470+00:00",
+      "status": 200,
+      "finalUrl": "https://www.odt.co.nz/",
+      "bytes": 1187686,
+      "title": "ODT.co.nz | Otago Daily Times | Latest South Island News",
+      "headings": 96,
+      "anchors": 559,
+      "detected": 33,
+      "scanMs": 206,
+      "live": {
+        "checkedAt": "2026-10-20T23:19:35.470Z",
+        "status": 200,
+        "finalUrl": "https://www.odt.co.nz/",
+        "title": "ODT.co.nz | Otago Daily Times | Latest South Island News",
+        "initialDetected": 33,
+        "headings": 96,
+        "byCategory": {
+          "celebrity": 0,
+          "crime": 1,
+          "tragedy": 0,
+          "sexual": 0,
+          "war": 0,
+          "disaster": 0,
+          "politics": 0,
+          "sport": 3,
+          "entertainment": 0,
+          "opinion": 0,
+          "business": 5,
+          "technology": 0,
+          "science": 0,
+          "sponsored": 0
+        },
+        "hide": {
+          "domain": "www.odt.co.nz",
+          "detected": 33,
+          "filtered": 9,
+          "active": true,
+          "eligible": true,
+          "configured": true
+        },
+        "renderMismatches": 0,
+        "collapse": {
+          "domain": "www.odt.co.nz",
+          "detected": 33,
+          "filtered": 9,
+          "active": true,
+          "eligible": true,
+          "configured": true
+        },
+        "afterScroll": {
+          "domain": "www.odt.co.nz",
+          "detected": 33,
+          "filtered": 9,
+          "active": true,
+          "eligible": true,
+          "configured": true
+        },
+        "pause": {
+          "domain": "www.odt.co.nz",
+          "detected": 33,
+          "filtered": 0,
+          "active": false,
+          "eligible": true,
+          "configured": true
+        }
+      }
+    },
+    {
+      "region": "NZ",
+      "publisher": "The Press",
+      "url": "https://www.thepress.co.nz/",
+      "slug": "the-press",
+      "attemptedAt": "2026-10-20T23:03:37.255510+00:00",
+      "status": 200,
+      "finalUrl": "https://www.thepress.co.nz/",
+      "bytes": 7275,
+      "title": "The Press",
+      "headings": 0,
+      "anchors": 0,
+      "detected": 0,
+      "scanMs": 1,
+      "live": {
+        "checkedAt": "2026-10-20T23:19:36.962Z",
+        "status": 200,
+        "finalUrl": "https://www.thepress.co.nz/",
+        "title": "The Press: Christchurch and Canterbury news | Stuff Ltd",
+        "initialDetected": 80,
+        "headings": 105,
+        "byCategory": {
+          "celebrity": 0,
+          "crime": 2,
+          "tragedy": 1,
+          "sexual": 0,
+          "war": 1,
+          "disaster": 0,
+          "politics": 4,
+          "sport": 4,
+          "entertainment": 0,
+          "opinion": 5,
+          "business": 4,
+          "technology": 1,
+          "science": 0,
+          "sponsored": 0
+        },
+        "hide": {
+          "domain": "www.thepress.co.nz",
+          "detected": 60,
+          "filtered": 29,
+          "active": true,
+          "eligible": true,
+          "configured": true
+        },
+        "renderMismatches": 0,
+        "collapse": {
+          "domain": "www.thepress.co.nz",
+          "detected": 80,
+          "filtered": 37,
+          "active": true,
+          "eligible": true,
+          "configured": true
+        },
+        "afterScroll": {
+          "domain": "www.thepress.co.nz",
+          "detected": 80,
+          "filtered": 37,
+          "active": true,
+          "eligible": true,
+          "configured": true
+        },
+        "pause": {
+          "domain": "www.thepress.co.nz",
+          "detected": 80,
+          "filtered": 0,
+          "active": false,
+          "eligible": true,
+          "configured": true
+        }
+      }
+    },
+    {
+      "region": "NZ",
+      "publisher": "The Post",
+      "url": "https://www.thepost.co.nz/",
+      "slug": "the-post",
+      "attemptedAt": "2026-10-20T23:03:37.370079+00:00",
+      "status": 200,
+      "finalUrl": "https://www.thepost.co.nz/",
+      "bytes": 7271,
+      "title": "The Post",
+      "headings": 0,
+      "anchors": 0,
+      "detected": 0,
+      "scanMs": 1,
+      "live": {
+        "checkedAt": "2026-10-20T23:19:46.821Z",
+        "status": 200,
+        "finalUrl": "https://www.thepost.co.nz/",
+        "title": "The Post | Trusted New Zealand News | Politics, Business, Finance, Economics, Sport, Lifestyle & More | Stuff Ltd",
+        "initialDetected": 127,
+        "headings": 156,
+        "byCategory": {
+          "celebrity": 0,
+          "crime": 0,
+          "tragedy": 0,
+          "sexual": 0,
+          "war": 0,
+          "disaster": 0,
+          "politics": 6,
+          "sport": 2,
+          "entertainment": 4,
+          "opinion": 9,
+          "business": 9,
+          "technology": 1,
+          "science": 0,
+          "sponsored": 0
+        },
+        "hide": {
+          "domain": "www.thepost.co.nz",
+          "detected": 60,
+          "filtered": 35,
+          "active": true,
+          "eligible": true,
+          "configured": true
+        },
+        "renderMismatches": 0,
+        "collapse": {
+          "domain": "www.thepost.co.nz",
+          "detected": 120,
+          "filtered": 68,
+          "active": true,
+          "eligible": true,
+          "configured": true
+        },
+        "afterScroll": {
+          "domain": "www.thepost.co.nz",
+          "detected": 127,
+          "filtered": 70,
+          "active": true,
+          "eligible": true,
+          "configured": true
+        },
+        "pause": {
+          "domain": "www.thepost.co.nz",
+          "detected": 127,
+          "filtered": 0,
+          "active": false,
+          "eligible": true,
+          "configured": true
+        }
+      }
+    },
+    {
+      "region": "NZ",
+      "publisher": "Newsroom",
+      "url": "https://newsroom.co.nz/",
+      "slug": "newsroom",
+      "attemptedAt": "2026-10-20T23:03:39.040389+00:00",
+      "status": 200,
+      "finalUrl": "https://newsroom.co.nz/",
+      "bytes": 451736,
+      "title": "Newsroom | Independent New Zealand News and Current affairs",
+      "headings": 87,
+      "anchors": 407,
+      "detected": 66,
+      "scanMs": 44,
+      "live": {
+        "checkedAt": "2026-10-20T23:19:54.963Z",
+        "error": "page.goto: Timeout 20000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://newsroom.co.nz/\", waiting until \"domcontentloaded\"\u001b[22m\n"
+      }
+    },
+    {
+      "region": "NZ",
+      "publisher": "The Spinoff",
+      "url": "https://thespinoff.co.nz/",
+      "slug": "the-spinoff",
+      "attemptedAt": "2026-10-20T23:03:39.463598+00:00",
+      "status": 200,
+      "finalUrl": "https://thespinoff.co.nz/",
+      "bytes": 467598,
+      "title": "The Spinoff",
+      "headings": 123,
+      "anchors": 142,
+      "detected": 83,
+      "scanMs": 231,
+      "live": {
+        "checkedAt": "2026-10-20T23:19:56.679Z",
+        "status": 200,
+        "finalUrl": "https://thespinoff.co.nz/",
+        "title": "The Spinoff",
+        "initialDetected": 83,
+        "headings": 123,
+        "byCategory": {
+          "celebrity": 0,
+          "crime": 0,
+          "tragedy": 0,
+          "sexual": 0,
+          "war": 0,
+          "disaster": 0,
+          "politics": 15,
+          "sport": 0,
+          "entertainment": 6,
+          "opinion": 0,
+          "business": 2,
+          "technology": 0,
+          "science": 0,
+          "sponsored": 0
+        },
+        "hide": {
+          "domain": "thespinoff.co.nz",
+          "detected": 60,
+          "filtered": 36,
+          "active": true,
+          "eligible": true,
+          "configured": true
+        },
+        "renderMismatches": 0,
+        "collapse": {
+          "domain": "thespinoff.co.nz",
+          "detected": 83,
+          "filtered": 54,
+          "active": true,
+          "eligible": true,
+          "configured": true
+        },
+        "afterScroll": {
+          "domain": "thespinoff.co.nz",
+          "detected": 83,
+          "filtered": 54,
+          "active": true,
+          "eligible": true,
+          "configured": true
+        },
+        "pause": {
+          "domain": "thespinoff.co.nz",
+          "detected": 83,
+          "filtered": 0,
+          "active": false,
+          "eligible": true,
+          "configured": true
+        }
+      }
+    }
+  ]
+}

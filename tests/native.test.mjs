@@ -19,7 +19,7 @@ test('native MV3 unpacked installation, service worker, local storage and conten
     const settings = await context.newPage(); await settings.goto(`chrome-extension://${id}/settings.html`);
     await settings.waitForFunction(() => !document.querySelector('#save').disabled);
     assert.equal(await settings.locator('input[name=category]:checked').count(), 0);
-    await settings.locator('input[value=crime]').check(); await settings.locator('#save').click();
+    await settings.locator('input[value=crime]').check(); await settings.locator('#next').click(); await settings.locator('#next').click(); await settings.locator('#save').click();
     const fixture = await readFile(resolve(root, 'tests/fixtures/news.html'));
     await context.route('http://news-fixture.test/**', route => route.fulfill({ contentType: 'text/html', body: fixture }));
     const news = await context.newPage(); await news.goto('http://news-fixture.test/');
@@ -38,5 +38,28 @@ test('native MV3 unpacked installation, service worker, local storage and conten
     const explanation = news.locator('#sponsored + [data-news-filter-ui=card]').locator('details');
     assert.match(await explanation.textContent(), /Sponsored & Paid Content/);
     assert.match(await explanation.textContent(), /sponsored.*label/i);
+  } finally { await context?.close(); await rm(profile, { recursive: true, force: true }); }
+});
+
+test('native MV3: closed shadow roots are reached through chrome.dom and filtered as a whole', { timeout: 60000 }, async () => {
+  const profile = await mkdtemp(resolve(tmpdir(), 'news-filter-native-'));
+  let context;
+  try {
+    context = await chromium.launchPersistentContext(profile, { channel: 'chromium', headless: true,
+      ...(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {}),
+      ignoreDefaultArgs: ['--disable-extensions'],
+      args: ['--no-sandbox', `--disable-extensions-except=${resolve(root, 'dist')}`, `--load-extension=${resolve(root, 'dist')}`] });
+    const worker = context.serviceWorkers()[0] ?? await context.waitForEvent('serviceworker');
+    await worker.evaluate(() => chrome.storage.local.set({ newsFilterPreferences: { version: 1, configured: true, enabled: true, mode: 'hide', filteredCategories: ['crime'] } }));
+    // Page scripts (and Playwright's own selectors) cannot see into closed roots; only the extension can.
+    await context.route('http://news-fixture.test/closed', route => route.fulfill({ contentType: 'text/html', body: `<title>News</title>
+      <script>customElements.define('closed-card', class extends HTMLElement { connectedCallback() {
+        const root = this.attachShadow({ mode: 'closed' });
+        root.innerHTML = '<div class="content-card"><a class="heading" href="' + this.dataset.href + '">' + this.dataset.title + '</a></div>'; } });</script>
+      <main><closed-card id="crime" data-href="/news/crime/stabbing" data-title="Man charged after stabbing at Auckland mall"></closed-card>
+      <closed-card id="food" data-href="/life/food/recipes" data-title="10 easy dinner recipes for busy weeknights"></closed-card></main>` }));
+    const news = await context.newPage(); await news.goto('http://news-fixture.test/closed');
+    await news.waitForFunction(() => getComputedStyle(document.querySelector('#crime')).display === 'none', null, { timeout: 8000 });
+    assert.notEqual(await news.evaluate(() => getComputedStyle(document.querySelector('#food')).display), 'none');
   } finally { await context?.close(); await rm(profile, { recursive: true, force: true }); }
 });

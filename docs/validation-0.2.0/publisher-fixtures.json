@@ -1,0 +1,177 @@
+[
+  {
+    "publisher": "Yahoo News",
+    "kind": "saved-response-snippets",
+    "expected": 3,
+    "detected": 3,
+    "missed": []
+  },
+  {
+    "publisher": "CNN",
+    "kind": "saved-response-snippets",
+    "expected": 3,
+    "detected": 3,
+    "missed": []
+  },
+  {
+    "publisher": "Fox News",
+    "kind": "saved-response-snippets",
+    "expected": 3,
+    "detected": 3,
+    "missed": []
+  },
+  {
+    "publisher": "NBC",
+    "kind": "saved-response-snippets",
+    "expected": 3,
+    "detected": 3,
+    "missed": []
+  },
+  {
+    "publisher": "CBS",
+    "kind": "saved-response-snippets",
+    "expected": 3,
+    "detected": 3,
+    "missed": []
+  },
+  {
+    "publisher": "ABC News",
+    "kind": "saved-response-snippets",
+    "expected": 3,
+    "detected": 3,
+    "missed": []
+  },
+  {
+    "publisher": "AP News",
+    "kind": "saved-response-snippets",
+    "expected": 3,
+    "detected": 3,
+    "missed": []
+  },
+  {
+    "publisher": "Washington Post",
+    "kind": "saved-response-snippets",
+    "expected": 3,
+    "detected": 3,
+    "missed": []
+  },
+  {
+    "publisher": "BBC",
+    "kind": "saved-response-snippets",
+    "expected": 3,
+    "detected": 3,
+    "missed": []
+  },
+  {
+    "publisher": "The Guardian",
+    "kind": "saved-response-snippets",
+    "expected": 3,
+    "detected": 3,
+    "missed": []
+  },
+  {
+    "publisher": "Sky News",
+    "kind": "saved-response-snippets",
+    "expected": 3,
+    "detected": 3,
+    "missed": []
+  },
+  {
+    "publisher": "Independent",
+    "kind": "saved-response-snippets",
+    "expected": 3,
+    "detected": 3,
+    "missed": []
+  },
+  {
+    "publisher": "The Sun",
+    "kind": "saved-response-snippets",
+    "expected": 3,
+    "detected": 3,
+    "missed": []
+  },
+  {
+    "publisher": "ABC Australia",
+    "kind": "saved-response-snippets",
+    "expected": 3,
+    "detected": 3,
+    "missed": []
+  },
+  {
+    "publisher": "9News",
+    "kind": "saved-response-snippets",
+    "expected": 3,
+    "detected": 3,
+    "missed": []
+  },
+  {
+    "publisher": "SBS",
+    "kind": "saved-response-snippets",
+    "expected": 3,
+    "detected": 3,
+    "missed": []
+  },
+  {
+    "publisher": "7NEWS",
+    "kind": "saved-response-snippets",
+    "expected": 3,
+    "detected": 3,
+    "missed": []
+  },
+  {
+    "publisher": "RNZ",
+    "kind": "saved-response-snippets",
+    "expected": 3,
+    "detected": 3,
+    "missed": []
+  },
+  {
+    "publisher": "NZ Herald",
+    "kind": "saved-response-snippets",
+    "expected": 3,
+    "detected": 3,
+    "missed": []
+  },
+  {
+    "publisher": "1News",
+    "kind": "saved-response-snippets",
+    "expected": 3,
+    "detected": 3,
+    "missed": []
+  },
+  {
+    "publisher": "Otago Daily Times",
+    "kind": "saved-response-snippets",
+    "expected": 3,
+    "detected": 3,
+    "missed": []
+  },
+  {
+    "publisher": "The Press",
+    "kind": "saved-response-snippets",
+    "expected": 3,
+    "detected": 3,
+    "missed": []
+  },
+  {
+    "publisher": "The Post",
+    "kind": "saved-response-snippets",
+    "expected": 3,
+    "detected": 3,
+    "missed": []
+  },
+  {
+    "publisher": "Newsroom",
+    "kind": "saved-response-snippets",
+    "expected": 3,
+    "detected": 3,
+    "missed": []
+  },
+  {
+    "publisher": "The Spinoff",
+    "kind": "saved-response-snippets",
+    "expected": 3,
+    "detected": 3,
+    "missed": []
+  }
+]

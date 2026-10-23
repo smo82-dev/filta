@@ -82,12 +82,13 @@ test('Chromium: production DOM/UI with a simulated WebExtension API (native inst
     });
     await t.test('first-run settings select nothing and filtering starts only after explicit setup', async () => {
       settings = await harness.settings();
-      await settings.locator('#save').waitFor({ state: 'visible' });
+      await settings.locator('#next').waitFor({ state: 'visible' });
       await settings.waitForFunction(() => !document.querySelector('#save').disabled);
       assert.equal(await settings.locator('input[name=category]:checked').count(), 0);
       news = await harness.loadNews(); await visible(news, 'crime');
       assert.equal((await harness.dispatch(news, { kind: 'PAGE_STATUS' }, {})).filtered, 0);
       for (const value of ['crime', 'celebrity', 'tragedy', 'disaster']) await settings.locator(`input[value=${value}]`).check();
+      await settings.locator('#next').click(); await settings.locator('#next').click();
       await settings.locator('#save').click();
       await hidden(news, 'crime'); await hidden(news, 'celebrity');
       await visible(news, 'technology'); await visible(news, 'emergency');
@@ -105,10 +106,11 @@ test('Chromium: production DOM/UI with a simulated WebExtension API (native inst
       const current = await harness.dispatch(harness.worker, { kind: 'GET_PREFS' }, {});
       assert.ok(current.filteredCategories.includes('crime'));
     });
-    await t.test('popup reports current page counts and switches Collapse to Hide', async () => {
+    await t.test('popup reports current page counts; filtering mode is editable in settings', async () => {
       const popup = await harness.popup(news);
       assert.equal(await popup.locator('#count').textContent(), '2');
-      await popup.locator('#hide').check();
+      await settings.locator('[data-section=behaviour]').click();
+      await settings.locator('#hide').check(); await settings.locator('#save').click();
       await hidden(news, 'crime');
       await news.waitForFunction(() => document.querySelectorAll('[data-news-filter-ui=card]').length === 0);
       assert.equal(await news.locator('#crime').count(), 1); // card has not been removed
@@ -125,6 +127,7 @@ test('Chromium: production DOM/UI with a simulated WebExtension API (native inst
     });
     await t.test('custom hide and always-show phrases apply live and retain precedence', async () => {
       await settings.reload(); await settings.waitForFunction(() => !document.querySelector('#save').disabled);
+      await settings.locator('[data-section=exceptions]').click(); await settings.locator('#phrases').evaluate(el => el.open = true);
       await settings.locator('#blockedKeywords').fill('community development\ntechnology');
       await settings.locator('#allowedKeywords').fill('Vanuatu'); await settings.locator('#save').click();
       await hidden(news, 'technology'); await visible(news, 'community');
@@ -136,12 +139,13 @@ test('Chromium: production DOM/UI with a simulated WebExtension API (native inst
       await visible(news, 'crime'); await visible(news, 'celebrity'); await popup.close();
       await harness.loadNews(news); await visible(news, 'crime');
       popup = await harness.popup(news);
-      await popup.getByRole('button', { name: 'Resume filtering on this site' }).click();
+      await popup.getByRole('button', { name: 'Resume this site' }).click();
       await hidden(news, 'crime'); await popup.close();
     });
     await t.test('global pause and resume apply immediately', async () => {
-      const popup = await harness.popup(news); await popup.locator('#enabled').uncheck();
-      await visible(news, 'crime'); await popup.locator('#enabled').check(); await hidden(news, 'crime'); await popup.close();
+      await settings.locator('[data-section=websites]').click();
+      await settings.locator('#enabled').uncheck(); await settings.locator('#save').click();
+      await visible(news, 'crime'); await settings.locator('#enabled').check(); await settings.locator('#save').click(); await hidden(news, 'crime');
     });
     await t.test('dynamic insertion and virtualised headline changes are filtered and corrected', async () => {
       await news.evaluate(() => {

@@ -1,0 +1,19 @@
+{
+  "expected": 61,
+  "detected": 61,
+  "tp": 61,
+  "fp": [],
+  "missed": [],
+  "scanMs": 37.10000000009313,
+  "diagnostics": {
+    "candidates": 84,
+    "detected": 61,
+    "rejected": {
+      "protected-or-fragment": 6,
+      "multiple-stories": 2,
+      "reading-view": 1
+    }
+  },
+  "recall": 1,
+  "precision": 1
+}

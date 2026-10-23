@@ -1,0 +1,180 @@
+{
+  "provenance": "Offline captured snippets; URL block tests isolate rendering, not semantic accuracy or live-site recall",
+  "results": [
+    {
+      "publisher": "Yahoo News",
+      "cards": 3,
+      "collapse": true,
+      "hide": true,
+      "restored": true
+    },
+    {
+      "publisher": "CNN",
+      "cards": 3,
+      "collapse": true,
+      "hide": true,
+      "restored": true
+    },
+    {
+      "publisher": "Fox News",
+      "cards": 3,
+      "collapse": true,
+      "hide": true,
+      "restored": true
+    },
+    {
+      "publisher": "NBC",
+      "cards": 3,
+      "collapse": true,
+      "hide": true,
+      "restored": true
+    },
+    {
+      "publisher": "CBS",
+      "cards": 3,
+      "collapse": true,
+      "hide": true,
+      "restored": true
+    },
+    {
+      "publisher": "ABC News",
+      "cards": 3,
+      "collapse": true,
+      "hide": true,
+      "restored": true
+    },
+    {
+      "publisher": "AP News",
+      "cards": 3,
+      "collapse": true,
+      "hide": true,
+      "restored": true
+    },
+    {
+      "publisher": "Washington Post",
+      "cards": 3,
+      "collapse": true,
+      "hide": true,
+      "restored": true
+    },
+    {
+      "publisher": "BBC",
+      "cards": 3,
+      "collapse": true,
+      "hide": true,
+      "restored": true
+    },
+    {
+      "publisher": "The Guardian",
+      "cards": 3,
+      "collapse": true,
+      "hide": true,
+      "restored": true
+    },
+    {
+      "publisher": "Sky News",
+      "cards": 3,
+      "collapse": true,
+      "hide": true,
+      "restored": true
+    },
+    {
+      "publisher": "Independent",
+      "cards": 3,
+      "collapse": true,
+      "hide": true,
+      "restored": true
+    },
+    {
+      "publisher": "The Sun",
+      "cards": 3,
+      "collapse": true,
+      "hide": true,
+      "restored": true
+    },
+    {
+      "publisher": "ABC Australia",
+      "cards": 3,
+      "collapse": true,
+      "hide": true,
+      "restored": true
+    },
+    {
+      "publisher": "9News",
+      "cards": 3,
+      "collapse": true,
+      "hide": true,
+      "restored": true
+    },
+    {
+      "publisher": "SBS",
+      "cards": 3,
+      "collapse": true,
+      "hide": true,
+      "restored": true
+    },
+    {
+      "publisher": "7NEWS",
+      "cards": 3,
+      "collapse": true,
+      "hide": true,
+      "restored": true
+    },
+    {
+      "publisher": "RNZ",
+      "cards": 3,
+      "collapse": true,
+      "hide": true,
+      "restored": true
+    },
+    {
+      "publisher": "NZ Herald",
+      "cards": 3,
+      "collapse": true,
+      "hide": true,
+      "restored": true
+    },
+    {
+      "publisher": "1News",
+      "cards": 3,
+      "collapse": true,
+      "hide": true,
+      "restored": true
+    },
+    {
+      "publisher": "Otago Daily Times",
+      "cards": 3,
+      "collapse": true,
+      "hide": true,
+      "restored": true
+    },
+    {
+      "publisher": "The Press",
+      "cards": 3,
+      "collapse": true,
+      "hide": true,
+      "restored": true
+    },
+    {
+      "publisher": "The Post",
+      "cards": 3,
+      "collapse": true,
+      "hide": true,
+      "restored": true
+    },
+    {
+      "publisher": "Newsroom",
+      "cards": 3,
+      "collapse": true,
+      "hide": true,
+      "restored": true
+    },
+    {
+      "publisher": "The Spinoff",
+      "cards": 3,
+      "collapse": true,
+      "hide": true,
+      "restored": true
+    }
+  ]
+}

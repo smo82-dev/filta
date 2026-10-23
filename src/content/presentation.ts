@@ -42,7 +42,12 @@ export function explanation(record: StoryRecord, debug = false): HTMLDetailsElem
     list.append(node('li', `“${signal.term}” in ${signal.field}${signal.kind === 'context' ? ' — contextual exception, lowers score' : ''} (${signal.contribution > 0 ? '+' : ''}${signal.contribution})`));
   }
   if (list.children.length) details.append(list);
-  if (debug) details.append(node('small', `Detector: ${record.detector}. Final action: ${record.decision.action}.`));
+  if (debug) {
+    details.append(node('small', `Detector: ${record.detector}. Final action: ${record.decision.action}.`));
+    for (const [field, value] of Object.entries(record.story)) {
+      if (value) details.append(node('p', `${field}: ${Array.isArray(value) ? value.join(', ') : value}`));
+    }
+  }
   return details;
 }
 function keywordEditor(record: StoryRecord, kind: 'allowedKeywords' | 'blockedKeywords', feedback: Feedback): HTMLElement {
@@ -121,7 +126,7 @@ export class StoryReview {
     const shadow = host.attachShadow({ mode: 'open' });
     shadow.append(node('style', UI_STYLE));
     const drawer = node('section'); drawer.className = 'drawer'; drawer.style.pointerEvents = 'auto';
-    drawer.setAttribute('aria-label', 'News Filter story review');
+    drawer.setAttribute('aria-label', 'FILTA story review');
     drawer.tabIndex = -1;
     const top = node('div'); top.className = 'top';
     top.append(node('h2', 'Stories on this page'), button('Close', () => this.close()));
