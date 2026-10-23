@@ -38,6 +38,11 @@ def load(name):
     return [json.loads(l) for l in open(HERE / name)]
 
 train = [i for i in load('train.jsonl') if not ('--no-bbc' in sys.argv and i['set'] == 'bbc')]
+# Optional extra section-labelled rows (e.g. New Zealand headlines), repeated --extra-weight times.
+# Each row names the classes it informs in 'scope'; it is a negative for every other class in scope.
+if '--extra' in sys.argv:
+    extra = [json.loads(l) for l in open(sys.argv[sys.argv.index('--extra') + 1])]
+    train += extra * opt('--extra-weight', 1)
 random.seed(7)
 random.shuffle(train)
 # Each training story is seen as a bare headline and as a card with its summary.
