@@ -76,9 +76,17 @@ function draw(focus = false) {
   if (wizard && step === 2) summary();
   if (focus) element(visible[0]!).querySelector<HTMLElement>('h2')?.focus();
 }
+// Save confirmations appear briefly in the top-right corner; errors stay until the next action.
+let toastTimer: ReturnType<typeof setTimeout> | undefined;
+function announce(message: string, error = false) {
+  clearTimeout(toastTimer); status.dataset.fading = 'false'; status.dataset.error = String(error); status.textContent = message;
+  if (!error && message !== 'Saving…') toastTimer = setTimeout(() => {
+    status.dataset.fading = 'true'; toastTimer = setTimeout(() => { status.textContent = ''; status.dataset.fading = 'false'; }, 400);
+  }, 7000);
+}
 element('next').addEventListener('click', () => { if (!saving && step < 2) { step++; draw(true); } });
 element('back').addEventListener('click', () => { if (!saving && step > 0) { step--; draw(true); } });
-element('restart').addEventListener('click', () => { wizard = true; step = 0; status.textContent = ''; draw(true); });
+element('restart').addEventListener('click', () => { wizard = true; step = 0; announce(''); draw(true); });
 element('cancel').addEventListener('click', () => { populate(initial); wizard = false; draw(true); });
 document.querySelectorAll<HTMLButtonElement>('#hub-nav button').forEach(button => button.addEventListener('click', () => {
   section = button.dataset.section!; draw(true);
@@ -91,14 +99,14 @@ form.addEventListener('submit', event => {
   for (const [key, value] of Object.entries(values())) {
     if (JSON.stringify(value) !== JSON.stringify(initial[key as keyof Preferences])) Object.assign(changes, { [key]: value });
   }
-  saving = true; draw(); status.dataset.error = 'false'; status.textContent = 'Saving…';
+  saving = true; draw(); announce('Saving…');
   void platform.messaging.request<Preferences>({ kind: 'PATCH_PREFS', patch: changes }).then(preferences => {
     const completed = wizard;
     populate(preferences); wizard = false;
-    status.textContent = completed ? 'You’re ready. Open a news website to start filtering.' : 'Saved. Your open news pages update automatically.';
+    announce(completed ? 'You’re ready. Open a news website to start filtering.' : 'Saved. Your open news pages update automatically.');
     saving = false; draw(completed);
   }).catch(error => {
-    saving = false; draw(); status.dataset.error = 'true'; status.textContent = `Could not save. ${errorMessage(error)}`; save.focus();
+    saving = false; draw(); announce(`Could not save. ${errorMessage(error)}`, true); save.focus();
   });
 });
 void platform.messaging.request<Preferences>({ kind: 'GET_PREFS' }).then(preferences => {
