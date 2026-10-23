@@ -59,7 +59,7 @@ function summary() {
   ] as [string, string][])) { const dt = document.createElement('dt'), dd = document.createElement('dd'); dt.textContent = key; dd.textContent = value; list.append(dt, dd); }
 }
 function draw(focus = false) {
-  element('wizard-header').hidden = !wizard; element('hub-header').hidden = wizard;
+  element('wizard-header').hidden = !wizard; element('hub-header').hidden = wizard; element('restart').hidden = wizard;
   const visible = wizard ? step === 0 ? ['topics'] : step === 1 ? ['behaviour', 'exceptions'] : ['ready'] : [section];
   for (const id of ['topics', 'behaviour', 'exceptions', 'websites', 'advanced', 'ready']) element(id).hidden = !visible.includes(id);
   element('step-label').textContent = `Step ${step + 1} of 3`;
