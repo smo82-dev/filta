@@ -2,6 +2,7 @@ import { structuredSections } from './structured';
 import type { DetectedStory, StoryDetector } from '../../core/types';
 import { domainMatches } from '../../core/text';
 import { deduplicate, extractCard, nodes, type Root } from './generic';
+import { withStyleCache } from './labels';
 export interface SiteAdapter extends StoryDetector<HTMLElement, Root> {
   id: string;
   domains: string[];
@@ -12,13 +13,16 @@ class SelectorAdapter implements SiteAdapter {
   matches(host: string) { return this.domains.some(domain => domainMatches(host, domain)); }
   detect(root: Root, pageUrl: string): DetectedStory<HTMLElement>[] {
     structuredSections(root.ownerDocument ?? root as Document, true);
-    return deduplicate(nodes(root, this.selector).map(element => extractCard(element, pageUrl, this.id))
-      .filter((value): value is DetectedStory<HTMLElement> => !!value));
+    return withStyleCache(() => deduplicate(nodes(root, this.selector).map(element => extractCard(element, pageUrl, this.id))
+      .filter((value): value is DetectedStory<HTMLElement> => !!value)));
   }
 }
 class GuardianAdapter extends SelectorAdapter {
   constructor() { super('guardian', ['theguardian.com'], '.fc-item, .dcr-card, li[data-link-name="trail"], article'); }
   override detect(root: Root, pageUrl: string): DetectedStory<HTMLElement>[] {
+    return withStyleCache(() => this.detectCards(root, pageUrl));
+  }
+  private detectCards(root: Root, pageUrl: string): DetectedStory<HTMLElement>[] {
     const cards = super.detect(root, pageUrl);
     // Current Guardian fronts use a sibling overlay link rather than a linked heading.
     // Skip compound cards with sub-stories; hiding those could hide unrelated reporting.

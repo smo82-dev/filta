@@ -8,7 +8,7 @@
     "typecheck": "tsc --noEmit",
     "build": "npm run typecheck && node scripts/build.mjs",
     "test": "node scripts/test.mjs",
-    "test:browser": "node --test tests/browser.test.mjs tests/sponsored.test.mjs tests/reliability-browser.test.mjs tests/publisher-fixtures.test.mjs tests/ui.test.mjs tests/bbc-owner.test.mjs tests/pipeline-regressions.test.mjs tests/popup-layout.test.mjs tests/stuff-owner.test.mjs",
+    "test:browser": "node --test tests/browser.test.mjs tests/sponsored.test.mjs tests/reliability-browser.test.mjs tests/publisher-fixtures.test.mjs tests/ui.test.mjs tests/bbc-owner.test.mjs tests/pipeline-regressions.test.mjs tests/popup-layout.test.mjs tests/stuff-owner.test.mjs tests/shadow-dom.test.mjs tests/native-ads.test.mjs",
     "test:extension": "node tests/native.test.mjs",
     "check": "npm run test && npm run build && npm run test:browser && node scripts/audit.mjs",
     "package": "npm run build && node scripts/package.mjs",

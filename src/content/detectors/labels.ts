@@ -9,14 +9,41 @@ const EXCLUDED = 'nav, aside, footer, form, button, time, input, select, textare
 const PROMOTIONAL_ARIA = /^(?:sponsored(?: by .+)?|paid content|paid post|partner content|promoted|advertisement|advertorial|brand partner|branded content|presented by(?: .+)?|commercial content|native advertising)$/i;
 const clean = (text: string | null) => (text ?? '').replace(/\s+/g, ' ').trim();
 export function markers(element: HTMLElement): string {
-  return [element.className, element.id, element.getAttribute('data-testid'), element.getAttribute('data-component')]
+  const cached = scan?.markers.get(element);
+  if (cached !== undefined) return cached;
+  const value = [element.className, element.id, element.getAttribute('data-testid'), element.getAttribute('data-component')]
     .join(' ').replace(/([a-z])([A-Z])/g, '$1 $2')
     // Feature flags describe a layout, not an author/byline region.
     .replace(/\b(?:with|has|without|no)[-_](?:byline|author)\b/gi, '');
+  scan?.markers.set(element, value);
+  return value;
 }
 export function metadataElement(element: HTMLElement): boolean {
   return METADATA.test(markers(element)) || element.matches('[data-label], [data-kicker], [data-topic], [data-category], [data-sponsored], [data-partner], a[rel~="tag"]') ||
     PROMOTIONAL_ARIA.test(clean(element.getAttribute('aria-label')));
+}
+// Discovery asks about the same ancestors thousands of times on a busy front page.
+// Within one scan, layout does not change, so each element's own style is read once.
+// The same ancestors are inspected tens of thousands of times on a busy front page
+// (live Stuff: ~360,000 attribute reads per scan). Within one synchronous scan the
+// DOM and layout do not change, so per-element facts are computed once.
+export interface ScanCache { visible: Map<Element, boolean>; markers: Map<Element, string>; protectedChain: Map<Element, boolean>; headlineAnchors: Map<Element, boolean>; urls: Map<string, string> }
+let scan: ScanCache | undefined;
+export function scanCache(): ScanCache | undefined { return scan; }
+export function withStyleCache<T>(run: () => T): T {
+  const outer = scan;
+  scan ??= { visible: new Map(), markers: new Map(), protectedChain: new Map(), headlineAnchors: new Map(), urls: new Map() };
+  try { return run(); } finally { if (!outer) scan = undefined; }
+}
+function selfVisible(element: HTMLElement): boolean {
+  const visibility = scan?.visible;
+  let visible = visibility?.get(element);
+  if (visible === undefined) {
+    const style = getComputedStyle(element);
+    visible = !(style.display === 'none' || style.visibility !== 'visible' || style.opacity === '0');
+    visibility?.set(element, visible);
+  }
+  return visible;
 }
 export function ownedVisibleContent(element: HTMLElement, card: HTMLElement, allowAdLabel = false, allowRelatedStory = false): boolean {
   for (let current: HTMLElement | null = element; current && current !== card; current = current.parentElement) {
@@ -26,8 +53,7 @@ export function ownedVisibleContent(element: HTMLElement, card: HTMLElement, all
     if (current !== element && current.matches('article, li')) return false;
     if (AD_CONTAINER.test(markers(current)) && (current !== element || !allowAdLabel)) return false;
     if (current.hidden || current.getAttribute('aria-hidden') === 'true' || current.hasAttribute('inert')) return false;
-    const style = getComputedStyle(current);
-    if (style.display === 'none' || style.visibility !== 'visible' || style.opacity === '0') return false;
+    if (!selfVisible(current)) return false;
   }
   // Ignore our display:none on the complete card, so filtered cards can be rescanned.
   return !card.hidden && card.getAttribute('aria-hidden') !== 'true';

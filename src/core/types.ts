@@ -19,7 +19,7 @@ export interface Signal {
   field: Field;
   term: string;
   contribution: number;
-  kind: 'term' | 'combination' | 'context' | 'blocked' | 'allowed';
+  kind: 'term' | 'combination' | 'context' | 'blocked' | 'allowed' | 'model';
 }
 export interface CategoryScore { id: CategoryId; name: string; score: number; threshold: number }
 export interface ClassificationResult { categories: CategoryScore[]; signals: Signal[] }

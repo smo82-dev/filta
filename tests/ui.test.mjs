@@ -29,6 +29,12 @@ test('guided setup, preference preservation, real popup interactions and accessi
   await settings.locator('#next').click();assert.match(await settings.locator('#summary').innerText(),/Entertainment/);await axe(settings);await capture(settings,'onboarding-3-ready');
   await settings.locator('#back').click();assert.equal(await settings.locator('#hide').isChecked(),true);await settings.locator('#next').click();
   await settings.locator('#save').click();await settings.locator('#hub-header').waitFor();await ready(settings);
+  // The completion message is a bold toast in the top-right corner that clears itself after 7 seconds.
+  const toast=settings.locator('#status');await settings.waitForFunction(()=>document.querySelector('#status').textContent.includes('You’re ready'));
+  const style=await toast.evaluate(e=>{const s=getComputedStyle(e),r=e.getBoundingClientRect();return {position:s.position,weight:Number(s.fontWeight),right:innerWidth-r.right,top:r.top};});
+  assert.equal(style.position,'fixed');assert.ok(style.weight>=700);assert.ok(style.right<40&&style.top<40,JSON.stringify(style));
+  await settings.waitForTimeout(6000);assert.match(await toast.textContent(),/You’re ready/);
+  await settings.waitForFunction(()=>document.querySelector('#status').textContent==='',null,{timeout:3000});assert.equal(await toast.isVisible(),false);
   const p=await harness.dispatch(harness.worker,{kind:'GET_PREFS'},{});assert.equal(p.configured,true);assert.deepEqual(p.filteredCategories,['celebrity','entertainment']);assert.deepEqual(p.allowedKeywords,['Vanuatu']);assert.equal(p.mode,'hide');
  });
  await t.test('returning user skips onboarding; repeat setup and cancellation preserve preferences',async()=>{
