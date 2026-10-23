@@ -7,5 +7,6 @@
 - Native ads (`commercialDisclosure` in generic.ts), closed shadow roots (`useShadowRootResolver`, `platform.shadowRoot`), per-scan memoisation (`withStyleCache`/`scanCache` in labels.ts).
 - Weak war model: `scripts/topic-model/train_weak.py ship.json out.json --classes war` (cue words masked); hand-labelled evaluation: `hand_sample.py` + `docs/validation-0.2.0/dev3/hand-labels-*.txt`.
 - Native tests run here: `node --test tests/native.test.mjs` (full Chromium with --load-extension).
+- International check (23 Oct 2026, English sites in 7 regions): see DEV3.md "Outside New Zealand"; eligibility list in `page-eligibility.ts`, native-widget markers in `generic.ts`.
 - Open decision: training-data licences before a store release (see DEV3.md, THIRD_PARTY_NOTICES.md).
 - Previous handover (development 2): `docs/validation-0.2.0/DEV2.md`.

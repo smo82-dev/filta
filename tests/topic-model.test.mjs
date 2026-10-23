@@ -116,3 +116,33 @@ test('opinion leads, sexual offending vocabulary, conflict-zone attacks and tech
   assert.ok(!(await flagged('Redwood: The KGB agent who helped stop the Cold War turning hot')).includes('war'));
   assert.ok(!(await flagged('Opinion polls show the race tightening in the capital')).includes('opinion'));
 });
+
+test('international English-language vocabulary (live AP, ABC Australia, NDTV, Straits Times, 23 Oct 2026)', async () => {
+  for (const [headline, category] of [
+    ['Senate races to watch', 'politics'],
+    ['Early voting boost', 'politics'],
+    ['PM Modi Says Congress Hurts Dissent Movements', 'politics'],
+    ['Prabowo vows Indonesia will not be frightened by MSCI', 'politics'],
+    ['Canada and Turkey forge trade and defense deals as Carney looks beyond US', 'politics'],
+    ['NAB staff speak out after mass job cuts revealed', 'business'],
+    ['GovTech retrenches 38 employees in second wave of layoffs', 'business'],
+    ['Lee Biscuits, maker of Marie biscuits, to end production, shutter factory', 'business'],
+    ['Military uses of AI', 'technology'],
+    ['Firms should act now to fix critical PHP vulnerabilities', 'technology'],
+    ['Inside the Nanning Ponzi scheme: Why smart people get scammed', 'crime'],
+    ['Disgraced former footballer to remain behind bars', 'crime'],
+    ['Russia’s overnight barrage', 'war'],
+    ['Asian Para Games Day 4 Live', 'sport'],
+    ['Europe’s killer heat this summer claims 50,000 lives', 'disaster'],
+  ]) assert.ok((await flagged(headline)).includes(category), `${headline} -> ${category}`);
+  for (const [headline, category] of [
+    ['Trump doubles down on support of Ramaswamy attack ad', 'war'],
+    ['Affordable home scheme went from blessing to disaster, buyers say', 'disaster'],
+  ]) assert.ok(!(await flagged(headline)).includes(category), `${headline} must not be ${category}`);
+});
+
+test('publisher labels: "Topic:Crime" and "Analysis by …" name the section', async () => {
+  assert.ok((await flagged('Dozens arrested in raids', { labels: ['Topic:Crime'] })).includes('crime'));
+  assert.ok((await flagged('Why the budget missed its mark', { labels: ['Analysis by Jane Smith'] })).includes('opinion'));
+  assert.ok((await flagged('Quick hits from day five', { labels: ['Topic:Cricket'] })).includes('sport'));
+});

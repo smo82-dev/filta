@@ -182,7 +182,10 @@ const AD_CLICK = /(?:^|\.)(?:taboola\.com|outbrain\.com|zemanta\.com|doubleclick
 const AD_PATH = /^(?:www\.)?bing\.com\/(?:api\/v\d+\/mediation|aclick)|^beap\.gemini\.yahoo\.com\//i;
 const PAID_UTM = /^(?:taboola|outbrain|zemanta|dianomi|revcontent|mgid|nativo|plista|ligatus|sharethrough)$/i;
 const PAID_MEDIUM = /^(?:paid|cpc|ppc|native|nativead|native-ad|sponsored|paidsocial|paid[-_ ]?content)$/i;
-const NATIVE_WIDGET = /(?:^|[-_\s])(taboola|trc|outbrain|ob-widget|ob|zergnet|dianomi|revcontent|mgid|nativo|ntv|plista|ligatus|nativead|native-ad|native_ad|nativeads)(?:$|[-_\s\d])/i;
+// Only names the ad networks themselves use. Short tokens such as "trc", "ob" and "ntv" are ordinary
+// publisher class names (NDTV wraps its whole front page in "trc-main"; NTV is a broadcaster), so
+// Taboola counts only in its own underscore form ("trc_rbox") and Outbrain only as its widget names.
+const NATIVE_WIDGET = /(?:^|[-_\s])(taboola|outbrain|ob-widget|ob-dynamic-rec-container|zergnet|dianomi|revcontent|mgid|nativo|plista|ligatus|nativead|native-ad|native_ad|nativeads)(?:$|[-_\s\d])|(?:^|\s)trc_(?:rbox|related|spotlight|vertical|horizontal|item|elastic)/i;
 const DISCLOSURE = /^(?:sponsored|sponsored content|promoted|promoted content|paid content|paid post|paid partnership|partner content|advertisement|advertorial|ad|ads)$/i;
 function commercialDisclosure(card: HTMLElement, link: HTMLAnchorElement, pageUrl: string): string | undefined {
   try {

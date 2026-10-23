@@ -62,6 +62,36 @@ The 45% validation figure is unbiased. Three gaps it exposed were then fixed (Gu
 
 **Newer training data.** The shipped model is trained on HuffPost News Category v3 (2012–2022) plus AG News, excluding January–May 2018 so every comparison above stays held out. Validating the procedure on the newest year (trained to June 2021, tested July 2021 – September 2022): headline-only macro recall 46.6% → 50.1%, wrong hits 1.31% → 1.20% (sport 75% → 78%, entertainment 50% → 55%, technology 35% → 65%). The crime cut-off is raised by 1 so benign police stories ("Police volunteer at a village clean up") are not crime; crime headline recall on HuffPost 2018 is 59% (rules alone: 13%).
 
+**Outside New Zealand (live, 23 October 2026, English-language sites only).** Front pages were scanned in the owner's Chrome with the shipped detector, and the headlines FILTA sees were hand-labelled across all topics (Claude's judgement; not committed). Times of India, CBC and NPR could not be opened from the browser tool, so they are untested.
+
+| Site (region) | Counts as news | Stories found | Headline links covered |
+| --- | --- | --- | --- |
+| AP News (US) | yes | 145 | 85% |
+| ABC News (Australia) | yes | 79 | 80% |
+| NDTV (India) | yes | 232 | 95% |
+| Straits Times (Singapore) | yes | 96 | 100% |
+| Al Jazeera (Qatar/global) | yes | 98 | 99% |
+| News24 (South Africa) | **no → yes** | 150 | 97% |
+| RTÉ (Ireland) | yes | 40 | 97% |
+
+Problems found and fixed:
+- **News24 was skipped entirely**: the eligibility check needed the bare word "news", and "News24" is not one. Names such as News24/9News, masthead words in the domain (Times, Herald, Tribune, Gazette…) and a list of major English-language outlets in Asia, Africa, Europe, Canada and the Pacific now count.
+- **NDTV's whole front page was tagged "Sponsored"**: its layout class `trc-main` matched the Taboola marker `trc`. Native-ad widgets now need the networks' own names (`trc_rbox…`, `outbrain`, `ob-widget`…); short tokens (`trc`, `ob`, `ntv`) no longer count. Tested with publisher layouts named that way.
+- **Classification vocabulary** was NZ/UK-centric. Added: US politics (Congress, Senate, GOP, midterms, ballots, White House), current national leaders and parties (Modi, BJP, Prabowo, Lula, Macron, Carney…), business (layoffs, job cuts, retrenchment, tariffs, earnings, ASX/MSCI…), technology (AI, OpenAI, data centres, iPhone, vulnerabilities), crime (scam, Ponzi, jailed, behind bars, trafficking), disaster (killer heat, chemical leak), war ("barrage", "occupation" near conflict zones; "attack ad" is not war), sport (Asian/Para Games, ODI, T20, IPL, March Madness), and publisher labels such as "Topic:Crime" and "Analysis by …".
+
+Results (recall / precision over all topic decisions):
+
+| Set | Before | After |
+| --- | --- | --- |
+| AP, ABC, NDTV, Straits Times (tuning, 316 headlines) | 52% / 76% | 69% / 79% |
+| Al Jazeera, News24, RTÉ (**held out**, 157 headlines) | 63% / 89% | **69% / 90%** |
+| 1News, BBC, Guardian (earlier validation) | 53% / 78% | 61% / 79% |
+| Stuff, NZ Herald, RNZ | 76% / 82% | 79% / 82% |
+
+The held-out "before" for News24 assumes FILTA ran there; in practice it did not run at all. On the 14,041-headline benchmark, macro recall moved 50.4% → 51.1% (headline) and 72.3% → 72.9% (card), wrong hits 1.46% → 1.48% and 1.78% → 1.89%; the fresh hand-labelled sample is unchanged. Remaining weak spots abroad: politics stories that name no politician or institution, celebrity stories about local stars, and business stories without business words.
+
+**Language.** FILTA is English-only by decision. On other-language sites it finds stories but classifies only from section/label metadata and English words.
+
 **New Zealand training data (tried, not shipped).** 1,248 section-labelled RNZ headlines (politics, sport, business, crime and justice, 21 October 2026 and earlier; any headline in the live sets above removed) were added to training at weights 1×3, 1×8 and 1×3 without sport (`train.py --extra rows.jsonl --extra-weight N`). On the 1News/BBC/Guardian validation set the best variant went from 53% recall / 78% precision to 55% / 80% (crime 7 → 10 of 15, business 1 → 2 of 8), but politics did not move (10 → 9 of 31): the politics misses are mostly overseas and broad-politics stories (Trump, Macron, Serbia, UK defence), not NZ vocabulary. The tuning set and the fresh hand-labelled sample were unchanged; on the 14,041-headline benchmark the variants moved individual cells by ±2–3 points in both directions, including sport, which the no-sport variant did not touch. That spread is the noise of the reshuffled calibration split, so the gain is not distinguishable from it. The shipped model is unchanged and no RNZ text is in the repository. The `--extra` option stays in `train.py` for a larger NZ sample.
 
 Native MV3 smoke test: the packaged ZIP loaded unpacked in full Chromium (Playwright 1.56, `--load-extension`), with a real service worker and `chrome.storage`. With Sport selected, *"Warriors lock down star hooker…"* and *"Cabrera Leads Red Sox…"* collapsed (neither contains a sport keyword); the recipe card stayed visible. This is not the Chrome toolbar or a same-identity store upgrade.
@@ -79,4 +109,4 @@ Tests: 75 core, **122 of 122 browser** and 2 of 2 **native** tests passing. New 
 - The hand labels are one annotator's judgement, not an independent panel.
 - The model adds about 0.7 MB to `content.js` (ZIP 285 KB).
 
-ZIP: `news-filter-0.2.0.zip` from `npm run package`, version_name `0.2.0 development 3`, 16 entries identical to `dist/`.
+ZIP: `news-filter-0.2.0.zip` from `npm run package`, version_name `0.2.0 development 4` (development 3 plus the international check), 16 entries identical to `dist/`.

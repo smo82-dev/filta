@@ -90,5 +90,9 @@ test('publisher markup makes unlisted news sites eligible; shops stay ineligible
     assert.equal(await check('<title>Front page</title><script type="application/ld+json">{"@type":["NewsArticle"],"headline":"x"}</script>', 'https://www.front-page.test/'), true);
     assert.equal(await check('<title>Shoes and boots</title><script type="application/ld+json">{"@type":"Product","name":"Boot"}</script>', 'https://www.boot-shop.test/'), false);
     assert.equal(await check('<title>Recipes</title>', 'https://www.recipes.test/'), false);
+    // Mastheads that never say the bare word "news" (News24, 23 Oct 2026; regional papers).
+    assert.equal(await check('<title>Top Stories | News24</title>', 'https://www.news24-example.test/'), true);
+    assert.equal(await check('<title>Front page</title>', 'https://www.valleyherald.test/'), true);
+    assert.equal(await check('<title>Daily deals</title>', 'https://www.newsletters-shop.test/'), false);
   } finally { await browser.close(); }
 });

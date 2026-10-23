@@ -30,10 +30,12 @@ customElements.define('feed-card', class extends HTMLElement {
 <article id="paid-utm"><h3><a href="https://brand.example/story?utm_medium=paid&amp;utm_campaign=x">Five reasons homeowners are switching to heat pumps</a></h3></article>
 <article id="external-editorial"><h3><a href="https://www.rnz.co.nz/news/national/123/ferry-sailings-resume">Ferry sailings resume after weekend storm</a></h3></article>
 <article id="about-taboola"><h3><a href="/business/markets/taboola-shares-rise">Taboola shares rise after strong quarterly earnings</a></h3></article>
+<div class="trc-main"><article id="trc-layout"><h3><a href="/india-news/monsoon-session-begins">Parliament monsoon session begins with heated debate</a></h3></article></div>
+<div class="ntv-news ob"><article id="ntv-layout"><h3><a href="/kenya/county-budget-approved">County assembly approves new budget for roads</a></h3></article></div>
 <article id="promoted-captain"><h3><a href="/sport/league/promoted-to-captain">Young forward promoted to captain for weekend clash</a></h3></article>
 </main>`;
 
-test('native ads: ad-network links, ad widgets and lone disclosures count as sponsored; editorial stays', { timeout: 90000 }, async t => {
+test('native ads: ad-network links, ad widgets and lone disclosures count as sponsored; editorial stays, including publisher layouts named trc-main or ntv (NDTV, 23 Oct 2026)', { timeout: 90000 }, async t => {
   const browser = await chromium.launch(launch);
   try {
     const context = await browser.newContext(); const h = new WebExtensionHarness(context, root); await h.init();
@@ -47,7 +49,7 @@ test('native ads: ad-network links, ad widgets and lone disclosures count as spo
       assert.equal(await news.locator('.videoCube:visible').count(), 0);
     });
     await t.test('editorial cards, including links to other publishers and stories about ad companies, stay', async () => {
-      for (const id of ['#msn-story', '#external-editorial', '#about-taboola', '#promoted-captain']) await news.locator(id).waitFor({ state: 'visible' });
+      for (const id of ['#msn-story', '#external-editorial', '#about-taboola', '#promoted-captain', '#trc-layout', '#ntv-layout']) await news.locator(id).waitFor({ state: 'visible' });
       const status = await h.dispatch(news, { kind: 'PAGE_STATUS' }, {});
       assert.equal(status.filtered, 4);
     });

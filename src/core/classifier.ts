@@ -4,7 +4,8 @@ import { normalise, storyFields } from './text';
 import { topicEvidence } from './topic-model';
 const FIELD_WEIGHTS: Record<Field, number> = { headline: 1, description: 0.35, url: 0.25, section: 1.5, label: 1.5 };
 const TAXONOMY_QUALIFIERS = new Set(['news', 'stories', 'story', 'content', 'and', 'the', 'latest', 'live', 'local', 'world', 'national',
-  'international', 'nz', 'au', 'uk', 'us', 'election', 'elections', 'justice', 'reports', 'features', 'updates']);
+  'international', 'nz', 'au', 'uk', 'us', 'election', 'elections', 'justice', 'reports', 'features', 'updates', 'topic', 'section',
+  'state', 'federal', 'territory', 'india', 'asia', 'africa', 'europe', 'americas', 'pacific', 'global', 'other']);
 const contains = (text: string, phrase: string) => !!phrase && (` ${text} `).includes(` ${phrase} `);
 export class RuleBasedClassifier implements StoryClassifier {
   private readonly compiled;
@@ -28,6 +29,8 @@ export class RuleBasedClassifier implements StoryClassifier {
   private taxonomy(text: string, key: string): boolean {
     if (text === key) return true;
     const words = text.split(' ');
+    // A byline label names the section first: "Analysis by Jane Smith", "Opinion by …".
+    if (words.length <= 6 && text.startsWith(`${key} by `)) return true;
     if (words.length > 5 || !(text.startsWith(`${key} `) || text.endsWith(` ${key}`))) return false;
     const rest = (text.startsWith(`${key} `) ? text.slice(key.length + 1) : text.slice(0, -key.length - 1)).split(' ');
     // "crime and justice" names one topic; "science and technology" spans two, so it decides neither.
