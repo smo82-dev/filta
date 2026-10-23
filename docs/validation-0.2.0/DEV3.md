@@ -62,7 +62,7 @@ The 45% validation figure is unbiased. Three gaps it exposed were then fixed (Gu
 
 **Newer training data.** The shipped model is trained on HuffPost News Category v3 (2012–2022) plus AG News, excluding January–May 2018 so every comparison above stays held out. Validating the procedure on the newest year (trained to June 2021, tested July 2021 – September 2022): headline-only macro recall 46.6% → 50.1%, wrong hits 1.31% → 1.20% (sport 75% → 78%, entertainment 50% → 55%, technology 35% → 65%). The crime cut-off is raised by 1 so benign police stories ("Police volunteer at a village clean up") are not crime; crime headline recall on HuffPost 2018 is 59% (rules alone: 13%).
 
-**Outside New Zealand (live, 23 October 2026, English-language sites only).** Front pages were scanned in the owner's Chrome with the shipped detector, and the headlines FILTA sees were hand-labelled across all topics (Claude's judgement; not committed). Times of India, CBC and NPR could not be opened from the browser tool, so they are untested.
+**Outside New Zealand (live, 23 October 2026, English-language sites only).** Front pages were scanned in the owner's Chrome with the shipped detector, and the headlines FILTA sees were hand-labelled across all topics (Claude's judgement; not committed). Times of India, CBC and NPR could not be opened from the browser tool; Hindustan Times and Global News stand in for them below.
 
 | Site (region) | Counts as news | Stories found | Headline links covered |
 | --- | --- | --- | --- |
@@ -89,6 +89,16 @@ Results (recall / precision over all topic decisions):
 | Stuff, NZ Herald, RNZ | 76% / 82% | 79% / 82% |
 
 The held-out "before" for News24 assumes FILTA ran there; in practice it did not run at all. On the 14,041-headline benchmark, macro recall moved 50.4% → 51.1% (headline) and 72.3% → 72.9% (card), wrong hits 1.46% → 1.48% and 1.78% → 1.89%; the fresh hand-labelled sample is unchanged. Remaining weak spots abroad: politics stories that name no politician or institution, celebrity stories about local stars, and business stories without business words.
+
+**Second round (same day): Canada, India again, the Pacific.** Times of India, CBC and NPR are blocked for the browser tool, so Global News (Canada), Hindustan Times (India) and the Fiji Times were used instead: stories found on all three (94%, 81% and 100% of headline links; Hindustan Times misses a syndicated-features strip). Politics without a named politician ("political", "politicians", MPs under attack, "Labor will not say…", US department secretaries) and Bollywood/"paps" celebrity vocabulary were added first, from the tuning sites only. Then, on these three held-out sites (140 topic decisions):
+
+| Set | dev3 | international round 1 | + politics/celebrity |
+| --- | --- | --- | --- |
+| Global News, Hindustan Times, Fiji Times (**held out**) | 52% / 82% | 62% / 84% | **63% / 84%** |
+
+After that measurement a few general words their misses exposed were added (no-confidence, impeachment, constitution bill, "convicts", "drops charges", gangrape), lifting that set to 69% / 85%; that figure is no longer independent. The first held-out set (Al Jazeera, News24, RTÉ) is unchanged at 69% / 90%; 1News/BBC/Guardian is 64% / 79%; the 14,041-headline benchmark is 51.4% / 73.0% recall (1.49% / 1.89% wrong hits); the fresh hand-labelled sample is unchanged.
+
+Still weak abroad: celebrity stories about local stars that use no gossip words (Indian film stars are partly covered), court stories that never say "court" or "charged", and business stories about a named company without business words.
 
 **Language.** FILTA is English-only by decision. On other-language sites it finds stories but classifies only from section/label metadata and English words.
 

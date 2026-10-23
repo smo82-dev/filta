@@ -146,3 +146,18 @@ test('publisher labels: "Topic:Crime" and "Analysis by …" name the section', a
   assert.ok((await flagged('Why the budget missed its mark', { labels: ['Analysis by Jane Smith'] })).includes('opinion'));
   assert.ok((await flagged('Quick hits from day five', { labels: ['Topic:Cricket'] })).includes('sport'));
 });
+
+test('politics without a named politician, local-star celebrity, court and conviction wording (Canada, India, Fiji, 23 Oct 2026)', async () => {
+  for (const [headline, category] of [
+    ['The frightening threats becoming part of political life in Australia', 'politics'],
+    ['PM Wale faces first no-confidence challenge', 'politics'],
+    ['Procedures to be followed if fresh impeachment motion is filed', 'politics'],
+    ['Labor will not say if the dam is value for money after cost blowout', 'politics'],
+    ['Agriculture secretary says agency is full-bore ahead on reorganization', 'politics'],
+    ['Salman Khan again schools paps over photos of actors', 'celebrity'],
+    ['Varun Dhawan laments lack of recognition in Bollywood awards', 'celebrity'],
+    ['Court convicts 2 over $33k scam', 'crime'],
+    ['Agency drops charges against duo', 'crime'],
+  ]) assert.ok((await flagged(headline)).includes(category), `${headline} -> ${category}`);
+  assert.ok((await flagged('Gangrape case: DNA tests confirm assault by four people')).includes('sexual'));
+});
